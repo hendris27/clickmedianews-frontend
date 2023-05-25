@@ -72,7 +72,7 @@ function SignIn() {
                                 <div><FaTwitter size={35} color='#3366ff'/></div>
                             </div>
                             <div className='font-bold'>
-                                Don't have an account ?
+                                Don&apos;t have an account ?
                             </div>
                             <div className='w-full'>
                                 <button className='btn text-white border-0 w-full normal-case'>Sign Up Now</button>
