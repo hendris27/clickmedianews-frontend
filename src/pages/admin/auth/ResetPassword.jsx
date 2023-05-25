@@ -7,7 +7,7 @@ const resetPassword = () => {
             <div className='flex w-full h-full xl:h-screen'>
                 <section className='flex w-[600px] h-[100vh] md:flex max-sm:hidden bg-[#376AED]'>
                     <div className='flex gap-5 w-4/5'>
-                        <Link className='flex gap-5'>
+                        <Link to='/forgot-password' className='flex gap-5'>
                             <img className='w-3 h-5 mt-6 ml-6' src={arrowLeft} alt='' />
                             <div className='font-bold mt-5 text-[16px] text-white'>Forgot Password</div>
                         </Link>
@@ -41,9 +41,9 @@ const resetPassword = () => {
                         <h1 className='text-[16px] font-semibold mt-[15px] ml-[120px]'>Confirm Password :</h1>
                         <input type='password2' name='password2' placeholder='enter your confirm password' className='input mt-[10px] ml-[120px] p-2 border-2 border-slate-200 w-[320px] h-[40px] rounded-md max-w-xs' />
                     </div>
-                    <button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
+                    <Link to='reset-success'><button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
                             Reset Password
-                    </button>
+                    </button></Link>
                 </section>
             </div>
         </>

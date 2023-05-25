@@ -6,6 +6,11 @@ import Articles from "./pages/users/Articles"
 import ForgotPassword from "./pages/users/auth/ForgotPassword"
 import SignIn from "./pages/users/auth/SignIn"
 import SignUp from "./pages/users/auth/SignUp"
+import AdminSignUp from "./pages/admin/auth/SignUp"
+import AdminSignIn from "./pages/admin/auth/SignIn"
+import AdminForgotPassword from "./pages/admin/auth/ForgotPassword"
+import AdminResetPassword from "./pages/admin/auth/ResetPassword"
+import AdminResetSuccess from "./pages/admin/auth/ResetSuccess"
 
 
 // import { Provider } from "react-redux"
@@ -15,9 +20,6 @@ import SignUp from "./pages/users/auth/SignUp"
 
 const App = () => {
     return (
-        
-         
-               
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home/>} />
@@ -36,6 +38,21 @@ const App = () => {
             </Routes>
             <Routes>
                 <Route path='/signup' element={<SignUp/>} />
+            </Routes>
+            <Routes>
+                <Route path='/sign-up' element={<AdminSignUp/>} />
+            </Routes>
+            <Routes>
+                <Route path='/sign-in' element={<AdminSignIn/>} />
+            </Routes>
+            <Routes>
+                <Route path='/forgot-password' element={<AdminForgotPassword/>} />
+            </Routes>
+            <Routes>
+                <Route path='/reset-password' element={<AdminResetPassword/>} />
+            </Routes>
+            <Routes>
+                <Route path='/reset-success' element={<AdminResetSuccess/>} />
             </Routes>
         </BrowserRouter>
     
