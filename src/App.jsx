@@ -56,21 +56,6 @@ const App = () => {
                 <Route path='/reset-success' element={<AdminResetSuccess />} />
             </Routes>
             <Routes>
-                <Route path='/sign-up' element={<AdminSignUp/>} />
-            </Routes>
-            <Routes>
-                <Route path='/sign-in' element={<AdminSignIn/>} />
-            </Routes>
-            <Routes>
-                <Route path='/forgot-password' element={<AdminForgotPassword/>} />
-            </Routes>
-            <Routes>
-                <Route path='/reset-password' element={<AdminResetPassword/>} />
-            </Routes>
-            <Routes>
-                <Route path='/reset-success' element={<AdminResetSuccess/>} />
-            </Routes>
-            <Routes>
                 <Route path='/categories' element={<Categories/>} />
             </Routes>
         </BrowserRouter>
