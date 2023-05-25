@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/users/Home"
 import SearchArticles from "./pages/users/SearchArticles"
 import Articles from "./pages/users/Articles"
+import ArticleView from "./pages/users/ArticleView.jsx"
 import WriteArticles from "./pages/users/WriteArticle"
 import ForgotPassword from "./pages/users/auth/ForgotPassword"
 import ResetPassword from "./pages/users/auth/ResetPassword.jsx"
@@ -36,6 +37,9 @@ const App = () => {
             </Routes>
             <Routes>
                 <Route path='/articles' element={<Articles />} />
+            </Routes>
+            <Routes>
+                <Route path='/articleview' element={<ArticleView />} />
             </Routes>
             <Routes>
                 <Route path='/writearticles' element={<WriteArticles />} />
