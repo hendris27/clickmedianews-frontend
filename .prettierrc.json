@@ -1,0 +1,7 @@
+{
+  "trailingComma": "none",
+  "indent": ["error", 4],
+  "linebreak-style": ["error", "unix"],
+  "semi": false,
+  "singleQuote": true
+}
