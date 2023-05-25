@@ -7,6 +7,9 @@ import ForgotPassword from "./pages/users/auth/ForgotPassword"
 import Categories from "./pages/users/Categories"
 import SignIn from "./pages/users/auth/SignIn"
 import SignUp from "./pages/users/auth/SignUp"
+
+{/*Admin*/}
+import HomeAdmin from "./pages/admin/HomeAdmin"
 import AdminSignUp from "./pages/admin/auth/SignUp"
 import AdminSignIn from "./pages/admin/auth/SignIn"
 import AdminForgotPassword from "./pages/admin/auth/ForgotPassword"
@@ -39,6 +42,12 @@ const App = () => {
             </Routes>
             <Routes>
                 <Route path='/signup' element={<SignUp />} />
+            </Routes>
+            
+            
+            {/*Admin*/}
+            <Routes>
+                <Route path='/home-admin' element={<HomeAdmin />} />
             </Routes>
             <Routes>
                 <Route path='/sign-up' element={<AdminSignUp />} />
