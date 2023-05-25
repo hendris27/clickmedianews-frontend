@@ -1,6 +1,7 @@
 import Header from "../../components/Headers"
 import Footer from "../../components/Footers"
 
+import { Link } from "react-router-dom"
 import picture_category from "../../assets/img/articel.jpg"
 import home_main from "../../assets/img/picture_main_content.png"
 import picture_video from "../../assets/img/Video.png"
@@ -31,7 +32,9 @@ const Home = ()=> {
                             be afraid to express the facts. Be an author and share you 
                             prespective of something to the world.</div>
                                 <div className='bg-[#19A7CE] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center hover:bg-[#E5E5CB] '>
-                                    <button>Start Exploring</button>
+                                    <Link to='/writearticles'>
+                                        <button>Start Exploring</button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
