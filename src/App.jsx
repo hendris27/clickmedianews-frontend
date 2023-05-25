@@ -1,4 +1,4 @@
-import {  BrowserRouter, Routes, Route} from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Home from "./pages/users/Home"
 import SearchArticles from "./pages/users/SearchArticles"
@@ -22,22 +22,37 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home/>} />
+                <Route path='/' element={<Home />} />
             </Routes>
             <Routes>
-                <Route path='/searcharticles' element={<SearchArticles/>} />
+                <Route path='/searcharticles' element={<SearchArticles />} />
             </Routes>
             <Routes>
-                <Route path='/articles' element={<Articles/>} />
+                <Route path='/articles' element={<Articles />} />
             </Routes>
             <Routes>
-                <Route path='/forgotpassword' element={<ForgotPassword/>} />
+                <Route path='/forgotpassword' element={<ForgotPassword />} />
             </Routes>
             <Routes>
-                <Route path='/signin' element={<SignIn/>} />
+                <Route path='/signin' element={<SignIn />} />
             </Routes>
             <Routes>
-                <Route path='/signup' element={<SignUp/>} />
+                <Route path='/signup' element={<SignUp />} />
+            </Routes>
+            <Routes>
+                <Route path='/sign-up' element={<AdminSignUp />} />
+            </Routes>
+            <Routes>
+                <Route path='/sign-in' element={<AdminSignIn />} />
+            </Routes>
+            <Routes>
+                <Route path='/forgot-password' element={<AdminForgotPassword />} />
+            </Routes>
+            <Routes>
+                <Route path='/reset-password' element={<AdminResetPassword />} />
+            </Routes>
+            <Routes>
+                <Route path='/reset-success' element={<AdminResetSuccess />} />
             </Routes>
             <Routes>
                 <Route path='/sign-up' element={<AdminSignUp/>} />
@@ -55,7 +70,7 @@ const App = () => {
                 <Route path='/reset-success' element={<AdminResetSuccess/>} />
             </Routes>
         </BrowserRouter>
-    
+
     )
 }
 export default App

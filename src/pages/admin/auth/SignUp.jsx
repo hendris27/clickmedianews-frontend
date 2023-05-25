@@ -20,7 +20,7 @@ function signUp () {
                         <h1 className='text-[50px] text-center mt-[-15px] mr-[250px] text-white font-bold'>News</h1>
                         <h1 className='text-[18px] text-center mb-[-10px] mr-[250px] text-white'>clicknews@mail.com</h1>
                         <h1 className='text-[14px] text-center mt-[70px] mr-[250px] text-white'>Already have an account ?</h1>
-                        <Link to='/sign-in'><button className='btn mt-[40px] ml-[-50px] rounded-md w-[300px] h-[40px] bg-[#0D253C] hover:bg-[#1c4e7d] text-white'>
+                        <button className='btn mt-[40px] ml-[-50px] rounded-md w-[300px] h-[40px] bg-[#0D253C] hover:bg-[#1c4e7d] text-white'>
                             Login Here
                         </button></Link>
                         <Link><h1 className='text-white mt-[70px] ml-[-150px]'>Why Click News</h1></Link>
@@ -48,7 +48,7 @@ function signUp () {
                         <h1 className='text-[16px] font-semibold mt-[15px] ml-[120px]'>Phone Number :</h1>
                         <input type='tel' name='tel' placeholder='enter your phone number' className='input mt-[10px] ml-[120px] p-2 border-2 border-slate-200 w-[320px] h-[40px] rounded-md max-w-xs' />
                     </div>
-                    <Link to='/sign-in'><button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
+                    <button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
                         Sign Up
                     </button></Link>
                     <h1 className='font-semibold mt-[20px] ml-[210px]'>OR SIGN UP WITH</h1>

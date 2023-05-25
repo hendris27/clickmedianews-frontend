@@ -44,7 +44,7 @@ const signIn = () => {
                         <h1 className='text-[16px] font-semibold mt-[15px] ml-[120px]'>Password :</h1>
                         <input type='password' name='password' placeholder='enter your password' className='input mt-[10px] ml-[120px] p-2 border-2 border-slate-200 w-[320px] h-[40px] rounded-md max-w-xs' />
                     </div>
-                    <Link to='/'><button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
+                    <button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
                             Sign In
                     </button></Link>
                     <h1 className='font-semibold mt-[20px] ml-[210px]'>OR SIGN IN WITH</h1>
