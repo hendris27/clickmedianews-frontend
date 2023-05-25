@@ -1,52 +1,18 @@
-import logoBrand from "../../assets/img/logo_brand.png"
-import Bell from "../../assets/img/bell.svg"
+import Header from "../../components/Headers"
+import picture_category from "../../assets/img/articel.jpg"
+
+
 import Category from "../../assets/img/category-image-2.png"
 import CategoryFade from "../../assets/img/category-image.png"
-import { FiSearch } from "react-icons/fi"
 import Filter from "../../assets/img/filter.png"
 import CategoryImage from  "../../assets/img/category-image-3.png"
 import Footer from "../../components/Footers"
-import Picture from "../../assets/img/picture_login.png"
-import { FiX } from "react-icons/fi"
 
 const Categories = () => {
     return (
         <>
             <div>
-                <div className='flex w-full justify-between items-center h-[112px] px-10'>
-                    <div><img src={logoBrand} className='w-32'/></div>
-                    <div>
-                        <nav>
-                            <ul className='flex gap-10 text-[20px] font-medium'>
-                                <li className='hover:text-black text-gray-500 cursor-pointer'>Home</li>
-                                <li className='hover:text-black text-gray-500 cursor-pointer'>Articles</li>
-                                <li className='hover:text-black text-gray-500 cursor-pointer'>Category</li>
-                                <li className='hover:text-black text-gray-500 cursor-pointer'>About</li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div>
-                        <div className='flex items-center gap-5'>
-                            <div className='relative'>
-                                <input type='text' className='max-w-[295px] h-[47px] border-2 px-8 rounded-2xl' placeholder='Search'/>
-                                <div className='absolute top-4 left-2'>
-                                    <FiSearch color='blue'/>
-                                </div>
-                                <div className='absolute top-4 right-2'>
-                                    <FiX color='blue'/>
-                                </div>
-                            </div>
-                            <div>
-                                <img src={Bell} className='w-6'/>
-                            </div>
-                            <div>
-                                <div className='rounded-full border-2 border-black overflow-hidden w-12 h-12'>
-                                    <img src={Picture} className='object-cover' />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div className='w-full relative'>
                     <div className='relative'>
                         <img src={Category} className='w-full'/>
@@ -118,7 +84,7 @@ const Categories = () => {
                     <img src={CategoryImage} />
                 </div>
             </div>
-            <div className='w-full flex justify-center text-gray-500'>
+
                 <p>We have no category left</p>
             </div>
             <Footer/>

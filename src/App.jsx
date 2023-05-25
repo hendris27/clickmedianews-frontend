@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/users/Home"
 import SearchArticles from "./pages/users/SearchArticles"
 import Articles from "./pages/users/Articles"
+import WriteArticles from "./pages/users/WriteArticle"
 import ForgotPassword from "./pages/users/auth/ForgotPassword"
 import ResetPassword from "./pages/users/auth/ResetPassword.jsx"
 import Notification from "./pages/users/Notification.jsx"
@@ -37,6 +38,9 @@ const App = () => {
                 <Route path='/articles' element={<Articles />} />
             </Routes>
             <Routes>
+                <Route path='/writearticles' element={<WriteArticles />} />
+            </Routes>
+            <Routes>
                 <Route path='/forgotpassword' element={<ForgotPassword />} />
             </Routes>
             <Routes>
@@ -49,8 +53,7 @@ const App = () => {
                 <Route path='/signup' element={<SignUp />} />
             </Routes>
             <Routes>
-                <Route path='/notification' element={<Notification />} />
-            </Routes>
+
             
             
             {/*Admin*/}
@@ -72,9 +75,7 @@ const App = () => {
             <Routes>
                 <Route path='/reset-success' element={<AdminResetSuccess />} />
             </Routes>
-            <Routes>
-                <Route path='/categories' element={<Categories/>} />
-            </Routes>
+           
         </BrowserRouter>
 
     )
