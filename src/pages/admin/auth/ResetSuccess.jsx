@@ -32,9 +32,9 @@ const resetSuccess = () => {
                     <div className='flex'>
                         <h1 className='text-slate-400 text-[18px] mt-[10px] ml-[200px]'>Please go back to sign in</h1>
                     </div>
-                    <button className='btn mt-[40px] ml-[140px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
+                    <Link to='/sign-in'><button className='btn mt-[40px] ml-[140px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
                             back to sign in
-                    </button>
+                    </button></Link>
                 </section>
             </div>
         </>

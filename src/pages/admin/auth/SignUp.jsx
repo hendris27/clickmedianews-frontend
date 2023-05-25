@@ -10,7 +10,7 @@ function signUp () {
             <div className='flex w-full h-full xl:h-screen'>
                 <section className='flex w-[600px] h-[100vh] md:flex max-sm:hidden bg-[#376AED]'>
                     <div className='flex gap-5 w-4/5'>
-                        <Link className='flex gap-5'>
+                        <Link to='/' className='flex gap-5'>
                             <img className='w-3 h-5 mt-6 ml-6' src={arrowLeft} alt='' />
                             <div className='font-bold mt-5 text-lg text-white'>Home Page</div>
                         </Link>
@@ -22,7 +22,7 @@ function signUp () {
                         <h1 className='text-[14px] text-center mt-[70px] mr-[250px] text-white'>Already have an account ?</h1>
                         <button className='btn mt-[40px] ml-[-50px] rounded-md w-[300px] h-[40px] bg-[#0D253C] hover:bg-[#1c4e7d] text-white'>
                             Login Here
-                        </button>
+                        </button></Link>
                         <Link><h1 className='text-white mt-[70px] ml-[-150px]'>Why Click News</h1></Link>
                         <Link><h1 className='text-white mt-[20px] ml-[-150px]'>Community</h1></Link>
                         <Link><h1 className='text-white mt-[-70px] ml-[200px]'>Be an Author</h1></Link>
@@ -50,7 +50,7 @@ function signUp () {
                     </div>
                     <button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
                         Sign Up
-                    </button>
+                    </button></Link>
                     <h1 className='font-semibold mt-[20px] ml-[210px]'>OR SIGN UP WITH</h1>
                     <Link><img className='w-[35px] mt-[20px] ml-[180px]' src={google} /></Link>
                     <Link><img className='w-[35px] mt-[-35px] ml-[260px]' src={facebook} /></Link>

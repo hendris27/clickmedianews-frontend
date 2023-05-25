@@ -57,11 +57,11 @@ const forgotPassword = () => {
                                             )}
                                         </div>
                                         <div>
-                                            <button className='btn bg-[#2d63eb] hover:bg-[#5c86f0] rounded-md w-full h-[30px] uppercase border-0 text-white'
+                                            <Link to='/reset-password'><button className='btn bg-[#2d63eb] hover:bg-[#5c86f0] rounded-md w-full h-[30px] uppercase border-0 text-white'
                                                 disabled={isSubmitting}
                                                 type='submit'>
                                                 Send Link
-                                            </button>
+                                            </button></Link>
                                             <button className='btn mt-3 bg-[#b9cbf8] rounded-md w-full h-[30px] uppercase border-0 text-white'
                                                 type='submit'>
                                                 Resend Link
