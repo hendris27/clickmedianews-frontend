@@ -12,9 +12,7 @@ const Categories = () => {
     return (
         <>
             <div>
-                <nav>
-                    <Header/>
-                </nav>
+
                 <div className='w-full relative'>
                     <div className='relative'>
                         <img src={Category} className='w-full'/>
@@ -86,7 +84,7 @@ const Categories = () => {
                     <img src={CategoryImage} />
                 </div>
             </div>
-            <div className='w-full flex justify-center text-gray-500 mb-8'>
+
                 <p>We have no category left</p>
             </div>
             <Footer/>
