@@ -10,7 +10,7 @@ const signIn = () => {
             <div className='flex w-full h-full xl:h-screen'>
                 <section className='flex w-[600px] h-[100vh] md:flex max-sm:hidden bg-[#376AED]'>
                     <div className='flex gap-5 w-4/5'>
-                        <Link to='/' className='flex gap-5'>
+                        <Link to='/home-admin' className='flex gap-5'>
                             <img className='w-3 h-5 mt-6 ml-6' src={arrowLeft} alt='' />
                             <div className='font-bold mt-5 text-lg text-white'>Home Page</div>
                         </Link>
@@ -45,9 +45,9 @@ const signIn = () => {
                         <input type='password' name='password' placeholder='enter your password' className='input mt-[10px] ml-[120px] p-2 border-2 border-slate-200 w-[320px] h-[40px] rounded-md max-w-xs' />
                     </div>
                     <Link>
-                    <button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
+                        <button className='btn mt-[40px] ml-[100px] rounded-xl w-[370px] h-[40px] bg-[#376AED] hover:bg-[#5c86f0] text-white'>
                             Sign In
-                    </button></Link>
+                        </button></Link>
                     <h1 className='font-semibold mt-[20px] ml-[210px]'>OR SIGN IN WITH</h1>
                     <Link><img className='w-[35px] mt-[20px] ml-[180px]' src={google} /></Link>
                     <Link><img className='w-[35px] mt-[-35px] ml-[260px]' src={facebook} /></Link>
