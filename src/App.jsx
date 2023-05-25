@@ -6,6 +6,7 @@ import Articles from "./pages/users/Articles"
 import ArticleView from "./pages/users/ArticleView.jsx"
 import WriteArticles from "./pages/users/WriteArticle"
 import ForgotPassword from "./pages/users/auth/ForgotPassword"
+import SavedArticle from "./pages/users/SavedArticle.jsx"
 import ResetPassword from "./pages/users/auth/ResetPassword.jsx"
 import Notification from "./pages/users/Notification.jsx"
 import Categories from "./pages/users/Categories"
@@ -37,6 +38,9 @@ const App = () => {
             </Routes>
             <Routes>
                 <Route path='/articles' element={<Articles />} />
+            </Routes>
+            <Routes>
+                <Route path='/savedarticle' element={<SavedArticle />} />
             </Routes>
             <Routes>
                 <Route path='/articleview' element={<ArticleView />} />
