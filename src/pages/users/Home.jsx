@@ -2,6 +2,7 @@ import Header from "../../components/Headers"
 import Footer from "../../components/Footers"
 
 import picture_category from "../../assets/img/articel.jpg"
+import home_main from "../../assets/img/picture_main_content.png"
 import picture_video from "../../assets/img/Video.png"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
@@ -9,25 +10,30 @@ import { BsFillBookmarkFill } from "react-icons/bs"
 
 const Home = ()=> {
     return <>
+       
         <div className='h-min-screen'>
             <nav>
                 <Header/>
             </nav>
             <main>
-                <div className='flex flex-col bg-gray-100 md:flex md:flex-row  bg-no-repeat bg-cover '>
-                    <div className='flex flex-col h-full  bg-gray-100 gap-8 pl-[136px] pt-[100px] pb-[70px] '>
-                        <div className='flex flex-col'>
-                            <div className='text-[65px] w-[668px] leading-[74px] '>Share Information</div>
-                            <div className='text-[65px] w-[668px] leading-[74px] '>and Educate People</div>
-                        </div>
-                        <div className='text-[20px] w-[608px] leading-[32px] '>Everyone has their point of view of something, but just don’t 
+                <div className='w-full relative'>
+                    <div className='relative'>
+                        <img src={home_main} className='w-full'/>
+                    </div>
+                    <div className='absolute top-0 left-0 flex flex-col  md:flex md:flex-row  bg-no-repeat bg-cover '>
+                        <div className='flex flex-col h-full  gap-8 pl-[136px] pt-[100px] pb-[70px] '>
+                            <div className='flex flex-col'>
+                                <div className='text-[65px] w-[668px] leading-[74px] '>Share Information</div>
+                                <div className='text-[65px] w-[668px] leading-[74px] '>and Educate People</div>
+                            </div>
+                            <div className='text-[20px] w-[608px] leading-[32px] '>Everyone has their point of view of something, but just don’t 
                             be afraid to express the facts. Be an author and share you 
                             prespective of something to the world.</div>
-                        <div className='bg-[#19A7CE] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center hover:bg-[#E5E5CB] '>
-                            <button>Start Exploring</button>
+                            <div className='bg-[#19A7CE] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center hover:bg-[#E5E5CB] '>
+                                <button>Start Exploring</button>
+                            </div>
                         </div>
                     </div>
-
                 </div>
                 <div className='flex flex-col bg-white px-[60px] pt-[60px] pb-[101px]  '>
                     <div className='flex flex-col gap-8'>
@@ -224,6 +230,7 @@ const Home = ()=> {
                 <Footer/>
             </footer>
         </div>
+       
     </> 
 }
 
