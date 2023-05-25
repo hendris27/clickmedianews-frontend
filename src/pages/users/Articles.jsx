@@ -8,7 +8,7 @@ import CategoryFade from "../../assets/img/category-image.png"
 import Filter from "../../assets/img/filter.png"
 import Footer from "../../components/Footers"
 
-const Categories = () => {
+const articles = () => {
     return (
         <>
             <div>
@@ -319,4 +319,4 @@ const Categories = () => {
     )
 }
 
-export default Categories
+export default articles
