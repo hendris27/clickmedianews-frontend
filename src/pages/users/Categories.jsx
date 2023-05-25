@@ -1,18 +1,18 @@
-import Header from "../../components/Headers"
-import picture_category from "../../assets/img/articel.jpg"
-
-
 import Category from "../../assets/img/category-image-2.png"
 import CategoryFade from "../../assets/img/category-image.png"
 import Filter from "../../assets/img/filter.png"
 import CategoryImage from  "../../assets/img/category-image-3.png"
 import Footer from "../../components/Footers"
+import Header from "../../components/Headers"
+
 
 const Categories = () => {
     return (
         <>
             <div>
-
+                <nav>
+                    <Header/>
+                </nav>
                 <div className='w-full relative'>
                     <div className='relative'>
                         <img src={Category} className='w-full'/>
@@ -84,7 +84,7 @@ const Categories = () => {
                     <img src={CategoryImage} />
                 </div>
             </div>
-
+            <div className='w-full flex justify-center text-gray-500'>
                 <p>We have no category left</p>
             </div>
             <Footer/>
