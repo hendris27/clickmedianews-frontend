@@ -42,13 +42,13 @@ const Header = () =>{
                        About
                     </a>
                 </div>
-                <div className='flex gap-4'>
-                    <div className='white flex border-2 rounded-xl px-6 items-center'>
+                <div className='flex gap-4 items-center'>
+                    <div className='bg-white flex border-2 rounded-xl px-6 items-center gap-2 h-12'>
                         <div>
                             <BsSearch size={25} color='#19A7CE'/>
                         </div>
                         <div>
-                            <input type='text' placeholder='Search ...' className='input  w-full max-w-xs outline-none hover:outline-none hover:border-0' />
+                            <input type='text' placeholder='Search ...' className='gap-3 h-11 w-full max-w-xs outline-none hover:outline-none hover:border-0' />
                         </div>
                         <div>
                             <button>  <MdOutlineClear size={25} color='#19A7CE'/></button>
