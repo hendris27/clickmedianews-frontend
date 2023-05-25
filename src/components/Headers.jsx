@@ -1,19 +1,11 @@
 import { Link } from "react-router-dom"
 import logoBrand from "../assets/img/logo_brand.png"
+import profile from "../assets/img/picture_login.png"
 // import defaultProfile from "../assets/img/default_picture.jpg"
 
-import { MdDensitySmall } from "react-icons/md"
+import { MdDensitySmall, MdNotificationsNone, MdOutlineClear} from "react-icons/md"
+import { BsSearch } from "react-icons/bs"
 
-import { FiUser, FiUnlock, FiLogOut } from "react-icons/fi"
-import {
-    AiFillCreditCard,
-    AiFillEdit,
-    AiOutlinePlusCircle,
-    AiOutlineUnorderedList,
-    AiOutlineHeart,
-    AiOutlineSetting,
-    
-}from "react-icons/ai"
 
 const Header = () =>{
 
@@ -50,8 +42,28 @@ const Header = () =>{
                        About
                     </a>
                 </div>
+                <div className='flex gap-4'>
+                    <div className='white flex border-2 rounded-xl px-6 items-center'>
+                        <div>
+                            <BsSearch size={25} color='#19A7CE'/>
+                        </div>
+                        <div>
+                            <input type='text' placeholder='Search ...' className='input  w-full max-w-xs outline-none hover:outline-none hover:border-0' />
+                        </div>
+                        <div>
+                            <button>  <MdOutlineClear size={25} color='#19A7CE'/></button>
+                        </div>
+                        
+                    </div>
+                    <div className='flex items-center'>
+                        <MdNotificationsNone size={25} color='#19A7CE'/>
+                    </div>
+                    <div className='p-2'><div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
+                        <img className='objcet-cover h-full w-full' src={profile} alt='' />
+                    </div></div>
+                </div>
                 <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
-                    <div className='bg-[#19A7CE] rounded-[5px] w-20 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
+                    <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
                         <button className='btn btn-primary text-white w-full h-[20px] '>
                             <Link
                                 to='/signup'
@@ -113,128 +125,31 @@ const Header = () =>{
                   
                 ) : ( */}
                 {/* <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
-                        <div>
+                    <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
+                        <button className='btn btn-primary text-white w-full h-[20px] '>
                             <Link
-                                to='/Login'
-                                className='hover:text-[#19A7CE] font-bold'
+                                to='/signup'
+                                className='font-bold'
                             >
-                                Log In
-                            </Link>
-                        </div>
-                        <div>
-                            <button className='btn btn-primary text-white w-full h-[20px]'>
-                                <Link
-                                    to='/Register'
-                                    className='hover:text-[#19A7CE] font-bold'
-                                >
                                     Sign Up
-                                </Link>
-                            </button>
-                        </div>
+                            </Link>
+                        </button>
                     </div>
-                )} */}
+                    <div>
+                        <Link
+                            to='/signin'
+                            className='hover:text-[#19A7CE] font-bold'
+                        >
+                                Log In
+                        </Link>
+                    </div>
+                </div> */}
 
                 
                  
                 <div className='dropdown dropdown-end md:hidden'>
                     <label tabIndex={0} className='btn m-1 bg-[#0E8388]'> <MdDensitySmall size={25} /></label>
-                    <ul tabIndex={0} className='dropdown-content menu p-2 shadow bg-gray-300 rounded-box w-52'>
-                        <li><a>
-                            <div className='flex gap-4'>
-                                <div>
-                                    <FiUser color='#0E8388' size={25} />
-                                </div>
-                                <div>
-                                    <Link to='/Profil'className='font-bold hover:text-[#0E8388]'>
-                                    Profile
-                                    </Link>
-                                </div>
-                            </div>    
-                        </a></li>
-                        <li><a>
-                            <div className='flex gap-4'>
-                                <div>
-                                    <AiFillCreditCard color='#19A7CE' size={25} />
-                                </div>
-                                <div>Card</div>
-                            </div>
-                        </a></li>
-                        <li><a>
-                            <div className='flex gap-4'>
-                                <div>
-                                    <AiFillEdit color='#19A7CE' size={25} />
-                                </div>
-                                <div>
-                                    <Link to='/Profil'className='hover:text-[#0E8388] hover:text-[17px]'
-                                    > Edit Profile </Link>
-                                </div>
-                            </div>
-                        </a></li>
-                        <li><a>
-                            <div className='flex gap-4'>
-                                <div>
-                                    <FiUnlock color='#19A7CE' size={25} />
-                                </div>
-                                <div>
-                                    <Link to='/ChangePassword' className='hover:text-[#0E8388] hover:text-[17px]'>
-                                     Change Password
-                                    </Link>
-                                </div>
-                            </div>
-                        </a></li>
-                        <li><a>
-                            <div className='flex gap-4'>
-                                <div>
-                                    <AiOutlinePlusCircle color='#19A7CE' size={25} />
-                                </div>
-                                <Link
-                                    to='/ManageEvent'
-                                    className='hover:text-[#0E8388] hover:text-[17px]' >
-                                 Create Event
-                                </Link>
-                            </div>
-                        </a></li>
-                        <li><a>
-                            <div>
-                                <AiOutlineUnorderedList color='#19A7CE' size={25} />
-                            </div>
-                            <Link
-                                to='/MyBooking'
-                                className='hover:text-[#0E8388] hover:text-[17px]' >
-                                 My Booking
-                            </Link>
-                        </a></li>
-                        <li><a>
-                            <div>
-                                <AiOutlineHeart color='#19A7CE' size={25} />
-                            </div>
-                            <Link
-                                to='/MyWishlist'
-                                className='hover:text-[#0E8388] hover:text-[17px]'
-                            >
-                        My Wishlist
-                            </Link>
-                        </a></li>
-                        <li><a>
-                            <div>
-                                <AiOutlineSetting color='#19A7CE' size={25} />
-                            </div>
-                            <Link
-                                to='/MyWishlist'
-                                className='hover:text-[#0E8388] hover:text-[17px]'
-                            >
-                       Settings
-                            </Link>
-                        </a></li>
-                        <li><a>
-                            <div className='flex'>
-                                <div>
-                                    <FiLogOut color='red' size={25} />
-                                </div>
-                                <div  className='text-[#ff0000] font-bold'>Logout</div>
-                            </div> 
-                        </a></li>
-                    </ul>
+                    
                 </div>
                 
             </header>
