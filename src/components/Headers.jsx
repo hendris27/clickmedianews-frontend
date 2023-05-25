@@ -54,7 +54,7 @@ const Header = () =>{
                     <div className='bg-[#19A7CE] rounded-[5px] w-20 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
                         <button className='btn btn-primary text-white w-full h-[20px] '>
                             <Link
-                                to='/signUp'
+                                to='/signup'
                                 className='font-bold'
                             >
                                     Sign Up
@@ -63,7 +63,7 @@ const Header = () =>{
                     </div>
                     <div>
                         <Link
-                            to='/login'
+                            to='/signin'
                             className='hover:text-[#19A7CE] font-bold'
                         >
                                 Log In
