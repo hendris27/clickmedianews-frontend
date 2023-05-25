@@ -6,7 +6,7 @@ import {FcGoogle} from "react-icons/fc"
 import {FaFacebook} from "react-icons/fa"
 import {FaTwitter} from "react-icons/fa"
 
-function SignIn() {
+function SignUp() {
     const validationSchema = Yup.object({
         email: Yup.string().required("Email is empty !"),
         password: Yup.string().required("Password is empty !"),
@@ -121,4 +121,4 @@ function SignIn() {
     )
 }
 
-export default SignIn
+export default SignUp
