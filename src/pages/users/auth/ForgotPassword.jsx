@@ -11,7 +11,7 @@ function ForgotPassword() {
     return (
         <Fragment>
             <div className='flex w-full h-full xl:h-screen'>
-                <div className="hidden md:flex flex-1 bg-[url('/src/assets/img/image.png')] bg-cover bg-bottom bg-no-repeat"></div>
+                <div className="hidden md:flex flex-1 bg-[url('/src/assets/img/forgot-image.png')] bg-cover bg-bottom bg-no-repeat"></div>
                 <div className='flex flex-col flex-1 bg-white gap-10 pt-10 h-screen md:h-full'>
                     <div className='flex items-center flex-col justify-center gap-10 h-screen'>
                         <div className='flex gap-4 w-4/5'>
