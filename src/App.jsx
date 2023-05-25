@@ -4,6 +4,7 @@ import Home from "./pages/users/Home"
 import SearchArticles from "./pages/users/SearchArticles"
 import Articles from "./pages/users/Articles"
 import ForgotPassword from "./pages/users/auth/ForgotPassword"
+import Categories from "./pages/users/Categories"
 import SignIn from "./pages/users/auth/SignIn"
 import SignUp from "./pages/users/auth/SignUp"
 
@@ -36,6 +37,9 @@ const App = () => {
             </Routes>
             <Routes>
                 <Route path='/signup' element={<SignUp/>} />
+            </Routes>
+            <Routes>
+                <Route path='/categories' element={<Categories/>} />
             </Routes>
         </BrowserRouter>
     
