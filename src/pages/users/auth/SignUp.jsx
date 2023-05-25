@@ -1,5 +1,6 @@
 function SignUp() {
-    return <></>
+    return <>
+        <div>sigup</div></>
 }
 
 export default SignUp

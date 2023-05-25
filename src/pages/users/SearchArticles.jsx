@@ -2,7 +2,7 @@ const searchArticles = ()=>{
 
     return (
         <>
-            <div>ini seacrh</div>
+            <div className='h-screen'></div>
         </>
     )
 
