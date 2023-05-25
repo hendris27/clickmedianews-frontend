@@ -1,8 +1,8 @@
-import Header from "../components/Headers"
-import Footer from "../components/Footers"
+import Header from "../../components/Headers"
+import Footer from "../../components/Footers"
 
-import picture_category from "../assets/img/articel.jpg"
-import picture_video from "../assets/img/Video.png"
+import picture_category from "../../assets/img/articel.jpg"
+import picture_video from "../../assets/img/Video.png"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 
