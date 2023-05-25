@@ -19,7 +19,7 @@ const forgotPassword = () => {
                 <div className='flex flex-col flex-1 bg-white gap-10 pt-10 h-screen md:h-full'>
                     <div className='flex items-center flex-col justify-center gap-10 h-screen'>
                         <div className='flex gap-5 w-4/5'>
-                            <Link className='flex gap-5' to>
+                            <Link to='/sign-in' className='flex gap-5' to>
                                 <img className='w-3 h-5' src={arrowLeft} />
                                 <div className='font-bold mt-[-5px] text-lg text-black'>Back</div>
                             </Link>
@@ -57,11 +57,11 @@ const forgotPassword = () => {
                                             )}
                                         </div>
                                         <div>
-                                            <button className='btn bg-[#2d63eb] hover:bg-[#5c86f0] rounded-md w-full h-[30px] uppercase border-0 text-white'
+                                            <Link to='/reset-password'><button className='btn bg-[#2d63eb] hover:bg-[#5c86f0] rounded-md w-full h-[30px] uppercase border-0 text-white'
                                                 disabled={isSubmitting}
                                                 type='submit'>
                                                 Send Link
-                                            </button>
+                                            </button></Link>
                                             <button className='btn mt-3 bg-[#b9cbf8] rounded-md w-full h-[30px] uppercase border-0 text-white'
                                                 type='submit'>
                                                 Resend Link
