@@ -11,7 +11,7 @@ const Header = () =>{
 
     return (
         <>
-            <header className='flex justify-between items-center bg-white px-[50px] w-full fixed z-10'>
+            <header className='flex justify-between items-center bg-white px-[50px] w-full fixed z-10 border-b-4'>
                 <div className='h-[60px] w-[140px] flex items-center justify-center'>
                     <Link to='/' className='hover:text-[#19A7CE] font-bold h-full w-full'>
                         <img src={logoBrand} alt='logo' />
@@ -19,7 +19,7 @@ const Header = () =>{
                 </div>
              
                 <div className='flex font-bold gap-12 hidden md:flex md:block'>
-                    <Link to='/' className='hover:text-[#19A7CE] font-bold'>
+                    <Link to='/home-admin' className='hover:text-[#19A7CE] font-bold'>
                         Home
                     </Link>
                     <Link
