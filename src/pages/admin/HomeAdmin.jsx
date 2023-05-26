@@ -1,4 +1,4 @@
-import Header from "../../components/Headers"
+import HeaderAdmin from "../../components/HeadersAdmin"
 import Footer from "../../components/Footers"
 
 import { Link } from "react-router-dom"
@@ -15,7 +15,7 @@ const Home = ()=> {
        
             <div className='h-min-screen'>
                 <nav>
-                    <Header/>
+                    <HeaderAdmin/>
                 </nav>
                 <main>
                     <div className='w-full relative'>
