@@ -10,6 +10,7 @@ import SavedArticle from "./pages/users/SavedArticle.jsx"
 import ResetPassword from "./pages/users/auth/ResetPassword.jsx"
 import Notification from "./pages/users/Notification.jsx"
 import Categories from "./pages/users/Categories"
+import Profile from "./pages/users/Profile"
 import SignIn from "./pages/users/auth/SignIn"
 import SignUp from "./pages/users/auth/SignUp"
 
@@ -36,6 +37,9 @@ const App = () => {
             </Routes>
             <Routes>
                 <Route path='/searcharticles' element={<SearchArticles />} />
+            </Routes>
+            <Routes>
+                <Route path='/profile' element={<Profile />} />
             </Routes>
             <Routes>
                 <Route path='/articles' element={<Articles />} />
