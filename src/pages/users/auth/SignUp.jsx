@@ -6,6 +6,7 @@ import {FcGoogle} from "react-icons/fc"
 import {FaFacebook} from "react-icons/fa"
 import {FaTwitter} from "react-icons/fa"
 import Footer from "../../../components/Footers"
+import ScrollToTop from "../../components/ScrollToTop"
 
 function SignUp() {
     const validationSchema = Yup.object({
@@ -100,6 +101,7 @@ function SignUp() {
                 </div>
             </div>
             <Footer/>
+            <ScrollToTop/>
         </Fragment>
     )
 }
