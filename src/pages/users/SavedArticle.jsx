@@ -15,7 +15,7 @@ function SavedArticle(){
             <div>
                 <Header/>
                 <div className='pt-20'>
-                    <div className='flex h-auto border-t-2'>
+                    <div className='flex h-auto'>
                         <div className='max-w-[500px] border-r-2 p-20 flex flex-col gap-10'>
                             <div>
                                 <p className='text-[24px] font-bold'>Profile</p>
@@ -73,13 +73,14 @@ function SavedArticle(){
                                     <div className='font-bold'>Help</div>
                                     <div><IoIosArrowForward/></div>
                                 </Link>
-                                <Link className='flex justify-center items-center border-none p-3 rounded-2xl bg-blue-600 text-white hover:text-blue-600'>
+                                <Link className='flex justify-center items-center border-none p-3 rounded-2xl bg-blue-600 text-white'>
                                     <div className='font-bold'>Logout</div>
                                 </Link>
                             </div>
                         </div>
-                        <div className='flex flex-1'>
-                            <div>
+                        <div className='flex flex-col flex-1 items-center mt-20 gap-10'>
+                            <div className='text-[#3366FF] text-2xl font-bold'>Saved Post</div>
+                            <div className='w-full flex flex-wrap gap-5 justify-center'>
                                 <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
                                     <div>
                                         <div className='flex gap-5'>
