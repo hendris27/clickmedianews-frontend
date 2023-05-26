@@ -1,6 +1,6 @@
 import Header from "../../components/Headers"
 import Footer from "../../components/Footers"
-
+import ScrollToTop from "../../components/ScrollToTop"
 import { Link } from "react-router-dom"
 import picture_category from "../../assets/img/articel.jpg"
 import home_main from "../../assets/img/picture_main_content.png"
@@ -234,7 +234,7 @@ const Home = ()=> {
                     <Footer/>
                 </footer>
             </div>
-       
+            <ScrollToTop/>
         </> 
     )
     

@@ -1,8 +1,7 @@
 import Header from "../../components/Headers"
 import picture_category from "../../assets/img/articel.jpg"
 import { Link } from "react-router-dom"
-
-
+import ScrollToTop from "../../components/ScrollToTop"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import Articles from "../../assets/img/picture_articles.png"
@@ -319,6 +318,7 @@ const articles = () => {
             <footer>
                 <Footer/>
             </footer>
+            <ScrollToTop/>
         </>
     )
 }
