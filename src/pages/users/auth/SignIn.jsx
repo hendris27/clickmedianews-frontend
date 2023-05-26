@@ -5,6 +5,7 @@ import * as Yup from "yup"
 import {FcGoogle} from "react-icons/fc"
 import {FaFacebook} from "react-icons/fa"
 import {FaTwitter} from "react-icons/fa"
+import ScrollToTop from "../../../components/ScrollToTop"
 import Footer from "../../../components/Footers"
 
 
@@ -85,6 +86,7 @@ function SignIn() {
                 </div>
             </div>
             <Footer/>
+            <ScrollToTop/>
         </Fragment>
     )
 }

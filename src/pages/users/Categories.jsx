@@ -4,6 +4,7 @@ import Filter from "../../assets/img/filter.png"
 import CategoryImage from  "../../assets/img/category-image-3.png"
 import Footer from "../../components/Footers"
 import Header from "../../components/Headers"
+import ScrollToTop from "../../components/ScrollToTop"
 
 
 const Categories = () => {
@@ -88,6 +89,7 @@ const Categories = () => {
                 <p>We have no category left</p>
             </div>
             <Footer/>
+            <ScrollToTop/>
         </>
     )
 }
