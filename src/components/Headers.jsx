@@ -56,12 +56,42 @@ const Header = () =>{
                         </div>
                         
                     </div>
-                    <div className='flex items-center'>
-                        <MdNotificationsNone size={25} color='#19A7CE'/>
+                    <div className='dropdown dropdown-bottom dropdown-end'>
+                        <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#19A7CE'/></label>
+                        <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[400px] px-2s flex flex-col items-center justify-between '>
+                            <li><a className='hover:bg-white'>
+                                <div className='flex gap-8'>
+                                    <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
+                                        <img className='objcet-cover h-full w-full' src={profile} alt='' />
+                                    </div>
+                                    <div className='flex flex-col'>
+                                        <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
+                                        <div>2m ago</div>
+                                    </div>
+                                </div>    
+                            </a></li>
+                            <li><a className='hover:bg-white'>
+                                <div className='flex gap-8'>
+                                    <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
+                                        <img className='objcet-cover h-full w-full' src={profile} alt='' />
+                                    </div>
+                                    <div className='flex flex-col'>
+                                        <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
+                                        <div>2m ago</div>
+                                    </div>
+                                </div>    
+                            </a></li>
+                            <div className='border-b-2 w-full hover:bg-white'></div>
+                            <li className='font-bold text-primary'><a className='hover:bg-white hover:text-black'>See More</a></li>
+                        </ul>
                     </div>
-                    <div className='p-2'><div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
-                        <img className='objcet-cover h-full w-full' src={profile} alt='' />
-                    </div></div>
+
+
+                    <div className='p-2'>
+                        <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
+                            <img className='objcet-cover h-full w-full' src={profile} alt='' />
+                        </div>
+                    </div>
                 </div>
                 <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
                     <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
