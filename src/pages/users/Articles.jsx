@@ -1,5 +1,7 @@
 import Header from "../../components/Headers"
 import picture_category from "../../assets/img/articel.jpg"
+import { Link } from "react-router-dom"
+
 
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
@@ -305,9 +307,11 @@ const articles = () => {
                 </div>
                 <div className='flex items-center justify-center'>
                     <div className='pt-12 w-[816px] h-[118px] '>
-                        <button className='btn bg-blue-100 text-[#19A7CE] font-bold h-full w-full border-0  hover:bg-[#19A7CE] hover:text-white'>
+                        <Link to='/categoryarticles'>
+                            <button className='btn bg-blue-100 text-[#19A7CE] font-bold h-full w-full border-0  hover:bg-[#19A7CE] hover:text-white'>
                           Load another 30+ category
-                        </button>
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
