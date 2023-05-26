@@ -13,13 +13,14 @@ import Categories from "./pages/users/Categories"
 import SignIn from "./pages/users/auth/SignIn"
 import SignUp from "./pages/users/auth/SignUp"
 
-{/*Admin*/}
+{/*Admin*/ }
 import HomeAdmin from "./pages/admin/HomeAdmin"
 import AdminSignUp from "./pages/admin/auth/SignUp"
 import AdminSignIn from "./pages/admin/auth/SignIn"
 import AdminForgotPassword from "./pages/admin/auth/ForgotPassword"
 import AdminResetPassword from "./pages/admin/auth/ResetPassword"
 import AdminResetSuccess from "./pages/admin/auth/ResetSuccess"
+import EditProfile from "./pages/admin/EditProfile"
 
 
 // import { Provider } from "react-redux"
@@ -67,8 +68,8 @@ const App = () => {
                 <Route path='/categories' element={<Categories />} />
             </Routes>
 
-            
-            
+
+
             {/*Admin*/}
             <Routes>
                 <Route path='/home-admin' element={<HomeAdmin />} />
@@ -88,7 +89,9 @@ const App = () => {
             <Routes>
                 <Route path='/reset-success' element={<AdminResetSuccess />} />
             </Routes>
-           
+            <Routes>
+                <Route path='/edit-profile' element={<EditProfile />} />
+            </Routes>
         </BrowserRouter>
 
     )
