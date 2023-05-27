@@ -1,13 +1,38 @@
 import { Link } from "react-router-dom"
 import logoBrand from "../assets/img/logo_brand.png"
-import profile from "../assets/img/picture_login.png"
+// import profile from "../assets/img/picture_login.png"
 // import defaultProfile from "../assets/img/default_picture.jpg"
 
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear} from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
-
+import React from "react"
+import http from "../helpers/http"
+import { useNavigate } from "react-router-dom"
+import { logout as logoutAction } from "../redux/reducers/auth"
+import { useDispatch, useSelector } from "react-redux"
 
 const Header = () =>{
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [profile, setProfile] = React.useState({})
+    const token = useSelector((state) => state.auth.token)   
+  
+
+    React.useEffect(() => {
+        async function getProfileData() {
+            const { data } = await http(token).get("/profile")
+            setProfile(data.results)
+        }
+        getProfileData()
+    }, [])
+
+    const doLogout = () => {
+        const confirmed = window.confirm("Are you sure you want to logout?")
+        if (confirmed) {
+            dispatch(logoutAction())
+            navigate("/signin")
+        }
+    }
 
     return (
         <>
@@ -56,54 +81,10 @@ const Header = () =>{
                         </div>
                         
                     </div>
-                    <div className='dropdown dropdown-bottom dropdown-end'>
-                        <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#19A7CE'/></label>
-                        <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[400px] px-2s flex flex-col items-center justify-between '>
-                            <li><a className='hover:bg-white'>
-                                <div className='flex gap-8'>
-                                    <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
-                                        <img className='objcet-cover h-full w-full' src={profile} alt='' />
-                                    </div>
-                                    <div className='flex flex-col'>
-                                        <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
-                                        <div>2m ago</div>
-                                    </div>
-                                </div>    
-                            </a></li>
-                            <li><a className='hover:bg-white'>
-                                <div className='flex gap-8'>
-                                    <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
-                                        <img className='objcet-cover h-full w-full' src={profile} alt='' />
-                                    </div>
-                                    <div className='flex flex-col'>
-                                        <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
-                                        <div>2m ago</div>
-                                    </div>
-                                </div>    
-                            </a></li>
-                            <div className='border-b-2 w-full hover:bg-white'></div>
-                            <li className='font-bold text-primary'><a className='hover:bg-white hover:text-black'>See More</a></li>
-                        </ul>
-                    </div>
-
-                    <div className='dropdown dropdown-bottom dropdown-end'>
-                        <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> 
-                            <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
-                                <img className='objcet-cover h-full w-full' src={profile} alt='' />
-                            </div>
-                        </label>
-                        <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
-                            <li><a className='hover:bg-white'>
-                                <Link to='/edit-profile'>
-                                    <div className='font-bold text-medium hover:text-primary'> See Profile</div> 
-                                </Link>   
-                            </a></li>
-                            <div className='border-b-2 w-full hover:bg-white'></div>
-                            <li className='font-bold text-primary'><a className='hover:bg-white hover:text-red-500'>Log Out</a></li>
-                        </ul>
-                    </div>
                 </div>
-                <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
+                
+               
+                {/* <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
                     <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
                         <button className='btn btn-primary normal-case text-white w-full h-[20px] '>
                             <Link
@@ -122,70 +103,84 @@ const Header = () =>{
                                 Log In
                         </Link>
                     </div>
-                </div>
+                </div> */}
                 
 
-                {/* {token ? (
+                {token ? (
                     
-                    <div className='hidden md:block flex justify-center items-center'>
-                        <button
-                            className='flex justify-center items-center'
-                        >
-                            {profile?.picture && (
-                                <img
-                                    className='object-cover w-full h-full' src={
-                                        profile?.picture?.startsWith("https") ? 
-                                            profile.picture : (profile?.picture === null ?
-                                                defaultProfile : `http://${import.meta.env.VITE_BACKEND_URL}/uploads/${profile?.
-                                                    picture}`)} alt='profile'/>
-                            )}
-                            <div className='flex dropdown dropdown-bottom dropdown-end bg-white hover:bg-white'>
-                 
-                                <label tabIndex={0} className='hover:bg-white border-0 btn m-1 bg-transparent gap-2 flex justify-center items-center text-black'>
-                                    <div> {profile?.fullName}</div>
-                                    <AiFillCaretDown color='red'/>
-
+                    <div className='flex justify-center items-center'>
+                        <div className='dropdown dropdown-bottom dropdown-end'>
+                            <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#19A7CE'/></label>
+                            <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[400px] px-2s flex flex-col items-center justify-between '>
+                                <li><a className='hover:bg-white'>
+                                    <div className='flex gap-8'>
+                                        <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
+                                            <img className='object-cover h-full w-full' src={profile} alt='' />
+                                        </div>
+                                        <div className='flex flex-col'>
+                                            <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
+                                            <div>2m ago</div>
+                                        </div>
+                                    </div>    
+                                </a></li>
+                                <li><a className='hover:bg-white'>
+                                    <div className='flex gap-8'>
+                                        <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
+                                            <img className='obj ct-cover h-full w-full' src={profile} alt='' />
+                                        </div>
+                                        <div className='flex flex-col'>
+                                            <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
+                                            <div>2m ago</div>
+                                        </div>
+                                    </div>    
+                                </a></li>
+                                <div className='border-b-2 w-full hover:bg-white'></div>
+                                <li className='font-bold text-primary'><a className='hover:bg-white hover:text-black'>See More</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div className='dropdown dropdown-bottom dropdown-end'>
+                                <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> 
+                                    <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
+                                        <img className='objcet-cover h-full w-full' src={profile} alt='' />
+                                    </div>
                                 </label>
-                                <ul tabIndex={0} className='dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52'>
-                                    <Link to='/Profil'>
-                                        <li><a className='font-bold'>See Profil</a></li>
-                                    </Link>
-                                    <li><a>
-                                        <div className='flex'>
-                                            <div>
-                                                <FiLogOut color='red' size={25} />
-                                            </div>
-                                            <div onClick={doLogout} className='text-[#ff0000] font-bold'>Logout</div>
-                                        </div> 
+                                <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
+                                    <li><a className='hover:bg-white'>
+                                        <Link to='/edit-profile'>
+                                            <div className='font-bold text-medium hover:text-primary'> See Profile</div> 
+                                        </Link>   
                                     </a></li>
+                                    <div className='border-b-2 w-full hover:bg-white'></div>
+                                    <li className='font-bold text-primary'><a className='hover:bg-white hover:text-red-500'>
+                                        <div onClick={doLogout} className='text-[#ff0000] font-bold'>Logout</div></a></li>
                                 </ul>
                             </div>
-                        </button>
-
+                        </div>
                     </div>
                   
-                ) : ( */}
-                {/* <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
-                    <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
-                        <button className='btn btn-primary text-white w-full h-[20px] '>
-                            <Link
-                                to='/signup'
-                                className='font-bold'
-                            >
+                ) : (
+                    <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
+                        <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
+                            <button className='btn btn-primary text-white w-full h-[20px] '>
+                                <Link
+                                    to='/signup'
+                                    className='font-bold'
+                                >
                                     Sign Up
-                            </Link>
-                        </button>
-                    </div>
-                    <div>
-                        <Link
-                            to='/signin'
-                            className='hover:text-[#19A7CE] font-bold'
-                        >
+                                </Link>
+                            </button>
+                        </div>
+                        <div>
+                            <Link
+                                to='/signin'
+                                className='hover:text-[#19A7CE] font-bold'
+                            >
                                 Log In
-                        </Link>
-                    </div>
-                </div> */}
-
+                            </Link>
+                        </div>
+                    </div> 
+                )}
                 
                  
                 <div className='dropdown dropdown-end md:hidden'>
