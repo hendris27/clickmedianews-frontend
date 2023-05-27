@@ -2,10 +2,28 @@ import Header from "../../components/Headers.jsx"
 import divider from "../../assets/img/Divider.png"
 import Picture from "../../assets/img/picture_login.png"
 import Footer from "../../components/Footers.jsx"
+import React from "react"
 import { IoIosArrowForward } from "react-icons/io"
 import { Link } from "react-router-dom"
 
 const EditProfile = () => {
+    const [selectedPicture, setSelectedPicture] = React.useState(false)
+    const [pictureURL, setSelectedURL] = React.useState ("")
+
+    const fileToDataUrl = (file) => {
+        const reader = new FileReader()
+        reader. addEventListener("load", () => {
+            setSelectedURL(reader.result)
+        })
+        reader.readAsDataURL(file)
+    }
+    const changePicture = (e) => {
+        const file = e.target.files[0]
+        setSelectedPicture(file)
+        fileToDataUrl(file)
+    }
+    setSelectedPicture(false)
+    
     return(
         <>
             <div className='flex h-min-screen'>
@@ -77,11 +95,14 @@ const EditProfile = () => {
                 <div className='flex'>
                     <div className='border-2 rounded-3xl border-blue-500 h-[120px] w-[120px] mt-[120px] ml-[300px] p-1'>
                         <div className='rounded-3xl h-[110px] w-[110px] border-2 border-gray-50 overflow-hidden'>
-                            <img src={Picture} className='object-cover' />
+                            {!selectedPicture && <img src={pictureURL} className='object-cover' />}
                         </div>
                     </div>
                     <Link><h1 className='text-[16px] mt-[110px] ml-[100px] text-[#376AED] font-semibold'>save changes</h1></Link>
-                    <Link><h1 className='text-[16px] mt-[250px] ml-[-340px] text-[#376AED]'>Choose profile picture</h1></Link>
+                    <label className='text-[16px] mt-[250px] ml-[-340px] text-[#376AED]'>
+                        <span>Choose profile picture</span>
+                        <input name='picture' onChange={changePicture} className='hidden' type='file' />
+                    </label>
                     
                 </div>
                 <div className='mt-[300px] ml-[-700px]'>
