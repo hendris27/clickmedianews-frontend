@@ -2,6 +2,7 @@ import Category from "../../assets/img/category-image-2.png"
 import CategoryFade from "../../assets/img/category-image.png"
 import Filter from "../../assets/img/filter.png"
 import CategoryImage from  "../../assets/img/category-image-3.png"
+import { BsFillPlusSquareFill } from "react-icons/bs"
 import Footer from "../../components/Footers"
 import Header from "../../components/Headers"
 import ScrollToTop from "../../components/ScrollToTop"
@@ -28,6 +29,10 @@ const Categories = () => {
                 </div>
             </div>
             <div className='p-20'>
+                <div className='w-full h-full flex justify-end pb-3 cursor-pointer'>
+                    <BsFillPlusSquareFill size={30} color='#5282FF' />
+                    <p className='ml-3 text-[18px]'>Add Categories</p>
+                </div>
                 <div className='w-full flex justify-between'>
                     <div className='flex gap-5'>
                         <img src={Filter} className='w-6'/>
@@ -49,48 +54,141 @@ const Categories = () => {
                     <button>Click the category to explore articles</button> 
                 </Link>
             </div>
-            <div className='p-24 flex flex-wrap gap-16'>
+            <div className='p-10 flex flex-wrap gap-5'>
                 <div className='flex flex-col items-center'>
-                    <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
                         <img src={CategoryImage} />
                     </div>
-                    <div className='font-bold'>Health</div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} /> 
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='absolute mt-10'>
+                        <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
+                        <h1 className='text-white text-center font-medium text-[20px]'>Articles</h1>
+                        <button className='btn opacity-75 text-white font-light mt-6'>Delete</button>
+                    </div>
+                    <div className='font-semibold'>Health</div>
                 </div>
             </div>
-            <div className='w-full flex justify-center text-gray-500'>
+            <div className='w-full flex justify-center text-gray-500 p-6'>
                 <p>We have no category left</p>
             </div>
             <Footer/>
