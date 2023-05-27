@@ -33,7 +33,7 @@ function SignIn() {
                                         <div className='text-[36px] font-bold'>Login</div>
                                         <div>
                                             <label htmlFor='email' className='font-bold'>Email address :</label>
-                                            <input type='email' id='email' name='email' placeholder='Enter your email address' className='input input-bordered w-full max-w-xs mt-2 mb-2' onChange={handleChange} onBlur={handleBlur} value={values.email}/>
+                                            <input type='email' id='email' name='email' placeholder='Enter your email address' className='input input-bordered w-full max-w-md mt-2 mb-2' onChange={handleChange} onBlur={handleBlur} value={values.email}/>
                                             {errors.email &&
                                                 touched.email && (
                                                 <label
@@ -48,7 +48,7 @@ function SignIn() {
                                         </div>
                                         <div>
                                             <label htmlFor='password' className='font-bold'>Password :</label>
-                                            <input type='password' id='password' name='password' placeholder='Enter your password' className='input input-bordered w-full max-w-xs mt-2 mb-2' onChange={handleChange} onBlur={handleBlur} value={values.password}/>
+                                            <input type='password' id='password' name='password' placeholder='Enter your password' className='input input-bordered w-full max-w-md mt-2 mb-2' onChange={handleChange} onBlur={handleBlur} value={values.password}/>
                                             {errors.password &&
                                                 touched.password && (
                                                 <label
@@ -64,6 +64,7 @@ function SignIn() {
                                         <div>
                                             <button disabled={isSubmitting} className='btn bg-primary text-white border-0 w-full normal-case'>Login</button>
                                         </div>
+                                        <div className='text-right text-primary'><Link to='/forgotpassword'>Forgot Password ?</Link></div>
                                     </form>
                                 )
                             }}

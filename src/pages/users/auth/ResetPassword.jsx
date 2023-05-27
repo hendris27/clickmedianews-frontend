@@ -47,13 +47,13 @@ function ResetPassword() {
                                                     placeholder='Code'
                                                     name='code'
                                                     className={`input input-bordered w-full bg-white border-2 mb-2 border-gray-400 text-black max-w-2xl border' ${
-                                                        errors.text &&
-                                                        touched.text &&
+                                                        errors.code &&
+                                                        touched.code &&
                                                         "input-error border-red-700"
                                                     }`}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    value={values.text}
+                                                    value={values.code}
                                                 />
                                                 {errors.code &&
                                                     touched.code && (
@@ -160,7 +160,7 @@ function ResetPassword() {
                             </Formik>
                         </div>
                     </div>
-                    <div className='h-full w-full bg-blue-700 p-4 lg:p-8 flex lg:flex-row flex-col lg:justify-between gap-5 lg:gap-0'>
+                    <div className='h-full w-full bg-primary p-4 lg:p-8 flex lg:flex-row flex-col lg:justify-between gap-5 lg:gap-0'>
                         <div className='flex flex-col gap-5 text-white'>
                             <Link to>Why News Today</Link>
                             <Link to>Community</Link>
