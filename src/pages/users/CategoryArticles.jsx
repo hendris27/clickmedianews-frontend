@@ -6,6 +6,8 @@ import { BsFillBookmarkFill } from "react-icons/bs"
 import { FiEdit2 } from "react-icons/fi"
 import Filter from "../../assets/img/filter.png"
 import Footer from "../../components/Footers"
+import { Link } from "react-router-dom"
+
 
 const categoryArticles = () => {
     return (
@@ -75,7 +77,9 @@ const categoryArticles = () => {
                                                     </div>
                                                    
                                                     <div className='bg-primary h-10 w-10 flex items-center justify-center rounded-full hover:bg-green-500'>
-                                                        <button><FiEdit2 color='white'/></button>
+                                                        <Link to='/writearticles'>
+                                                            <button><FiEdit2 color='white'/></button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>

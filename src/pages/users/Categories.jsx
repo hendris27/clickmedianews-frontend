@@ -5,8 +5,7 @@ import CategoryImage from  "../../assets/img/category-image-3.png"
 import Footer from "../../components/Footers"
 import Header from "../../components/Headers"
 import ScrollToTop from "../../components/ScrollToTop"
-
-
+import { Link } from "react-router-dom"
 
 const Categories = () => {
     return (
@@ -46,11 +45,16 @@ const Categories = () => {
                 </div>
             </div>
             <div className='w-full flex justify-center text-gray-500'>
-                <p>Click the category to explore articles</p>
+                <Link to='/categoryarticles'>
+                    <button>Click the category to explore articles</button> 
+                </Link>
             </div>
             <div className='p-24 flex flex-wrap gap-16'>
-                <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
-                    <img src={CategoryImage} />
+                <div className='flex flex-col items-center'>
+                    <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
+                        <img src={CategoryImage} />
+                    </div>
+                    <div className='font-bold'>Health</div>
                 </div>
                 <div className='w-[165px] h-[217px] bg-blue-400 rounded-2xl'>
                     <img src={CategoryImage} />
