@@ -1,12 +1,42 @@
 import { Fragment } from "react"
 import { Link } from "react-router-dom"
 import { Formik } from "formik"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import * as Yup from "yup"
+import http from "../../../helpers/http"
 
 function ForgotPassword() {
     const validationSchema = Yup.object({
         email: Yup.string().required("Email is empty !")
     })
+
+    const [forgotError, setForgotError] = useState("")
+    const [successMessage, setSuccessMessage] = useState("")
+    const navigate = useNavigate()
+    const DoForgot = async (values) => {
+        try {
+            const email = values.email
+            const body = new URLSearchParams({ email }).toString()
+            const { data } = await http().post("/auth/forgot-password", body)
+            return setSuccessMessage(data.message)
+        } catch (err) {
+            const results = err.response?.data?.results
+            const message = err?.response?.data?.message
+            if (results) {
+                setForgotError(results)
+            }
+            if (message) {
+                setForgotError(message)
+            }
+        }
+    }
+
+    if (successMessage) {
+        setTimeout(() => {
+            navigate("/resetpassword")
+        }, 3000)
+    }
 
     return (
         <Fragment>
@@ -40,6 +70,7 @@ function ForgotPassword() {
                             <Formik
                                 initialValues={{ email: "" }}
                                 validationSchema={validationSchema}
+                                onSubmit={DoForgot}
                             >
                                 {({
                                     values,
@@ -55,6 +86,8 @@ function ForgotPassword() {
                                             onSubmit={handleSubmit}
                                             className='flex flex-col gap-4 w-3/4'
                                         >
+                                            {forgotError && <div className='alert alert-error danger text-[11px]'>{forgotError}</div>}
+                                            {successMessage && <div className='alert alert-success danger text-[11px]'>{successMessage}</div>}
                                             <div>
                                                 <input
                                                     type='email'
