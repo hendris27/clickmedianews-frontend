@@ -15,7 +15,7 @@ function ForgotPassword() {
                 <div className='flex flex-col flex-1 bg-white gap-10 pt-10 h-screen md:h-full'>
                     <div className='flex items-center flex-col justify-center gap-10 h-screen'>
                         <div className='flex gap-4 w-4/5'>
-                            <Link className='flex gap-5'>
+                            <Link to='/signin' className='flex gap-5'>
                                 <img
                                     src='/src/assets/img/arrow-back.svg'
                                     className='w-2'
@@ -104,7 +104,7 @@ function ForgotPassword() {
                             </Formik>
                         </div>
                     </div>
-                    <div className='h-full w-full bg-blue-700 p-4 lg:p-8 flex lg:flex-row flex-col lg:justify-between gap-5 lg:gap-0'>
+                    <div className='h-full w-full bg-primary p-4 lg:p-8 flex lg:flex-row flex-col lg:justify-between gap-5 lg:gap-0'>
                         <div className='flex flex-col gap-5 text-white'>
                             <Link to>Why News Today</Link>
                             <Link to>Community</Link>
