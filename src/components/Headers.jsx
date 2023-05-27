@@ -86,16 +86,26 @@ const Header = () =>{
                         </ul>
                     </div>
 
-
-                    <div className='p-2'>
-                        <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
-                            <img className='objcet-cover h-full w-full' src={profile} alt='' />
-                        </div>
+                    <div className='dropdown dropdown-bottom dropdown-end'>
+                        <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> 
+                            <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
+                                <img className='objcet-cover h-full w-full' src={profile} alt='' />
+                            </div>
+                        </label>
+                        <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
+                            <li><a className='hover:bg-white'>
+                                <Link to='/profile'>
+                                    <div className='font-bold text-medium hover:text-primary'> See Profile</div> 
+                                </Link>   
+                            </a></li>
+                            <div className='border-b-2 w-full hover:bg-white'></div>
+                            <li className='font-bold text-primary'><a className='hover:bg-white hover:text-red-500'>Log Out</a></li>
+                        </ul>
                     </div>
                 </div>
                 <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
                     <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
-                        <button className='btn btn-primary text-white w-full h-[20px] '>
+                        <button className='btn btn-primary normal-case text-white w-full h-[20px] '>
                             <Link
                                 to='/signup'
                                 className='font-bold'
