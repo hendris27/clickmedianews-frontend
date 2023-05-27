@@ -1,4 +1,4 @@
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import { Link } from "react-router-dom"
 import { Formik } from "formik"
 import * as Yup from "yup"
@@ -12,11 +12,14 @@ import { useNavigate } from "react-router-dom"
 import { clearMessage } from "../../../redux/reducers/auth"
 import { asyncLoginAction } from "../../../redux/actions/auth"
 import { useEffect } from "react"
+import { FaEye } from "react-icons/fa"
+import { FaEyeSlash } from "react-icons/fa"
 
 function SignIn() {
     const errorMessage = useSelector((state) => state.auth.errorMessage)
     const successMessage = useSelector((state) => state.auth.successMessage)
     const formError = useSelector((state) => state.auth.formError[0]?.msg)
+    const [open, setOpen] = useState(false)
     const token = useSelector((state) => state.auth.token)
     const validationSchema = Yup.object({
         email: Yup.string().required("Email is empty !"),
@@ -24,6 +27,10 @@ function SignIn() {
     })
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    function showEye(){
+        setOpen(!open)
+    }
 
     useEffect(() => {
         dispatch(clearMessage())
@@ -92,7 +99,12 @@ function SignIn() {
                                         </div>
                                         <div>
                                             <label htmlFor='password' className='font-bold'>Password :</label>
-                                            <input type='password' id='password' name='password' placeholder='Enter your password' className='input input-bordered w-full max-w-md mt-2 mb-2' onChange={handleChange} onBlur={handleBlur} value={values.password}/>
+                                            <div className='relative'>
+                                                <input type={open ? "text" : "password"} id='password' name='password' placeholder='Enter your password' className='input input-bordered w-full max-w-md mt-2 mb-2' onChange={handleChange} onBlur={handleBlur} value={values.password}/>
+                                                <button type='button' onClick={showEye}>
+                                                    {open ? <FaEye size={25} className='absolute top-5 right-5'/> : <FaEyeSlash size={25} className='absolute top-5 right-5'/>}
+                                                </button>
+                                            </div>
                                             {errors.password &&
                                                 touched.password && (
                                                 <label
