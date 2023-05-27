@@ -33,7 +33,14 @@ const WriteArticles = () => {
                                     <input type='text' className='px-8 input input-bordered w-full' placeholder='Articel Title'/>
                                 </div>
                                 <div className='w-[50%]'>
-                                    <input type='text' className='px-8 input input-bordered w-full' placeholder='Articel Category'/>
+                                    <select className='select w-full max-w-xs'>
+                                        <option disabled selected>Aticles Category</option>
+                                        <option>Homer</option>
+                                        <option>Marge</option>
+                                        <option>Bart</option>
+                                        <option>Lisa</option>
+                                        <option>Maggie</option>
+                                    </select>
 
                                 </div>
                             </div>
