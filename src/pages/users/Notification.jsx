@@ -15,20 +15,20 @@ const Notification = () => {
                     <div>
                         <nav>
                             <ul className='flex gap-10 text-[20px] font-medium'>
-                                <li className='hover:text-black text-gray-500 cursor-pointer'>Home</li>
-                                <li className='hover:text-black text-gray-500 cursor-pointer'>Articles</li>
-                                <li className='hover:text-black text-gray-500 cursor-pointer'>Category</li>
-                                <li className='hover:text-black text-gray-500 cursor-pointer'>About</li>
+                                <li className='hover:text-[#376AED] text-gray-500 cursor-pointer'>Home</li>
+                                <li className='hover:text-[#376AED] text-gray-500 cursor-pointer'>Articles</li>
+                                <li className='hover:text-[#376AED] text-gray-500 cursor-pointer'>Category</li>
+                                <li className='hover:text-[#376AED] text-gray-500 cursor-pointer'>About</li>
                             </ul>
                         </nav>
                     </div>
                     <div>
-                        <div className='flex items-center gap-5'>
+                        <div className='flex items-center gap-5 cursor-pointer'>
                             <div>
                                 <img src={Bell} className='w-6'/>
                             </div>
                             <div>
-                                <div className='rounded-full border-2 border-black overflow-hidden w-12 h-12'>
+                                <div className='rounded-full border-2 border-[#376AED] overflow-hidden w-12 h-12'>
                                     <img src={Picture} className='object-cover' />
                                 </div>
                             </div>
