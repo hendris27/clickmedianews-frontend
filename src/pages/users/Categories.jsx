@@ -2,7 +2,7 @@ import Category from "../../assets/img/category-image-2.png"
 import CategoryFade from "../../assets/img/category-image.png"
 import Filter from "../../assets/img/filter.png"
 import CategoryImage from  "../../assets/img/category-image-3.png"
-import { BsFillPlusSquareFill } from "react-icons/bs"
+// import { BsFillPlusSquareFill } from "react-icons/bs"
 import Footer from "../../components/Footers"
 import Header from "../../components/Headers"
 import ScrollToTop from "../../components/ScrollToTop"
@@ -30,7 +30,8 @@ const Categories = () => {
             </div>
             <div className='p-20'>
                 <div className='w-full h-full flex justify-end pb-3 cursor-pointer'>
-                    <BsFillPlusSquareFill size={30} color='#5282FF' />
+                    <button className='bg-[#376AED] rounded-md w-6 text-[20px] text-white'>+</button>
+                    {/* <BsFillPlusSquareFill size={30} color='#5282FF' /> */}
                     <p className='ml-3 text-[18px]'>Add Categories</p>
                 </div>
                 <div className='w-full flex justify-between'>
