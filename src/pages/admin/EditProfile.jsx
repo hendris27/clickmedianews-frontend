@@ -1,4 +1,4 @@
-import Header from "../../components/HeadersAdmin.jsx"
+import Header from "../../components/Headers.jsx"
 import divider from "../../assets/img/Divider.png"
 import Picture from "../../assets/img/picture_login.png"
 import Footer from "../../components/Footers.jsx"
