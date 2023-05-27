@@ -1,8 +1,13 @@
 import Header from "../../components/Headers.jsx"
 import Picture from "../../assets/img/picture_login.png"
 import Footer from "../../components/Footers.jsx"
-import { IoIosArrowForward } from "react-icons/io"
-import { Link } from "react-router-dom"
+import { FaChevronLeft } from "react-icons/fa"
+import picture_category from "../../assets/img/articel.jpg"
+import { BiLike, BiTimeFive} from "react-icons/bi"
+import { BsFillBookmarkFill } from "react-icons/bs"
+
+// import { IoIosArrowForward } from "react-icons/io"
+// import { Link } from "react-router-dom"
 
 const Profile = () => {
     return(
@@ -11,34 +16,42 @@ const Profile = () => {
                 <nav>
                     <Header/>
                 </nav>
-                <div className='flex'>
-                    <div className='w-[500px] border-r-2 p-24 flex flex-col gap-10'>
-                        <div>
-                            <p className='text-[24px] mt-[40px] font-bold'>Profile</p>
+                <div className='pt-28 px-28 flex flex-col gap-20 bg-secondary'>
+                    <div className='flex justify-between px-[50px]'> 
+                        <div className='flex gap-4 items-center'>
+                            <div><FaChevronLeft/></div>
+                            <div className='font-bold'>Category</div>
                         </div>
-                        <div>
-                            <div className='w-[295px] h-[284px] shadow-2xl rounded-2xl bg-white relative'>
-                                <div className='flex gap-5 items-center w-full h-[120px] px-10'>
-                                    <div className='border-2 rounded-3xl border-blue-500 p-1'>
-                                        <div className='rounded-3xl border-2 border-gray-50 overflow-hidden w-16 h-16'>
-                                            <img src={Picture} className='object-cover' />
-                                        </div>
-                                    </div>
-                                    <div className='flex flex-col flex-1'>
-                                        <div>@jonathan</div>
-                                        <div className='font-bold'>Joe Daniel</div>
-                                        <div>Member</div>
+                        <div className='font-bold text-[24px]'>Joe Daniel</div>
+                        <div></div>
+                    </div>
+                   
+                </div>
+                <div className=' flex justify-between bg-secondary '>
+                    <div className='w-[50%] px-[150px] pt-24 pb-24 flex flex-col items-center gap-16 '>
+                        <div className='w-[295px] h-[284px] shadow-2xl rounded-2xl bg-white relative'>
+                            <div className='flex gap-5 items-center w-full h-[120px] px-10'>
+                                <div className='border-2 rounded-3xl border-blue-500 p-1'>
+                                    <div className='rounded-3xl border-2 border-gray-50 overflow-hidden w-16 h-16'>
+                                        <img src={Picture} className='object-cover' />
                                     </div>
                                 </div>
-                                <div className='px-10'>
-                                    <div className='font-bold'>About Me</div>
-                                    <div>Madison Blackstone is a director of publisher, with experience managing global teams.</div>
+                                <div className='flex flex-col flex-1'>
+                                    <div>@jonathan</div>
+                                    <div className='font-bold'>Joe Daniel</div>
+                                    <div>Member</div>
                                 </div>
-                                <div className='w-[255px] rounded-2xl absolute bottom-[-20px] right-5 h-[50px] bg-blue-500 pr-5 flex justify-between text-white text-center'>
-                                    <div className='rounded-r-2xl border-1 pt-1 rounded-l-2xl w-[70px] justify-center bg-blue-600'>
-                                        <div className='font-bold'>52</div>
-                                        <div className='text-[10px]'>Post</div>
-                                    </div>
+                            </div>
+                            <div className='px-10'>
+                                <div className='font-bold'>About Me</div>
+                                <div>Madison Blackstone is a director of publisher, with experience managing global teams.</div>
+                            </div>
+                            <div className='h-[215px] w-[70px] rounded-2xl absolute bottom-[25px] right-[-30px]  bg-blue-500 flex flex-col text-white text-center'>
+                                <div className='rounded-r-2xl border-1 pt-1 rounded-l-2xl h-20 w-[70px] flex flex-col items-center justify-center bg-blue-600'>
+                                    <div className='font-bold'>52</div>
+                                    <div className='text-[10px]'>Post</div>
+                                </div>
+                                <div className='flex flex-col gap-2'>
                                     <div className='flex flex-col pt-1 gap-1'>
                                         <div className='font-bold'>250</div>
                                         <div className='text-[10px]'>Visitor</div>
@@ -47,79 +60,142 @@ const Profile = () => {
                                         <div className='font-bold'>4.5K</div>
                                         <div className='text-[10px]'>Comments</div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
-                        <div className='w-full flex justify-center'><Link className='text-blue-500'>See Profile</Link></div>
-                        <div className='flex flex-col gap-5 '>
-                            <Link to='/edit-profile' className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
-                                <div className='font-bold'>Edit Profile</div>
-                                <div><IoIosArrowForward/></div>
-                            </Link>
-                            <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
-                                <div className='font-bold'>Saved Post</div>
-                                <div><IoIosArrowForward/></div>
-                            </Link>
-                            <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
-                                <div className='font-bold'>FAQ</div>
-                                <div><IoIosArrowForward/></div>
-                            </Link>
-                            <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
-                                <div className='font-bold'>Help</div>
-                                <div><IoIosArrowForward/></div>
-                            </Link>
-                            <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
-                                <div className='font-bold'>Logout</div>
-                                <div><IoIosArrowForward/></div>
-                            </Link>
-                       
+                        <div className='flex flex-col gap-4'>
+                            <div><button className='btn btn-primary min-w-[295px] '>Messages</button></div>
+                            <div><button className='btn btn-gray-400 min-w-[295px] hover:bg-primary '>Following</button></div>
+                            <div><button className='btn bg-green-500 min-w-[295px] text-black hover:bg-primary outline-none border-0 '>Accept Author Request</button></div>
                         </div>
                     </div>
-                    <div className='flex p-24 flex-1 justify-center'>
-                        <div className='flex'>
-                            <div className='border-2 rounded-3xl border-blue-500 h-[120px] w-[120px] mt-[120px]  p-1'>
-                                <div className='rounded-3xl h-[110px] w-[110px] border-2 border-gray-50 overflow-hidden'>
-                                    <img src={Picture} className='object-cover' />
+                    <div className='pt-28'>
+                        <div className=' border-l-2 h-[400px] border-black '></div>
+                    </div>
+                    <div className='flex-1 w-full px-[70px] pt-24 pb-24 flex flex-col items-center'>
+                        <div className='flex flex-col gap-8'>
+                            <div className='text-[25px]  font-bold'>Post</div>
+                            <div className='flex gap-4'>
+                                <div>
+                                    <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl '>
+                                        <div className='flex flex-col' >
+                                            <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
+                                                <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
+                                            </div>
+                                            <div className='px-4 py-2'>
+                                                <div className='flex flex-col gap-2 items-center' >
+                                                    <div className='flex flex-col gap-4'>
+                                                        <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
+                                                        <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
+                                                    </div>
+                                                    <div className='flex gap-4'>
+                                                        <div className='flex gap-2 items-center'>
+                                                            <div><BiLike/></div>
+                                                            <div>2.1k</div>
+                                                        </div>
+                                                        <div className='flex gap-2 items-center'>
+                                                            <div><BiTimeFive/></div>
+                                                            <div>3m ago</div>
+                                                        </div>
+                                                        <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl '>
+                                    <div className='flex flex-col' >
+                                        <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
+                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
+                                        </div>
+                                        <div className='px-4 py-2'>
+                                            <div className='flex flex-col gap-2 items-center' >
+                                                <div className='flex flex-col gap-4'>
+                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
+                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
+                                                </div>
+                                                <div className='flex gap-4'>
+                                                    <div className='flex gap-2 items-center'>
+                                                        <div><BiLike/></div>
+                                                        <div>2.1k</div>
+                                                    </div>
+                                                    <div className='flex gap-2 items-center'>
+                                                        <div><BiTimeFive/></div>
+                                                        <div>3m ago</div>
+                                                    </div>
+                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <Link><h1 className='text-[16px] mt-[110px] ml-[100px] text-[#376AED] font-semibold'>save changes</h1></Link>
-                            <Link><h1 className='text-[16px] mt-[250px] ml-[-340px] text-[#376AED]'>Choose profile picture</h1></Link>
-                    
+                            <div className='flex gap-4'>
+                                <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl '>
+                                    <div className='flex flex-col' >
+                                        <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
+                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
+                                        </div>
+                                        <div className='px-4 py-2'>
+                                            <div className='flex flex-col gap-2 items-center' >
+                                                <div className='flex flex-col gap-4'>
+                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
+                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
+                                                </div>
+                                                <div className='flex gap-4'>
+                                                    <div className='flex gap-2 items-center'>
+                                                        <div><BiLike/></div>
+                                                        <div>2.1k</div>
+                                                    </div>
+                                                    <div className='flex gap-2 items-center'>
+                                                        <div><BiTimeFive/></div>
+                                                        <div>3m ago</div>
+                                                    </div>
+                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl '>
+                                    <div className='flex flex-col' >
+                                        <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
+                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
+                                        </div>
+                                        <div className='px-4 py-2'>
+                                            <div className='flex flex-col gap-2 items-center' >
+                                                <div className='flex flex-col gap-4'>
+                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
+                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
+                                                </div>
+                                                <div className='flex gap-4'>
+                                                    <div className='flex gap-2 items-center'>
+                                                        <div><BiLike/></div>
+                                                        <div>2.1k</div>
+                                                    </div>
+                                                    <div className='flex gap-2 items-center'>
+                                                        <div><BiTimeFive/></div>
+                                                        <div>3m ago</div>
+                                                    </div>
+                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className='flex  p-12'>
-                            <div className='mt-[300px] ml-[-700px]'>
-                                <h1 className='text-[16px] mt-[25px] ml-[120px]'>Username :</h1>
-                                <input type='text' name='username' placeholder='@jonathan' className='input mt-[10px] ml-[120px] p-3 border-2 border-slate-200 w-[300px] h-[50px] rounded-md max-w-xs' />
-                            </div>
-                            <div>
-                                <h1 className='text-[16px] mt-[430px] ml-[-300px]'>Email :</h1>
-                                <input type='email' name='email' placeholder='joedaniel@mail.co' className='input mt-[10px] ml-[-300px] p-3 border-2 border-slate-200 w-[300px] h-[50px] rounded-md max-w-xs' />
-                            </div>
-                            <div>
-                                <h1 className='text-[16px] mt-[530px] ml-[-300px]'>Job :</h1>
-                                <input type='text' name='job' placeholder='Reporter' className='input mt-[10px] ml-[-300px] p-3 border-2 border-slate-200 w-[300px] h-[50px] rounded-md max-w-xs' />
-                            </div>
-                            <div>
-                                <h1 className='text-[16px] font-semibold mt-[325px] ml-[120px]'>Name :</h1>
-                                <input type='text' name='name' placeholder='Joe Daniel' className='input mt-[10px] ml-[120px] p-2 border-2 border-slate-200 w-[300px] h-[50px] rounded-md max-w-xs' />
-                            </div>
-                            <div>
-                                <h1 className='text-[16px] mt-[430px] ml-[-300px]'>Password :</h1>
-                                <input type='password' name='password' placeholder='' className='input mt-[10px] ml-[-300px] p-3 border-2 border-slate-200 w-[300px] h-[50px] rounded-md max-w-xs' />
-                            </div>
-                            <div>
-                                <h1 className='text-[16px] mt-[530px] ml-[-300px]'>About :</h1>
-                                <input type='text' name='about' 
-                                    placeholder='Madison Blackstone'
-                                    className='input mt-[10px] ml-[-300px] border-2 border-slate-200 w-[300px] h-[130px] rounded-md max-w-xs' />
-                            </div>
-
-                        </div>
-                        <button className='btn btn-primary text-white hover:bg-blue-500 mt-[800px] ml-[-500px]'>Request to be an author</button>
-          
                     </div>
                 </div>
+                
             </div>
+                       
+                        
+                       
+
+                    
             <footer>
                 <Footer />
             </footer>

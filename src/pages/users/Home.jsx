@@ -1,9 +1,9 @@
 import Header from "../../components/Headers"
 import Footer from "../../components/Footers"
 import ScrollToTop from "../../components/ScrollToTop"
-import picture_category from "../../assets/img/articel.jpg"
 import home_main from "../../assets/img/picture_main_content.png"
 import picture_video from "../../assets/img/Video.png"
+import picture_category from "../../assets/img/articel.jpg"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 
