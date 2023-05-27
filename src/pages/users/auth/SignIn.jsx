@@ -118,7 +118,7 @@ function SignIn() {
                                             )}
                                         </div>
                                         <div>
-                                            <button disabled={isSubmitting} className='btn bg-primary text-white border-0 w-full normal-case'>Login</button>
+                                            <button disabled={isSubmitting}  className='btn bg-primary text-white border-0 w-full normal-case'>Login</button>
                                         </div>
                                         <div className='text-right text-primary'><Link to='/forgotpassword'>Forgot Password ?</Link></div>
                                     </form>
