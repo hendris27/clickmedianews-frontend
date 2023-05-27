@@ -24,7 +24,7 @@ import AdminSignIn from "./pages/admin/auth/SignIn"
 import AdminForgotPassword from "./pages/admin/auth/ForgotPassword"
 import AdminResetPassword from "./pages/admin/auth/ResetPassword"
 import AdminResetSuccess from "./pages/admin/auth/ResetSuccess"
-import EditProfile from "./pages/admin/EditProfile"
+import EditProfil from "./pages/users/EditProfil"
 
 const App = () => {
     return (
@@ -96,7 +96,7 @@ const App = () => {
                         <Route path='/reset-success' element={<AdminResetSuccess />} />
                     </Routes>
                     <Routes>
-                        <Route path='/edit-profile' element={<EditProfile />} />
+                        <Route path='/edit-profile' element={<EditProfil />} />
                     </Routes>
                 </BrowserRouter>
             </PersistGate>
