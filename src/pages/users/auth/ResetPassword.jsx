@@ -1,6 +1,9 @@
 import { Fragment } from "react"
 import { Link } from "react-router-dom"
 import { Formik } from "formik"
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import http from "../../../helpers/http"
 import * as Yup from "yup"
 
 function ResetPassword() {
@@ -12,6 +15,37 @@ function ResetPassword() {
             .required("Confirm password is empty !")
             .oneOf([Yup.ref("password"), null], "Passwords must match"),
     })
+
+    const [successMessage, setSuccessMessage] = useState("")
+    const [ResetError, setResetError] = useState("")
+    const navigate = useNavigate()
+
+    const doResetPassword = async (values) => {
+        try {
+            const code = values.code
+            const email = values.email
+            const password = values.password
+            const confirmPassword = values.confirmPassword
+            const body = new URLSearchParams({ code, email, password, confirmPassword }).toString()
+            const { data } = await http().post("/auth/reset-password", body)
+            return setSuccessMessage(data.message)
+        } catch (err) {
+            const results = err.response?.data?.results
+            const message = err?.response?.data?.message
+            if (results) {
+                setResetError(results)
+            }
+            if (message) {
+                setResetError(message)
+            }
+        }
+    }
+
+    if (successMessage) {
+        setTimeout(() => {
+            navigate("/signin")
+        }, 3000)
+    }
 
     return (
         <Fragment>
@@ -26,6 +60,7 @@ function ResetPassword() {
                             <Formik
                                 initialValues={{ code: "", email: "", password: "", confirmPassword: "" }}
                                 validationSchema={validationSchema}
+                                onSubmit={doResetPassword}
                             >
                                 {({
                                     values,
@@ -41,6 +76,10 @@ function ResetPassword() {
                                             onSubmit={handleSubmit}
                                             className='flex flex-col gap-4 w-3/4'
                                         >
+                                            {ResetError && <div className='alert alert-error danger text-[11px]'>{ResetError}</div>}
+                                            {successMessage && (
+                                                <div className='alert alert-success danger text-[11px]'>{successMessage}</div>
+                                            )}
                                             <div>
                                                 <input
                                                     type='text'
