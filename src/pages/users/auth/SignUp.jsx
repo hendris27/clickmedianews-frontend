@@ -5,19 +5,44 @@ import * as Yup from "yup"
 import {FcGoogle} from "react-icons/fc"
 import {FaFacebook} from "react-icons/fa"
 import {FaTwitter} from "react-icons/fa"
+import { useDispatch, useSelector } from "react-redux"
+import { asyncRegisterAction } from "../../../redux/actions/auth"
+import { clearMessage } from "../../../redux/reducers/auth"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import Footer from "../../../components/Footers"
 import ScrollToTop from "../../../components/ScrollToTop"
 
 function SignUp() {
+    const errorMessage = useSelector((state) => state.auth.errorMessage)
+    const formError = useSelector((state) => state.auth.formError[0]?.msg)
+    const successMessage = useSelector((state) => state.auth.successMessage)
     const validationSchema = Yup.object({
         email: Yup.string().required("Email is empty !"),
         password: Yup.string().required("Password is empty !"),
         phoneNumber: Yup.number().typeError("Phone number is invalid").required("Phone Number is empty !")
     })
     
-    function doSignUp(values){
-        alert(values)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    async function doSignUp(values, { setSubmitting }){
+        dispatch(clearMessage())
+        dispatch(asyncRegisterAction(values))
+        setSubmitting(false)
     }
+
+    useEffect(() => {
+        if (successMessage) {
+            setTimeout(() => {
+                navigate("/signin")
+            }, 5000)
+        }
+    }, [successMessage, navigate, dispatch])
+    
+    useEffect(() => {
+        dispatch(clearMessage())
+    }, [dispatch])
     
     return (
         <Fragment>
@@ -30,6 +55,21 @@ function SignUp() {
                                 return (
                                     <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
                                         <div className='text-[36px] font-bold'>Sign Up</div>
+                                        {errorMessage && (
+                                            <div>
+                                                <div className='alert alert-error danger text-[11px]'>{errorMessage}</div>
+                                            </div>
+                                        )}
+                                        {formError && (
+                                            <div>
+                                                <div className='alert alert-error font-bold danger text-[15px]'>{formError}</div>
+                                            </div>
+                                        )}
+                                        {successMessage && (
+                                            <div>
+                                                <div className='alert alert-success text-[11px]'>{successMessage}</div>
+                                            </div>
+                                        )}
                                         <div>
                                             <label htmlFor='email' className='font-bold'>Email :</label>
                                             <input type='email' id='email' name='email' placeholder='Enter your email address' className='input input-bordered w-full max-w-xs mt-2 mb-2' onChange={handleChange} onBlur={handleBlur} value={values.email}/>
