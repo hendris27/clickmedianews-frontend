@@ -26,7 +26,7 @@ const CategoryArticles = () => {
         async function getArticle(){
             const {data} = await http().get("/articles")
             console.log(data.results)
-            if(data.results.status){
+            if(data.results){
                 setArticle(data.results)
             }
         }getArticle()
