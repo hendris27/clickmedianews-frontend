@@ -3,7 +3,16 @@ import Footer from "../../components/Footers"
 
 import { FaChevronLeft } from "react-icons/fa"
 import { HiPlus } from "react-icons/hi"
+import { useState} from "react"
+import http from "../../helpers/http"
+
 const WriteArticles = () => {
+    const [category, setCategory] = useState([])
+    async function getCategory(){
+        const {data} = await http().get("/categories/all")
+        setCategory(data.results)
+    }
+    getCategory()
     return (
         <>
             <div>
@@ -35,11 +44,11 @@ const WriteArticles = () => {
                                 <div className='w-[50%]'>
                                     <select className='select w-full max-w-xs'>
                                         <option disabled selected>Aticles Category</option>
-                                        <option>Homer</option>
-                                        <option>Marge</option>
-                                        <option>Bart</option>
-                                        <option>Lisa</option>
-                                        <option>Maggie</option>
+                                        {category.map(category => {
+                                            return (
+                                                <option key={category.id}>{category.name}</option>
+                                            )
+                                        })}
                                     </select>
 
                                 </div>
