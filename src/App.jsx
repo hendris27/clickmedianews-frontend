@@ -74,8 +74,6 @@ const App = () => {
                         <Route path='/categories' element={<Categories />} />
                     </Routes>
 
-
-
                     {/*Admin*/}
                     <Routes>
                         <Route path='/home-admin' element={<HomeAdmin />} />
