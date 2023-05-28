@@ -7,9 +7,19 @@ import { FiEdit2 } from "react-icons/fi"
 import Filter from "../../assets/img/filter.png"
 import Footer from "../../components/Footers"
 import { Link } from "react-router-dom"
+import { useState, useEffect } from "react"
+import http from "../../helpers/http"
 
 
-const categoryArticles = () => {
+const CategoryArticles = () => {
+    const [category, setCategory] = useState([])
+    useEffect(()=> {
+        async function getCategory(){
+            const {data} = await http().get("/categories/all")
+            setCategory(data.results)
+        }
+        getCategory()
+    }, [])
     return (
         <>
             <div>
@@ -19,14 +29,11 @@ const categoryArticles = () => {
             </div>
             <div className='pt-[100px] px-[60px]'>
                 <div className='flex gap-8 justify-between cursor-pointer'>
-                    <div className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>Government</div>
-                    <div className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>Economy</div>
-                    <div className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>Government</div>
-                    <div className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>Economy</div>
-                    <div className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>Government</div>
-                    <div className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>Economy</div>
-                    <div className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>Government</div>
-                    <div className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>Economy</div>
+                    {category.map(category => {
+                        return (
+                            <div key={`category-article-${category.id}`} className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>{category.name}</div>
+                        )
+                    })}    
                 </div>
             </div>
             <div className='bg-white px-[60px] pt-[65px] pb-[90px]'>
@@ -340,4 +347,4 @@ const categoryArticles = () => {
     )
 }
 
-export default categoryArticles
+export default CategoryArticles
