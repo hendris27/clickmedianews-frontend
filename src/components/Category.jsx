@@ -21,7 +21,7 @@ const Category = () => {
                     return (
                         <div key={`category-${category.id}`} className='flex flex-col items-center gap-4 drop-shadow-2xl' >
                             <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
-                                <img src={`http://localhost:8888/uploads/${category.picture}`} className='w-full h-full object-cover' alt={category.category} />
+                                <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
                             </div>
                             <div>{category.category}</div>
                         </div>
