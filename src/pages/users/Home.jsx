@@ -6,12 +6,12 @@ import picture_video from "../../assets/img/Video.png"
 import picture_category from "../../assets/img/articel.jpg"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
+import Category from "../../components/Category"
 
 
 const Home = ()=> {
     return (
         <>
-       
             <div className='h-min-screen'>
                 <nav>
                     <Header/>
@@ -53,44 +53,7 @@ const Home = ()=> {
                                 <div className='hover:text-black'>#jokowidodo</div>
                                 <div className='hover:text-black'>#ladygaga</div>
                             </div>
-                            <div className='flex flex-col gap-8 pt-[20px]'>
-                                <div className='flex justify-between font-semibold'>
-                                    <div>Category</div>
-                                    <div className='text-[#19A7CE]'>More</div>
-                                </div>
-                                <div className='flex gap-8'>
-                                    <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
-                                        <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
-                                            <img src={picture_category} className='w-full h-full object-cover' alt='' />
-                                        </div>
-                                        <div>Government</div>
-                                    </div>
-                                    <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
-                                        <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
-                                            <img src={picture_category} className='w-full h-full object-cover' alt='' />
-                                        </div>
-                                        <div>Government</div>
-                                    </div>
-                                    <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
-                                        <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
-                                            <img src={picture_category} className='w-full h-full object-cover' alt='' />
-                                        </div>
-                                        <div>Government</div>
-                                    </div>
-                                    <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
-                                        <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
-                                            <img src={picture_category} className='w-full h-full object-cover' alt='' />
-                                        </div>
-                                        <div>Government</div>
-                                    </div>
-                                    <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
-                                        <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
-                                            <img src={picture_category} className='w-full h-full object-cover' alt='' />
-                                        </div>
-                                        <div>Government</div>
-                                    </div>
-                                </div>
-                            </div>
+                            <Category />
                             <div className='flex flex-col gap-8 pt-[20px]'>
                                 <div className='flex justify-between font-semibold'>
                                     <div>Recomended</div>
