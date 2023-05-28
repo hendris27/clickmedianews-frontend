@@ -10,13 +10,16 @@ import http from "../helpers/http"
 import { useNavigate } from "react-router-dom"
 import { logout as logoutAction } from "../redux/reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
+import { Formik } from "formik"
+
 
 const Header = () =>{
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)   
-  
+    const [searchValue, setSearchValue] = React.useState()
+
 
     React.useEffect(() => {
         async function getProfileData() {
@@ -33,7 +36,15 @@ const Header = () =>{
             navigate("/signin")
         }
     }
-
+    const handleClearClick = () => {
+        setSearchValue("")
+    }
+    const onSearch = (values) => {
+        const qs = new URLSearchParams(values).toString()
+        navigate(`/searcharticles?${qs}`)
+        // setSeacrhParams(values, "/Search")
+    }
+ 
     return (
         <>
             <header className='flex justify-between items-center bg-white px-[50px] w-full fixed z-10 border-b-4'>
@@ -69,18 +80,37 @@ const Header = () =>{
                     </a>
                 </div>
                 <div className='flex gap-4 items-center'>
-                    <div className='bg-white flex border-2 rounded-xl px-6 items-center gap-2 h-12'>
-                        <div>
-                            <BsSearch size={25} color='#19A7CE'/>
-                        </div>
-                        <div>
-                            <input type='text' placeholder='Search ...' className='gap-3 h-11 w-full max-w-xs outline-none hover:outline-none hover:border-0' />
-                        </div>
-                        <div>
-                            <button>  <MdOutlineClear size={25} color='#19A7CE'/></button>
-                        </div>
-                        
-                    </div>
+                    <Formik 
+                        initialValues={{
+                            search: ""
+                        }}
+                        onSubmit={onSearch}>
+                        {({
+                            handleBlur,
+                            handleChange,
+                            handleSubmit,
+                        }) =>
+                            ( <form onSubmit={handleSubmit} className='bg-white flex border-2 rounded-xl px-6 items-center gap-2 h-12'>
+                                <div>
+                                    <button>  <BsSearch size={25} color='#19A7CE'/></button>
+                                </div>
+                                <div>
+                                    <input 
+                                        type='text' 
+                                        name='search'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={searchValue}
+                                        placeholder='Search ...' 
+                                        className='gap-3 h-11 w-full max-w-xs outline-none hover:outline-none hover:border-0' />
+                                </div>
+                                <div>
+                                    <button type='submit' onClick={handleClearClick} >  <MdOutlineClear size={25} color='#19A7CE'/></button>
+                                </div>
+                            
+                            </form>
+                            )}
+                    </Formik>
                 </div>
                 
                
@@ -160,6 +190,7 @@ const Header = () =>{
                                         <div onClick={doLogout} className='text-[#ff0000] font-bold'>Logout</div></a></li>
                                 </ul>
                             </div>
+                            <div></div>
                         </div>
                     </div>
                   
