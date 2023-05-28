@@ -21,7 +21,7 @@ const Categories = () => {
     }, [])
     const handleDelete = async (categoryId) => {
         try {
-            await http.delete(`/categories/${categoryId}`)
+            await http().delete(`/categories/${categoryId}`)
             setCategory((prevCategories) => 
                 prevCategories.filter((cat) => cat.id !== categoryId))
         }catch (err) {
@@ -79,7 +79,7 @@ const Categories = () => {
                     return (
                         <div key={`category-pages-${category.id}`} className='flex flex-col items-center'>
                             <div className='w-[165px] h-[217px] brightness-50 relative rounded-2xl'>
-                                <img src={`http://localhost:8888/uploads/${category.picture}`} />
+                                <img src={category.picture} />
                             </div>
                             <div className='absolute mt-10'>
                                 <h1 className='text-white text-center font-medium text-[20px]'>+200</h1>
