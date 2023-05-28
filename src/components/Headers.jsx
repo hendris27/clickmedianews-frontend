@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import logoBrand from "../assets/img/logo_brand.png"
 // import profile from "../assets/img/picture_login.png"
 // import defaultProfile from "../assets/img/default_picture.jpg"
-
+import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear} from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
 import React from "react"
@@ -115,7 +115,7 @@ const Header = () =>{
                                 <li><a className='hover:bg-white'>
                                     <div className='flex gap-8'>
                                         <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
-                                            <img className='object-cover h-full w-full' src={profile} alt='' />
+                                            <img className='object-cover h-full w-full' src={profile.picture} alt='' />
                                         </div>
                                         <div className='flex flex-col'>
                                             <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
@@ -142,7 +142,9 @@ const Header = () =>{
                             <div className='dropdown dropdown-bottom dropdown-end'>
                                 <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> 
                                     <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#19A7CE]'>
-                                        <img className='objcet-cover h-full w-full' src={profile} alt='' />
+                                        {profile.picture === null ? (
+                                            <img src={defaultPicture} className='object-cover h-full w-full'/>
+                                        ) : <img src={profile.picture} className='object-cover h-full w-full'/>}
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
