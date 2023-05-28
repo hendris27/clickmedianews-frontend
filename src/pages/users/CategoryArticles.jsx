@@ -7,18 +7,54 @@ import { FiEdit2 } from "react-icons/fi"
 import Filter from "../../assets/img/filter.png"
 import Footer from "../../components/Footers"
 import { Link } from "react-router-dom"
-import { useState, useEffect } from "react"
+import React, { useState} from "react"
 import http from "../../helpers/http"
+import { useSelector } from "react-redux"
 
 
 const CategoryArticles = () => {
     const [category, setCategory] = useState([])
-    useEffect(()=> {
+    const [article, setArticle] = useState([])
+    const [user, setUser] = useState({})
+    const token = useSelector(state => state.auth.token)
+
+    React.useEffect(()=> {
         async function getCategory(){
             const {data} = await http().get("/categories/all")
             setCategory(data.results)
         }
         getCategory()
+
+        async function getArticle(){
+            try {
+                const {data} = await http().get("/articles")
+                console.log(data.results)
+                if(data.results.status === true){
+                    setArticle(data.results)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }getArticle()
+
+        async function getUser(){
+            try {
+                const {data} = await http(token).get("/users")
+                console.log(data)
+                if(data.results.role === "superadmin"){
+                    setUser(data.results.role)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }getUser()
+    
     }, [])
     return (
         <>
@@ -70,44 +106,48 @@ const CategoryArticles = () => {
                     <div className='pt-8'>
                         <div className='flex flex-col'>
                             <div className='flex gap-8'>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br /> Let’s see how its facts</div>
+                                {article.map(article=>{
+                                    return(
+                                        <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'key={`article${article.id}`}>
+                                            <div className='flex justify-between items-center' >
+                                                <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                                                    <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
                                                 </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike /></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive /></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
-                                                </div>
+                                                <div className='pl-8'>
+                                                    <div className='flex flex-col gap-8' >
+                                                        <div className='flex flex-col gap-4'>
+                                                            <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{article.title}</div>
+                                                            <div className='text-[18px] leading-[20px] font-medium '>{article.description}</div>
+                                                        </div>
+                                                        <div className='flex gap-4'>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiLike /></div>
+                                                                {user !=="superadmin" && <div>{article.likeCount}</div>}
+                                                            </div>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiTimeFive /></div>
+                                                                <div>3m ago</div>
+                                                            </div>
+                                                            <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
+                                                        </div>
 
-                                                <div className='flex justify-between items-center'>
-                                                    <div className='flex items-center'>
-                                                        <button className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete Articles</button>
-                                                    </div>
+                                                        <div className='flex justify-between items-center'>
+                                                            <div className='flex items-center'>
+                                                                {user === "superadmin" && <button className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete Articles</button>}
+                                                            </div>
 
-                                                    <div className='bg-primary h-10 w-10 mr-2  flex items-center justify-center rounded-full hover:bg-green-500'>
-                                                        <Link to='/writearticles'>
-                                                            <button><FiEdit2 color='white' /></button>
-                                                        </Link>
+                                                            <div className='bg-primary h-10 w-10 mr-2  flex items-center justify-center rounded-full hover:bg-green-500'>
+                                                                <Link to='/writearticles'>
+                                                                    <button><FiEdit2 color='white' /></button>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    )
+                                })}
                                 <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
                                     <div className='flex justify-between items-center' >
                                         <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden'>

@@ -135,7 +135,9 @@ const Header = () =>{
                                     </div>    
                                 </a></li>
                                 <div className='border-b-2 w-full hover:bg-white'></div>
-                                <li className='font-bold text-primary'><a className='hover:bg-white hover:text-black'>See More</a></li>
+                                <Link to='/notificaton'>
+                                    <li className='font-bold text-primary'><a className='hover:bg-white hover:text-black'>See More</a></li>
+                                </Link> 
                             </ul>
                         </div>
                         <div>
