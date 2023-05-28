@@ -101,7 +101,7 @@ const EditProfile = () => {
                                     </div>
                                     <div className='flex flex-col flex-1'>
                                         <div>{profile.username}</div>
-                                        <div className='font-bold'>{profile.fullName}</div>
+                                        <div className='font-bold'>{profile?.fullName}</div>
                                         <div>Member</div>
                                     </div>
                                 </div>
