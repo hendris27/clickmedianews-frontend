@@ -8,6 +8,7 @@ import http from "../../helpers/http.js"
 import { Formik } from "formik"
 import { FaEye } from "react-icons/fa"
 import { FaEyeSlash } from "react-icons/fa"
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import defaultPicture from "../../assets/img/default.jpg"
 
 const EditProfile = () => {
@@ -16,8 +17,9 @@ const EditProfile = () => {
     const [selectedPicture, setSelectedPicture] = useState(false)
     const [pictureURI, setPictureURI] = useState("")
     const [open, setOpen] = useState(false)
-
-    console.log(profile)
+    const [openModal, setOpenModal] = useState(false)
+    const [successMessage, setSuccessMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => { 
         async function getProfile(){
@@ -43,6 +45,7 @@ const EditProfile = () => {
     }
 
     const editProfile = async (values) => {
+        setOpenModal(true)
         const form = new FormData()
         Object.keys(values).forEach((key) => {
             if (values[key]) {
@@ -67,14 +70,16 @@ const EditProfile = () => {
             })
       
             setProfile(data.results)
-            
+            setSuccessMessage(data.message)
+            setTimeout(()=>{setSuccessMessage(false)}, 2000)
         } catch (err) {
             const results = err.response?.data?.results[0].msg
-            alert(results)
+            setErrorMessage(results)
+            setTimeout(()=>{setErrorMessage(false)}, 2000)
         }
 
         getProfile()
-
+        setOpenModal(false)
     }
 
     return(
@@ -151,12 +156,13 @@ const EditProfile = () => {
                         </div>
                     </div>
                     <div className=' pt-28 flex-1 bg-secondary '>
-                        <Formik initialValues={{username: "", fullName: "", email: "", password: "", profession: "", about: ""}} onSubmit={editProfile}>
+                        <Formik initialValues={{username: "", fullName: "", email: "", password: "", profession: "", about: ""}} onSubmit={editProfile} enableReinitialize={true}>
                             {({values,  handleBlur, handleChange, handleSubmit, isSubmitting}) => {
                                 function showEye(){
                                     setOpen(!open)
                                 }
                                 return (
+                                    
                                     <form className='pb-24' onSubmit={handleSubmit}>
                                         <div className='flex justify-between px-[60px]'>
                                             <div></div>
@@ -170,8 +176,15 @@ const EditProfile = () => {
                                                         {profile.picture === null ? (
                                                             <img src={defaultPicture} className='object-cover h-full w-full'/>
                                                         ) : <img src={profile.picture} className='object-cover h-full w-full'/>}
+                                                        
                                                     </div>
                                                 </div>
+                                                {
+                                                    successMessage && <div className='alert alert-success flex items-center justify-center mt-5'>{successMessage}</div>
+                                                }
+                                                {
+                                                    errorMessage && <div className='alert alert-success flex items-center justify-center mt-5'>{errorMessage}</div>
+                                                }
                                                 <div className='pt-4'>
                                                     <div className=' rounded-xl'>
                                                         <label className='btn bg-transparent hover:bg-transparent w-full h-full border-0'>
@@ -260,11 +273,16 @@ const EditProfile = () => {
                                 )
                             }}
                         </Formik>
-                  
                     </div>
-                   
+                    <input type='checkbox' id='loading' className='modal-toggle' checked={openModal} />
+                    <div className='modal'>
+                        <div className='modal-box bg-transparent h-40 shadow-none overflow-hidden'>
+                            <div className='flex flex-col justify-center items-center'>
+                                <AiOutlineLoading3Quarters className='animate-spin' size={70} color='white' />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
             </div>
             <footer>
                 <Footer />
