@@ -3,13 +3,34 @@ import Footer from "../../components/Footers.jsx"
 import { IoIosArrowForward } from "react-icons/io"
 import { Link } from "react-router-dom"
 import Picture from "../../assets/img/picture_login.png"
-import CategoryImage from "../../assets/img/category-image-3.png"
+// import CategoryImage from "../../assets/img/category-image-3.png"
 import { AiOutlineLike } from "react-icons/ai"
 import { BiTime } from "react-icons/bi"
 import Save from "../../assets/img/save.png"
-
+import { useState, useEffect } from "react"
+import http from "../../helpers/http.js"
+import { useSelector } from "react-redux"
+import moment from "moment/moment.js"
 
 function SavedArticle(){
+    const [savePost, setSavePost] = useState([])
+    const token = useSelector(state => state.auth.token)
+    useEffect(()=> {
+        async function getSavePost(){
+            const {data} = await http(token).get("/saved-article")
+            setSavePost(data.results)
+        }
+        getSavePost()
+    }, [token])
+    const handleDelete = async (savepostId) => {
+        try {
+            await http().delete(`/saved-article/${savepostId}`)
+            setSavePost((prevCategories) => 
+                prevCategories.filter((savePost) => savePost.id !== savepostId))
+        }catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <>
             <div>
@@ -81,7 +102,35 @@ function SavedArticle(){
                         <div className='flex flex-col flex-1 items-center mt-20 gap-10'>
                             <div className='text-[#3366FF] text-2xl font-bold'>Saved Post</div>
                             <div className='w-full flex flex-wrap gap-5 justify-center'>
-                                <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
+                                {savePost.map(savedArticle => {
+                                    return (
+                                        <div key={`saved-article-${savedArticle.id}`} className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
+                                            <div>
+                                                <div className='flex gap-5'>
+                                                    <img src={savedArticle.picture} className='w-28'/>
+                                                    <div className='flex flex-col gap-4'>
+                                                        <div className='font-bold text-[20px]'>{savedArticle.title}</div>
+                                                        <div>{savedArticle.descriptions}</div>
+                                                        <div className='flex gap-2 items-center'>
+                                                            <div className='flex'>
+                                                                <AiOutlineLike size={25}/>
+                                                                <p>2.1k</p>
+                                                            </div>
+                                                            <div className='flex'>
+                                                                <BiTime size={25}/>
+                                                                <p>{moment(savedArticle.createdAt).format("DD-MM-YYYY")}</p>
+                                                            </div>
+                                                            <button onClick={() => handleDelete(savedArticle.id)} >
+                                                                <img src={Save} className='w-4' alt='' />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                                {/* <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
                                     <div>
                                         <div className='flex gap-5'>
                                             <img src={CategoryImage} className='w-28'/>
@@ -248,31 +297,7 @@ function SavedArticle(){
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                    <div>
-                                        <div className='flex gap-5'>
-                                            <img src={CategoryImage} className='w-28'/>
-                                            <div className='flex flex-col gap-4'>
-                                                <div className='font-bold text-[20px]'>COVID-19</div>
-                                                <div>Why corona never ends? Let’s see how its facts</div>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='flex'>
-                                                        <AiOutlineLike size={25}/>
-                                                        <p>2.1k</p>
-                                                    </div>
-                                                    <div className='flex'>
-                                                        <BiTime size={25}/>
-                                                        <p>4m ago</p>
-                                                    </div>
-                                                    <div>
-                                                        <img src={Save} className='w-4' alt='' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

@@ -21,7 +21,7 @@ const Categories = () => {
     }, [])
     const handleDelete = async (categoryId) => {
         try {
-            await http.delete(`/categories/${categoryId}`)
+            await http().delete(`/categories/${categoryId}`)
             setCategory((prevCategories) => 
                 prevCategories.filter((cat) => cat.id !== categoryId))
         }catch (err) {
