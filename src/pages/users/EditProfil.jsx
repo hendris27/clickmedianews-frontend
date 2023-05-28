@@ -84,12 +84,12 @@ const EditProfile = () => {
                     <Header/>
                 </nav>
                 <div className='flex'>
-                    <div className='w-[500px] border-r-2 p-24 flex flex-col gap-10 '>
+                    <div className='w-[500px] border-r-2 p-24 border-black flex flex-col gap-10  bg-secondary'>
                         <div>
                             <p className='text-[24px] mt-[40px] font-bold'>Profile</p>
                         </div>
                         <div>
-                            <div className='w-[295px] h-[284px] shadow-2xl rounded-2xl bg-white relative'>
+                            <div className='w-[295px] h-[284px] shadow-2xl rounded-2xl bg-red-100 relative'>
                                 <div className='flex gap-5 items-center w-full h-[120px] px-10'>
                                     <div className='border-2 rounded-3xl border-blue-500 p-1'>
                                         <div className='rounded-3xl border-2 border-gray-50 overflow-hidden w-16 h-16'>
@@ -150,7 +150,7 @@ const EditProfile = () => {
                        
                         </div>
                     </div>
-                    <div className=' pt-28 flex-1 '>
+                    <div className=' pt-28 flex-1 bg-secondary '>
                         <Formik initialValues={{username: "", fullName: "", email: "", password: "", profession: "", about: ""}} onSubmit={editProfile}>
                             {({values,  handleBlur, handleChange, handleSubmit, isSubmitting}) => {
                                 function showEye(){
@@ -189,7 +189,7 @@ const EditProfile = () => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <button type='submit' className='text-[18px] font-bold text-primary ' disabled={isSubmitting}>Save Change</button>
+                                                <button type='submit' className='text-[18px] font-bold text-primary hover:text-black' disabled={isSubmitting}>Save Change</button>
                                             </div>
                                         </div>  
                                         <div className='flex justify-between px-[60px] '>
