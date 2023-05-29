@@ -17,35 +17,51 @@ const CategoryArticles = () => {
     const token = useSelector(state => state.auth.token)
     const [article, setArticle] = useState([])
 
-    async function getEventsCategory(name){
-        const {data} = await http().get("/articles", {params: {category: name}})
-        setArticle(data.results)
-    }
-
     useEffect(()=> {
         async function getCategory(){
-            const {data} = await http().get("/categories/all")
-            setCategory(data.results)
+            try {
+                const {data} = await http().get("/categories/all")
+                setCategory(data.results)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
         }
         getCategory()
 
         async function getArticle(){
-            const {data} = await http().get("/articles")
-            console.log(data.results)
-            if(data.results){
-                setArticle(data.results)
+            try {
+                const {data} = await http().get("/articles")
+                console.log(data.results)
+                if(data.results){
+                    setArticle(data.results)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
             }
         }getArticle()
 
         async function getUser(){
-            const {data} =  await http(token).get("/users")
-            console.log(data.results)
-            if(data.results.role === "superadmin"){
-                setUser(data.results.role)
+            try {
+                const {data} =  await http(token).get("/users")
+                console.log(data.results)
+                if(data.results.role === "superadmin"){
+                    setUser(data.results.role)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
             }
         }
         getUser()
-    }, [token])
+    }, [])
 
     async function deleteArticle(event){
         try {
@@ -55,6 +71,19 @@ const CategoryArticles = () => {
             setArticle(articleResponse.data.results)
         } catch (error) {
             console.error(error)
+        }
+    }
+
+    async function getArticleCategory(name){
+        try {
+            const {data} = await http().get("/articles", {params: {category: name}})
+            console.log(data)
+            setArticle(data.results)
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
         }
     }
     return (
@@ -68,7 +97,7 @@ const CategoryArticles = () => {
                 <div className='flex gap-8 justify-between cursor-pointer'>
                     {category.map(category => {
                         return (
-                            <button onClick={()=> getEventsCategory(category.name)} key={`category-article-${category.id}`} className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>{category.name}</button>
+                            <button  onClick={()=>getArticleCategory(category.name)} type='submit' key={`category-article-${category.id}`} className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>{category.name}</button>
                         )
                     })}    
                 </div>
@@ -109,31 +138,32 @@ const CategoryArticles = () => {
                             <div className='flex gap-8'>
                                 {article.map(event=>{
                                     return(
-                                        <Link to={`/articles/manage/${event.id}`} key={`article${event.id}`}>
-                                            {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                                <div className='flex justify-between items-center' >
-                                                    <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                                        <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
-                                                    </div>
-                                                    <div className='pl-8'>
-                                                        <div className='flex flex-col gap-8' >
-                                                            <div className='flex flex-col gap-4'>
-                                                                <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
-                                                                <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
-                                                            </div>
-                                                            <div className='flex gap-4'>
-                                                                {user !=="superadmin" && 
+                                        <div key={`article${event.id}`}>
+                                            <Link to={`/articleview/${event.id}`}>
+                                                {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
+                                                    <div className='flex justify-between items-center' >
+                                                        <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                                                            <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
+                                                        </div>
+                                                        <div className='flex-1 pl-8'>
+                                                            <div className='flex flex-col gap-8' >
+                                                                <div className='flex flex-col gap-4'>
+                                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
+                                                                    <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
+                                                                </div>
+                                                                <div className='flex gap-4'>
+                                                                    {user !=="superadmin" && 
                                                             <div className='flex gap-2 items-center'>
                                                                 <div><BiLike /></div>
                                                                 <div>{event.likeCount}</div>
                                                             </div>}
-                                                                <div className='flex gap-2 items-center'>
-                                                                    <div><BiTimeFive /></div>
-                                                                    <div>3m ago</div>
+                                                                    <div className='flex gap-2 items-center'>
+                                                                        <div><BiTimeFive /></div>
+                                                                        <div>3m ago</div>
+                                                                    </div>
+                                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
                                                                 </div>
-                                                                <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
-                                                            </div>
-                                                            {user === "superadmin" && 
+                                                                {user === "superadmin" && 
                                                             <div className='flex gap-3 justify-between items-center'>
                                                                 <div className='flex items-center'>
                                                                     <button onClick={() => deleteArticle(event)}className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete events</button>
@@ -145,11 +175,12 @@ const CategoryArticles = () => {
                                                                     </Link>
                                                                 </div>
                                                             </div> }
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>}
-                                        </Link>
+                                                </div>}
+                                            </Link>
+                                        </div>
                                     )
                                 })}
                             </div>
