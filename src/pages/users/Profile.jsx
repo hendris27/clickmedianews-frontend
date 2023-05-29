@@ -4,23 +4,19 @@ import { FaChevronLeft } from "react-icons/fa"
 import picture_category from "../../assets/img/articel.jpg"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
-import http from "../../helpers/http.js"
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { getProfileAction } from "../../redux/actions/profile.js"
 import defaultPicture from "../../assets/img/default.jpg"
 
 const Profile = () => {
     const token = useSelector((state) => state.auth.token)
-    const [profile, setProfile] = useState([])
+    const profile = useSelector(state => state.profile.data)
+    const dispatch = useDispatch()
 
     useEffect(() => { 
-        async function getProfile(){
-            const { data } = await http(token).get("/profile")
-            setProfile(data.results)
-        }
-
-        getProfile()
-    }, [token])
+        dispatch(getProfileAction(token))
+    }, [token, dispatch])
 
 
     return(
@@ -35,7 +31,7 @@ const Profile = () => {
                             <div><FaChevronLeft/></div>
                             <div className='font-bold'>Category</div>
                         </div>
-                        <div className='font-bold text-[24px]'>{profile.fullName}</div>
+                        <div className='font-bold text-[24px]'>{profile?.fullName}</div>
                         <div></div>
                     </div>
                    
@@ -46,20 +42,20 @@ const Profile = () => {
                             <div className='flex gap-5 items-center w-full h-[120px] px-10'>
                                 <div className='border-2 rounded-3xl border-blue-500 p-1'>
                                     <div className='rounded-3xl border-2 border-gray-50 overflow-hidden w-16 h-16'>
-                                        {profile.picture === null ? (
+                                        {profile?.picture === null ? (
                                             <img src={defaultPicture} className='object-cover h-full w-full'/>
-                                        ) : <img src={profile.picture} className='object-cover h-full w-full'/>}
+                                        ) : <img src={profile?.picture} className='object-cover h-full w-full'/>}
                                     </div>
                                 </div>
                                 <div className='flex flex-col flex-1'>
-                                    <div>{profile.username}</div>
-                                    <div className='font-bold'>{profile.fullName}</div>
+                                    <div>{profile?.username}</div>
+                                    <div className='font-bold'>{profile?.fullName}</div>
                                     <div>Member</div>
                                 </div>
                             </div>
                             <div className='px-10'>
                                 <div className='font-bold'>About Me</div>
-                                <div>{profile.about}</div>
+                                <div>{profile?.about}</div>
                             </div>
                             <div className='h-[215px] w-[70px] rounded-2xl absolute bottom-[25px] right-[-30px]  bg-blue-500 flex flex-col text-white text-center'>
                                 <div className='rounded-r-2xl border-1 pt-1 rounded-l-2xl h-20 w-[70px] flex flex-col items-center justify-center bg-blue-600'>
@@ -204,13 +200,7 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                
             </div>
-                       
-                        
-                       
-
-                    
             <footer>
                 <Footer />
             </footer>
