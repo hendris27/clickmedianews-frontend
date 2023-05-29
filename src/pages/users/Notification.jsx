@@ -49,6 +49,10 @@ const notification = () => {
                                 <label htmlFor='notification' className='text-gray-500'>2m ago</label>
                             </div>
                         </div>
+                        <div className='flex justify-between'>
+                            <div><button className='bg-primary p-2 mr-5 hover:bg-green-500 rounded-xl'>Accept</button></div>
+                            <div><button className='bg-blue-200 p-2 hover:bg-red-300 rounded-xl' >Ignore</button></div>
+                        </div>
                         <div>
                             <input type='checkbox' name='notification' id='notification' className='w-6 h-6 border-primary' />
                         </div> 
@@ -62,6 +66,9 @@ const notification = () => {
                                 <label htmlFor='notification1' className='font-bold'>Ryan just liked your post</label>
                                 <label htmlFor='notification1' className='text-gray-500'>2m ago</label>
                             </div>
+                        </div>
+                        <div className='flex justify-between'>
+                            <div><button className='bg-primary p-2 mr-5 hover:bg-[#6868f2] rounded-xl'>View</button></div>
                         </div>
                         <div>
                             <input type='checkbox' name='notification1' id='notification1' className='w-6 h-6 border-primary' />
