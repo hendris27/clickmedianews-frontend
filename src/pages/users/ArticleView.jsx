@@ -31,8 +31,6 @@ const ArticleView = () => {
         setEdit(false)
     }
 
-
-    
     function publishButton(){
         setEdit(false)
         publishArticle(selectedCategoryId, descriptions )
@@ -97,7 +95,7 @@ const ArticleView = () => {
     },[])
     async function publishArticle(selectedCategoryId, descriptions ){
         try {
-            const {data} = await http(token).patch(`/admin/waiting-lists/${id}`, {categoryId: selectedCategoryId, descriptions: descriptions})
+            const {data} = await http().patch(`/admin/waiting-lists/${id}`, {categoryId: selectedCategoryId, descriptions: descriptions})
             console.log(data.results)
         } catch (error) {
             const message = error?.response?.data?.message

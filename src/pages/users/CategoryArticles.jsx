@@ -10,7 +10,6 @@ import { useState, useEffect } from "react"
 import http from "../../helpers/http"
 import { useSelector } from "react-redux"
 
-
 const CategoryArticles = () => {
     const [category, setCategory] = useState([])
     const [user, setUser] = useState([])
