@@ -5,12 +5,13 @@ import { BsFillBookmarkFill } from "react-icons/bs"
 import { FiEdit2 } from "react-icons/fi"
 import Filter from "../../assets/img/filter.png"
 import Footer from "../../components/Footers"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
 import { useSelector } from "react-redux"
 
 const CategoryArticles = () => {
+    const navigate = useNavigate()
     const [category, setCategory] = useState([])
     const [user, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
@@ -62,14 +63,21 @@ const CategoryArticles = () => {
         getUser()
     }, [])
 
-    async function deleteArticle(event){
+    async function deleteArticle(id){
         try {
-            const {data} = await http().delete(`/admin/articles/${event.id}`)
-            console.log(data)
-            const articleResponse = await http().get("/articles")
-            setArticle(articleResponse.data.results)
+            const body = new URLSearchParams({
+                articleId: id,
+            })
+            const {data} = await http(token).delete("/admin/waiting-lists", body)
+            console.log(data.results)
+            if(data.results){
+                navigate("/categoryarticles")
+            }
         } catch (error) {
-            console.error(error)
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
         }
     }
 
@@ -164,7 +172,7 @@ const CategoryArticles = () => {
                                                                 {user === "superadmin" && 
                                                             <div className='flex gap-3 justify-between items-center'>
                                                                 <div className='flex items-center'>
-                                                                    <button onClick={() => deleteArticle(event)}className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete events</button>
+                                                                    <button type='submit' onClick={() => deleteArticle(event.id)} className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete Article</button>
                                                                 </div>
 
                                                                 <div className='bg-primary h-10 w-10 mr-2 flex items-center justify-center rounded-full hover:bg-green-500'>
