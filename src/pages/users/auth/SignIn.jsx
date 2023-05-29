@@ -65,7 +65,7 @@ function SignIn() {
                         <Formik initialValues={{email: "", password: "", phoneNumber: ""}} onSubmit={doSignIn} validationSchema={validationSchema}>
                             {({values, errors, touched, handleBlur, handleSubmit, handleChange, isSubmitting}) => {
                                 return (
-                                    <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
+                                    <form onSubmit={handleSubmit} className='flex flex-col gap-3 max-w-xs'>
                                         <div className='text-[36px] font-bold'>Login</div>
                                         {errorMessage && (
                                             <div>
