@@ -1,6 +1,6 @@
 import Header from "../../components/Headers"
 import Picture from "../../assets/img/picture_login.png"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import ArrowBack from "../../assets/img/arrow-back.svg"
 import Save from "../../assets/img/save.png"
 import Like from "../../assets/img/like.png"
@@ -11,12 +11,13 @@ import { useSelector } from "react-redux"
 import moment from "moment"
 
 const ArticleView = () => {
+    const navigate = useNavigate()
     const [article, setArticle] = useState([])
     const [user, setUser] = useState({})
     const [category, setCategory] = useState([])
     const [selectedCategoryId, setSelectedCategoryId] = useState("")
     const [edit, setEdit] = useState(false)
-    const [descriptions, setDescription] = useState(article?.descriptions)
+    const [descriptions, setDescriptions] = useState(article?.descriptions)
 
     console.log(selectedCategoryId)
     const {id} = useParams()
@@ -30,12 +31,31 @@ const ArticleView = () => {
         setEdit(false)
     }
 
+    function publishButton(){
+        setEdit(false)
+        publishArticle(selectedCategoryId, descriptions )
+    }
+
+    async function deleteArticle(){
+        try {
+            const {data} = await http(token).delete(`/admin/articles/${id}`)
+            console.log(data.results)
+            navigate("/categoryarticles")
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
+        }
+    }
+
     useEffect(()=>{
         async function getArticle(){
             try {
                 const {data} = await http().get(`/article-view/${id}`)
                 console.log(data.results)
                 setArticle(data.results)
+                setDescriptions(data.results.descriptions)
             } catch (error) {
                 const message = error?.response?.data?.message
                 if(message){
@@ -46,7 +66,8 @@ const ArticleView = () => {
 
         async function getUser(){
             try {
-                const {data} =  await http(token).get("/users")
+                const {data} =  await http(token).get("/admin/users/detail")
+                console.log(data.results)
                 if(data.results.role === "superadmin"){
                     setUser(data.results.role)
                 }
@@ -72,9 +93,9 @@ const ArticleView = () => {
         }
         getCategory()
     },[])
-    async function publishArticle(selectedCategory, id){
+    async function publishArticle(selectedCategoryId, descriptions ){
         try {
-            const {data} = await http(token).patch(`/admin/waiting-lists/${id}`, {categoryId: selectedCategory})
+            const {data} = await http().patch(`/admin/waiting-lists/${id}`, {categoryId: selectedCategoryId, descriptions: descriptions})
             console.log(data.results)
         } catch (error) {
             const message = error?.response?.data?.message
@@ -124,7 +145,7 @@ const ArticleView = () => {
                             <div className='w-full flex flex-col gap-3'>
                                 {user !== "superadmin" && <button className='btn normal-case w-full font-bold max-w-full'>Share Article Link</button>}
                                 {user === "superadmin" && <div className='flex flex-col gap-3'>
-                                    <button onClick={editButton} className='btn normal-case w-full font-bold max-w-full'>Edit article</button>
+                                    {edit=== true ? (<button onClick={saveButton} className='btn normal-case w-full font-bold max-w-full'>Save article</button>) : (<button onClick={editButton} className='btn normal-case w-full font-bold max-w-full'>Edit article</button>)}
                                     <select 
                                         name='categoryId' 
                                         className='btn btn-primary normal-case w-full font-bold max-w-full text-white'
@@ -144,9 +165,12 @@ const ArticleView = () => {
                 </div>
                 <div className='w-full px-20 pt-20 pb-20 flex flex-col gap-10'>
                     <div>
-                        <div className='flex flex-col gap-5'>
-                            <input>{article?.descriptions}</input>
-                        </div>
+                        {user === "superadmin" ? (<div className='flex flex-col gap-5'>
+                            {edit === true ? <textarea className='' type='text' value={descriptions} onChange={(e) => setDescriptions(e.target.value)}/> : <div>{descriptions}</div> }
+                        </div>) : 
+                            <div className='flex flex-col gap-5'>
+                                <div>{descriptions}</div>
+                            </div>}
                     </div>
                     {user !== "superadmin" ? (<div className='flex flex-col gap-8'>
                         <p className='font-bold text-[24px]'>2 Comments</p>
@@ -180,8 +204,8 @@ const ArticleView = () => {
                         </div>
                     </div>) : (
                         <div className='flex gap-16'>
-                            <button onClick={()=> publishArticle(selectedCategoryId, id)} className='h-16 btn btn-primary flex-1 normal-case text-white font-bold max-w-full'>Publish Article</button>
-                            <button className='h-16 btn btn-secondary flex-1 normal-case text-primary font-bold max-w-full'>Decline Article Request </button>
+                            <button onClick={publishButton} className='h-16 btn btn-primary flex-1 normal-case text-white font-bold max-w-full'>Publish Article</button>
+                            <button onClick={deleteArticle} className='h-16 btn btn-secondary flex-1 normal-case text-primary font-bold max-w-full'>Decline Article Request </button>
                         </div>
                     )}
                 </div>

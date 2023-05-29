@@ -10,7 +10,6 @@ import { useState, useEffect } from "react"
 import http from "../../helpers/http"
 import { useSelector } from "react-redux"
 
-
 const CategoryArticles = () => {
     const [category, setCategory] = useState([])
     const [user, setUser] = useState([])
@@ -48,7 +47,7 @@ const CategoryArticles = () => {
 
         async function getUser(){
             try {
-                const {data} =  await http(token).get("/users")
+                const {data} =  await http(token).get("/admin/users")
                 console.log(data.results)
                 if(data.results.role === "superadmin"){
                     setUser(data.results.role)
