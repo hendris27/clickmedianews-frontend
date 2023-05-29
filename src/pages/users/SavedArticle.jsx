@@ -114,7 +114,7 @@ function SavedArticle(){
                                     <div className='font-bold'>Edit Profile</div>
                                     <div><IoIosArrowForward/></div>
                                 </Link>
-                                <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
+                                <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl bg-blue-300 text-blue-600 hover:bg-blue-100 hover:text-blue-600'>
                                     <div className='font-bold'>Saved Post</div>
                                     <div><IoIosArrowForward/></div>
                                 </Link>
@@ -138,7 +138,7 @@ function SavedArticle(){
                                     <div key={`saved-article-${article.id}`} className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
                                         <div>
                                             <div className='flex gap-5'>
-                                                <img src={article.Picture} className='w-28'/>
+                                                <img src={article.picture} className='w-28'/>
                                                 <div className='flex flex-col gap-4'>
                                                     <div className='font-bold text-[20px]'>{article.title}</div>
                                                     <div>{article.descriptions}</div>
