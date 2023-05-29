@@ -134,29 +134,6 @@ function SavedArticle(){
                         <div className='flex flex-col flex-1 items-center mt-20 gap-10'>
                             <div className='text-[#3366FF] text-2xl font-bold'>Saved Post</div>
                             <div className='w-full flex flex-wrap gap-5 justify-center'>
-
-                                {savePost.map(savedArticle => {
-                                    return (
-                                        <div key={`saved-article-${savedArticle.id}`} className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                            <div>
-                                                <div className='flex gap-5'>
-                                                    <img src={savedArticle.picture} className='w-28'/>
-                                                    <div className='flex flex-col gap-4'>
-                                                        <div className='font-bold text-[20px]'>{savedArticle.title}</div>
-                                                        <div>{savedArticle.descriptions}</div>
-                                                        <div className='flex gap-2 items-center'>
-                                                            <div className='flex'>
-                                                                <AiOutlineLike size={25}/>
-                                                                <p>2.1k</p>
-                                                            </div>
-                                                            <div className='flex'>
-                                                                <BiTime size={25}/>
-                                                                <p>{moment(savedArticle.createdAt).format("DD-MM-YYYY")}</p>
-                                                            </div>
-                                                            <button onClick={() => handleDelete(savedArticle.id)} >
-                                                                <img src={Save} className='w-4' alt='' />
-                                                            </button>
-
                                 {savePost.map(article => (
                                     <div key={`saved-article-${article.id}`} className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
                                         <div>
@@ -176,23 +153,14 @@ function SavedArticle(){
                                                         </div>
                                                         <button onClick={() => handleDelete(article.id)}>
                                                             <img src={Save} className='w-4' alt='' />
-
-
- 
-
                                                         </button>
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                    )
-                                })}
-
                                     </div>
-                                ))}
-
+                                )
+                                )}
                                 {/* <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
                                     <div>
                                         <div className='flex gap-5'>
