@@ -19,7 +19,6 @@ const ArticleView = () => {
     const [edit, setEdit] = useState(false)
     const [descriptions, setDescriptions] = useState(article?.descriptions)
 
-    console.log(selectedCategoryId)
     const {id} = useParams()
     const token = useSelector(state => state.auth.token)
 
@@ -82,8 +81,9 @@ const ArticleView = () => {
 
         async function getCategory(){
             try {
-                const {data} = await http().get("/categories/all")
+                const {data} = await http().get("/categories?limit=10")
                 setCategory(data.results)
+                console.log(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
                 if(message){
@@ -93,9 +93,13 @@ const ArticleView = () => {
         }
         getCategory()
     },[])
-    async function publishArticle(selectedCategoryId, descriptions ){
+    async function publishArticle(){
         try {
-            const {data} = await http().patch(`/admin/waiting-lists/${id}`, {categoryId: selectedCategoryId, descriptions: descriptions})
+            const formData = new FormData()
+            formData.append("categoryId", selectedCategoryId)
+            formData.append("descriptions", descriptions)
+
+            const {data} = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
             console.log(data.results)
         } catch (error) {
             const message = error?.response?.data?.message
@@ -148,13 +152,13 @@ const ArticleView = () => {
                                     {edit=== true ? (<button onClick={saveButton} className='btn normal-case w-full font-bold max-w-full'>Save article</button>) : (<button onClick={editButton} className='btn normal-case w-full font-bold max-w-full'>Edit article</button>)}
                                     <select 
                                         name='categoryId' 
-                                        className='btn btn-primary normal-case w-full font-bold max-w-full text-white'
-                                        defaultValue=''
+                                        className='h-12 rounded-md border-none bg-primary normal-case w-full font-bold max-w-full text-white'
+                                        defaultValue={category}
                                         onChange={(e) => setSelectedCategoryId(e.target.value)}>
-                                        <option disabled value=''>Add to category</option>
+                                        <option className='text-center' disabled value=''>Add to category</option>
                                         {category.map(event =>{
                                             return(
-                                                <option key={`citySearch${event.id}`} value={event.id}>{event.name}</option>
+                                                <option className='text-center' key={`citySearch${event.id}`} value={event.id}>{event.name}</option>
                                             )
                                         })}   
                                     </select>
@@ -166,7 +170,7 @@ const ArticleView = () => {
                 <div className='w-full px-20 pt-20 pb-20 flex flex-col gap-10'>
                     <div>
                         {user === "superadmin" ? (<div className='flex flex-col gap-5'>
-                            {edit === true ? <textarea className='' type='text' value={descriptions} onChange={(e) => setDescriptions(e.target.value)}/> : <div>{descriptions}</div> }
+                            {edit === true ? <textarea name='descriptions' className='h-[300px]' type='text' value={descriptions} onChange={(e) => setDescriptions(e.target.value)}/> : <div>{descriptions}</div> }
                         </div>) : 
                             <div className='flex flex-col gap-5'>
                                 <div>{descriptions}</div>
