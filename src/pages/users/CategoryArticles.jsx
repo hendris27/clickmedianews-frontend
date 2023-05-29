@@ -16,6 +16,12 @@ const CategoryArticles = () => {
     const [user, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
     const [article, setArticle] = useState([])
+
+    async function getEventsCategory(name){
+        const {data} = await http().get("/articles", {params: {category: name}})
+        setArticle(data.results)
+    }
+
     useEffect(()=> {
         async function getCategory(){
             const {data} = await http().get("/categories/all")
@@ -39,7 +45,7 @@ const CategoryArticles = () => {
             }
         }
         getUser()
-    }, [])
+    }, [token])
 
     async function deleteArticle(event){
         try {
@@ -62,7 +68,7 @@ const CategoryArticles = () => {
                 <div className='flex gap-8 justify-between cursor-pointer'>
                     {category.map(category => {
                         return (
-                            <div key={`category-article-${category.id}`} className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>{category.name}</div>
+                            <button onClick={()=> getEventsCategory(category.name)} key={`category-article-${category.id}`} className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>{category.name}</button>
                         )
                     })}    
                 </div>
@@ -103,7 +109,7 @@ const CategoryArticles = () => {
                             <div className='flex gap-8'>
                                 {article.map(event=>{
                                     return(
-                                        <div key={`article${event.id}`}>
+                                        <Link to={`/articles/manage/${event.id}`} key={`article${event.id}`}>
                                             {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
                                                 <div className='flex justify-between items-center' >
                                                     <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
@@ -143,7 +149,7 @@ const CategoryArticles = () => {
                                                     </div>
                                                 </div>
                                             </div>}
-                                        </div>
+                                        </Link>
                                     )
                                 })}
                             </div>
