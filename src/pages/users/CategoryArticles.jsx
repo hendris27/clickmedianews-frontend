@@ -48,7 +48,7 @@ const CategoryArticles = () => {
 
         async function getUser(){
             try {
-                const {data} =  await http(token).get("/users")
+                const {data} =  await http(token).get("/admin/users")
                 console.log(data.results)
                 if(data.results.role === "superadmin"){
                     setUser(data.results.role)

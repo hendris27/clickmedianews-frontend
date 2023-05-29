@@ -64,22 +64,34 @@ function SavedArticle(){
     return (
         <>
             <div>
-                <Header/>
+                <Header />
                 <div className='pt-20'>
                     <div className='flex h-auto'>
                         <div className='max-w-[500px] border-r-2 p-20 flex flex-col gap-10'>
                             <div>
-                                <p className='text-[24px] font-bold'>Profile</p>
+                                <p className='text-24px font-bold'>Profile</p>
                             </div>
                             <div>
-                                <div className='mb-2 text-center w-[295px]'>Click profile card to see profile</div>
+                                <div className='mb-2 text-center w-[295px]'>
+                  Click profile card to see profile
+                                </div>
                                 <div className='w-[295px] h-[284px] shadow-2xl rounded-2xl bg-white relative'>
                                     <div className='flex gap-5 items-center w-full h-[120px] px-10'>
                                         <div className='border-2 rounded-3xl border-blue-500 p-1'>
                                             <div className='rounded-3xl border-2 border-gray-50 overflow-hidden w-16 h-16'>
                                                 {profile.picture === null ? (
-                                                    <img src={defaultPicture} className='object-cover' />
-                                                ) : <img src={profile.picture} className='object-cover' />}
+                                                    <img
+                                                        src={defaultPicture}
+                                                        className='object-cover'
+                                                        alt=''
+                                                    />
+                                                ) : (
+                                                    <img
+                                                        src={profile.picture}
+                                                        className='object-cover'
+                                                        alt=''
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                         <div className='flex flex-col flex-1'>
@@ -108,25 +120,49 @@ function SavedArticle(){
                                     </div>
                                 </div>
                             </div>
-                            <div className='w-full flex justify-center'><Link to='/profile' className='text-blue-500'>See Profile</Link></div>
-                            <div className='flex flex-col gap-5 '>
-                                <Link to='/edit-profile' className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
+                            <div className='w-full flex justify-center'>
+                                <Link to='/profile' className='text-blue-500'>
+                  See Profile
+                                </Link>
+                            </div>
+                            <div className='flex flex-col gap-5'>
+                                <Link
+                                    to='/edit-profile'
+                                    className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'
+                                >
                                     <div className='font-bold'>Edit Profile</div>
-                                    <div><IoIosArrowForward/></div>
+                                    <div>
+                                        <IoIosArrowForward />
+                                    </div>
                                 </Link>
-                                <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
+                                <Link
+                                    className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'
+                                >
                                     <div className='font-bold'>Saved Post</div>
-                                    <div><IoIosArrowForward/></div>
+                                    <div>
+                                        <IoIosArrowForward />
+                                    </div>
                                 </Link>
-                                <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
+                                <Link
+                                    className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'
+                                >
                                     <div className='font-bold'>FAQ</div>
-                                    <div><IoIosArrowForward/></div>
+                                    <div>
+                                        <IoIosArrowForward />
+                                    </div>
                                 </Link>
-                                <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
+                                <Link
+                                    className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'
+                                >
                                     <div className='font-bold'>Help</div>
-                                    <div><IoIosArrowForward/></div>
+                                    <div>
+                                        <IoIosArrowForward />
+                                    </div>
                                 </Link>
-                                <button onClick={doLogout} className='flex justify-center items-center border-none p-3 rounded-2xl bg-blue-600 text-white'>
+                                <button
+                                    onClick={doLogout}
+                                    className='flex justify-center items-center border-none p-3 rounded-2xl bg-blue-600 text-white'
+                                >
                                     <div className='font-bold'>Logout</div>
                                 </button>
                             </div>
@@ -134,240 +170,45 @@ function SavedArticle(){
                         <div className='flex flex-col flex-1 items-center mt-20 gap-10'>
                             <div className='text-[#3366FF] text-2xl font-bold'>Saved Post</div>
                             <div className='w-full flex flex-wrap gap-5 justify-center'>
-
-                                {savePost.map(savedArticle => {
-                                    return (
-                                        <div key={`saved-article-${savedArticle.id}`} className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                            <div>
-                                                <div className='flex gap-5'>
-                                                    <img src={savedArticle.picture} className='w-28'/>
-                                                    <div className='flex flex-col gap-4'>
-                                                        <div className='font-bold text-[20px]'>{savedArticle.title}</div>
-                                                        <div>{savedArticle.descriptions}</div>
-                                                        <div className='flex gap-2 items-center'>
-                                                            <div className='flex'>
-                                                                <AiOutlineLike size={25}/>
-                                                                <p>2.1k</p>
-                                                            </div>
-                                                            <div className='flex'>
-                                                                <BiTime size={25}/>
-                                                                <p>{moment(savedArticle.createdAt).format("DD-MM-YYYY")}</p>
-                                                            </div>
-                                                            <button onClick={() => handleDelete(savedArticle.id)} >
-                                                                <img src={Save} className='w-4' alt='' />
-                                                            </button>
-
-                                {savePost.map(article => (
-                                    <div key={`saved-article-${article.id}`} className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
+                                {savePost.map((savedArticle) => (
+                                    <div
+                                        key={`saved-article-${savedArticle.id}`}
+                                        className='w-[366px] h-[146px] rounded-lg shadow-2xl'
+                                    >
                                         <div>
                                             <div className='flex gap-5'>
-                                                <img src={article.Picture} className='w-28'/>
+                                                <img src={savedArticle.picture} className='w-28' alt='' />
                                                 <div className='flex flex-col gap-4'>
-                                                    <div className='font-bold text-[20px]'>{article.title}</div>
-                                                    <div>{article.descriptions}</div>
+                                                    <div className='font-bold text-[20px]'>
+                                                        {savedArticle.title}
+                                                    </div>
+                                                    <div>{savedArticle.descriptions}</div>
                                                     <div className='flex gap-2 items-center'>
                                                         <div className='flex'>
-                                                            <AiOutlineLike size={25}/>
+                                                            <AiOutlineLike size={25} />
                                                             <p>2.1k</p>
                                                         </div>
                                                         <div className='flex'>
-                                                            <BiTime size={25}/>
-                                                            <p>{moment(article.createdAt).fromNow("mm")} ago</p>
+                                                            <BiTime size={25} />
+                                                            <p>{moment(savedArticle.createdAt).format("DD-MM-YYYY")}</p>
                                                         </div>
-                                                        <button onClick={() => handleDelete(article.id)}>
+                                                        <button onClick={() => handleDelete(savedArticle.id)}>
                                                             <img src={Save} className='w-4' alt='' />
-
-
- 
-
                                                         </button>
-
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                    )
-                                })}
-
                                     </div>
                                 ))}
-
-                                {/* <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                    <div>
-                                        <div className='flex gap-5'>
-                                            <img src={CategoryImage} className='w-28'/>
-                                            <div className='flex flex-col gap-4'>
-                                                <div className='font-bold text-[20px]'>COVID-19</div>
-                                                <div>Why corona never ends? Let’s see how its facts</div>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='flex'>
-                                                        <AiOutlineLike size={25}/>
-                                                        <p>2.1k</p>
-                                                    </div>
-                                                    <div className='flex'>
-                                                        <BiTime size={25}/>
-                                                        <p>4m ago</p>
-                                                    </div>
-                                                    <div>
-                                                        <img src={Save} className='w-4' alt='' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                    <div>
-                                        <div className='flex gap-5'>
-                                            <img src={CategoryImage} className='w-28'/>
-                                            <div className='flex flex-col gap-4'>
-                                                <div className='font-bold text-[20px]'>COVID-19</div>
-                                                <div>Why corona never ends? Let’s see how its facts</div>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='flex'>
-                                                        <AiOutlineLike size={25}/>
-                                                        <p>2.1k</p>
-                                                    </div>
-                                                    <div className='flex'>
-                                                        <BiTime size={25}/>
-                                                        <p>4m ago</p>
-                                                    </div>
-                                                    <div>
-                                                        <img src={Save} className='w-4' alt='' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                    <div>
-                                        <div className='flex gap-5'>
-                                            <img src={CategoryImage} className='w-28'/>
-                                            <div className='flex flex-col gap-4'>
-                                                <div className='font-bold text-[20px]'>COVID-19</div>
-                                                <div>Why corona never ends? Let’s see how its facts</div>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='flex'>
-                                                        <AiOutlineLike size={25}/>
-                                                        <p>2.1k</p>
-                                                    </div>
-                                                    <div className='flex'>
-                                                        <BiTime size={25}/>
-                                                        <p>4m ago</p>
-                                                    </div>
-                                                    <div>
-                                                        <img src={Save} className='w-4' alt='' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                    <div>
-                                        <div className='flex gap-5'>
-                                            <img src={CategoryImage} className='w-28'/>
-                                            <div className='flex flex-col gap-4'>
-                                                <div className='font-bold text-[20px]'>COVID-19</div>
-                                                <div>Why corona never ends? Let’s see how its facts</div>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='flex'>
-                                                        <AiOutlineLike size={25}/>
-                                                        <p>2.1k</p>
-                                                    </div>
-                                                    <div className='flex'>
-                                                        <BiTime size={25}/>
-                                                        <p>4m ago</p>
-                                                    </div>
-                                                    <div>
-                                                        <img src={Save} className='w-4' alt='' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                    <div>
-                                        <div className='flex gap-5'>
-                                            <img src={CategoryImage} className='w-28'/>
-                                            <div className='flex flex-col gap-4'>
-                                                <div className='font-bold text-[20px]'>COVID-19</div>
-                                                <div>Why corona never ends? Let’s see how its facts</div>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='flex'>
-                                                        <AiOutlineLike size={25}/>
-                                                        <p>2.1k</p>
-                                                    </div>
-                                                    <div className='flex'>
-                                                        <BiTime size={25}/>
-                                                        <p>4m ago</p>
-                                                    </div>
-                                                    <div>
-                                                        <img src={Save} className='w-4' alt='' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                    <div>
-                                        <div className='flex gap-5'>
-                                            <img src={CategoryImage} className='w-28'/>
-                                            <div className='flex flex-col gap-4'>
-                                                <div className='font-bold text-[20px]'>COVID-19</div>
-                                                <div>Why corona never ends? Let’s see how its facts</div>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='flex'>
-                                                        <AiOutlineLike size={25}/>
-                                                        <p>2.1k</p>
-                                                    </div>
-                                                    <div className='flex'>
-                                                        <BiTime size={25}/>
-                                                        <p>4m ago</p>
-                                                    </div>
-                                                    <div>
-                                                        <img src={Save} className='w-4' alt='' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='w-[366px] h-[146px] rounded-lg shadow-2xl'>
-                                    <div>
-                                        <div className='flex gap-5'>
-                                            <img src={CategoryImage} className='w-28'/>
-                                            <div className='flex flex-col gap-4'>
-                                                <div className='font-bold text-[20px]'>COVID-19</div>
-                                                <div>Why corona never ends? Let’s see how its facts</div>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='flex'>
-                                                        <AiOutlineLike size={25}/>
-                                                        <p>2.1k</p>
-                                                    </div>
-                                                    <div className='flex'>
-                                                        <BiTime size={25}/>
-                                                        <p>4m ago</p>
-                                                    </div>
-                                                    <div>
-                                                        <img src={Save} className='w-4' alt='' />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                     </div>
                 </div>
-                <Footer/>
+                <Footer />
             </div>
         </>
+
     )
 }
 
