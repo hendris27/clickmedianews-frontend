@@ -47,8 +47,8 @@ const CategoryArticles = () => {
 
         async function getUser(){
             try {
-                const {data} =  await http(token).get("/admin/users")
-                console.log(data.results)
+                const {data} =  await http(token).get("/admin/users/detail")
+                console.log(data.results.role)
                 if(data.results.role === "superadmin"){
                     setUser(data.results.role)
                 }
@@ -150,18 +150,17 @@ const CategoryArticles = () => {
                                                                     <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
                                                                     <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
                                                                 </div>
-                                                                <div className='flex gap-4'>
-                                                                    {user !=="superadmin" && 
-                                                            <div className='flex gap-2 items-center'>
-                                                                <div><BiLike /></div>
-                                                                <div>{event.likeCount}</div>
-                                                            </div>}
+                                                                {user !== "superadmin" && <div className='flex gap-4'>
+                                                                    <div className='flex gap-2 items-center'>
+                                                                        <div><BiLike /></div>
+                                                                        <div>{event.likeCount}</div>
+                                                                    </div>
                                                                     <div className='flex gap-2 items-center'>
                                                                         <div><BiTimeFive /></div>
                                                                         <div>3m ago</div>
                                                                     </div>
                                                                     <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
-                                                                </div>
+                                                                </div>}
                                                                 {user === "superadmin" && 
                                                             <div className='flex gap-3 justify-between items-center'>
                                                                 <div className='flex items-center'>
