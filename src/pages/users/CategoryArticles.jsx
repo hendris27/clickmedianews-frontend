@@ -19,7 +19,7 @@ const CategoryArticles = () => {
     useEffect(()=> {
         async function getCategory(){
             try {
-                const {data} = await http().get("/categories/all")
+                const {data} = await http().get("/categories?limit=9")
                 setCategory(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
