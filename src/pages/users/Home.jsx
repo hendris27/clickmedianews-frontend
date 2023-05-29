@@ -108,11 +108,11 @@ const Home = ()=> {
                     </div>
                     <div className='bg-[#ffffff] pl-[155px] pt-[135px] pb-[175px]'>
                         <div className='flex gap-16'>
-                            <div>
-                                <img src={image} alt='picture' />
-                            </div>
-                            <div className='absolute top-[2900px] left-5'>
-                                <img src= {card} alt='picture' />
+                            <div className='flex relative'>
+                                <img src={image} />
+                                <div className='absolute -inset-x-20 -bottom-20'>
+                                    <img src= {card} alt='picture' />
+                                </div>
                             </div>
                             <div className='flex flex-col gap-8'>
                                 <div className='flex flex-col gap-4'>
