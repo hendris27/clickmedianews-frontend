@@ -15,6 +15,7 @@ const SearchArticles = () => {
                 </nav>
                
             </div>
+            
             <div className='bg-white px-[60px] pt-[125px] pb-[90px]'>
                 <div className='flex flex-col gap-8'>
                     <div className='font-bold'>Search result for &quot;COVID 19 &quot;</div>
@@ -27,6 +28,7 @@ const SearchArticles = () => {
                         <div className='bg-blue-100 text-[#19A7CE] px-2'>#ladygaga</div>
                         <div className='bg-blue-100 text-[#19A7CE] px-2'>#dayniki</div>
                     </div>
+                    
                     <div className='flex gap-5'>
                         <div><img src={Filter} className='w-6'/></div>
                         <div>Filter Article : sort by 
