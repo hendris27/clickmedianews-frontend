@@ -50,7 +50,7 @@ const App = () => {
                         <Route path='/savedarticle' element={<SavedArticle />} />
                     </Routes>
                     <Routes>
-                        <Route path='/articleview' element={<ArticleView />} />
+                        <Route path='/articleview/:id' element={<ArticleView />} />
                     </Routes>
                     <Routes>
                         <Route path='/writearticles' element={<WriteArticles />} />
