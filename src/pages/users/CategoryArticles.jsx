@@ -16,6 +16,12 @@ const CategoryArticles = () => {
     const [user, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
     const [article, setArticle] = useState([])
+
+    async function getEventsCategory(name){
+        const {data} = await http().get("/articles", {params: {category: name}})
+        setArticle(data.results)
+    }
+
     useEffect(()=> {
         async function getCategory(){
             const {data} = await http().get("/categories/all")
@@ -39,11 +45,18 @@ const CategoryArticles = () => {
             }
         }
         getUser()
-    }, [])
+    }, [token])
 
-    // async function deleteArticle(){
-    //     const {data} = await http(token).delete(`/${article.id}`)
-    // }
+    async function deleteArticle(event){
+        try {
+            const {data} = await http().delete(`/admin/articles/${event.id}`)
+            console.log(data)
+            const articleResponse = await http().get("/articles")
+            setArticle(articleResponse.data.results)
+        } catch (error) {
+            console.error(error)
+        }
+    }
     return (
         <>
             <div>
@@ -55,7 +68,7 @@ const CategoryArticles = () => {
                 <div className='flex gap-8 justify-between cursor-pointer'>
                     {category.map(category => {
                         return (
-                            <div key={`category-article-${category.id}`} className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>{category.name}</div>
+                            <button onClick={()=> getEventsCategory(category.name)} key={`category-article-${category.id}`} className='hover:bg-blue-200 p-2 rounded-xl text-[#19A7CE] text-[18px] font-bold'>{category.name}</button>
                         )
                     })}    
                 </div>
@@ -93,36 +106,37 @@ const CategoryArticles = () => {
                 <div className='flex flex-col gap-4'>
                     <div className='pt-8'>
                         <div className='flex flex-col'>
-                            <div className='flex gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '>
-                                {article.map(article=>{
+                            <div className='flex gap-8'>
+                                {article.map(event=>{
                                     return(
-                                        <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl' key={`article${article.id}`}>
-                                            <div className='flex justify-between items-center' >
-                                                <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                                    <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
-                                                </div>
-                                                <div className='pl-8'>
-                                                    <div className='flex flex-col gap-8' >
-                                                        <div className='flex flex-col gap-4'>
-                                                            <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{article.title}</div>
-                                                            <div className='text-[18px] leading-[20px] font-medium '>{article.descriptions}</div>
-                                                        </div>
-                                                        <div className='flex gap-4'>
-                                                            {user !=="superadmin" && 
+                                        <Link to={`/articles/manage/${event.id}`} key={`article${event.id}`}>
+                                            {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
+                                                <div className='flex justify-between items-center' >
+                                                    <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                                                        <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
+                                                    </div>
+                                                    <div className='pl-8'>
+                                                        <div className='flex flex-col gap-8' >
+                                                            <div className='flex flex-col gap-4'>
+                                                                <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
+                                                                <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
+                                                            </div>
+                                                            <div className='flex gap-4'>
+                                                                {user !=="superadmin" && 
                                                             <div className='flex gap-2 items-center'>
                                                                 <div><BiLike /></div>
-                                                                <div>{article.likeCount}</div>
+                                                                <div>{event.likeCount}</div>
                                                             </div>}
-                                                            <div className='flex gap-2 items-center'>
-                                                                <div><BiTimeFive /></div>
-                                                                <div>3m ago</div>
+                                                                <div className='flex gap-2 items-center'>
+                                                                    <div><BiTimeFive /></div>
+                                                                    <div>3m ago</div>
+                                                                </div>
+                                                                <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
                                                             </div>
-                                                            <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
-                                                        </div>
-                                                        {user === "superadmin" && 
+                                                            {user === "superadmin" && 
                                                             <div className='flex gap-3 justify-between items-center'>
                                                                 <div className='flex items-center'>
-                                                                    <button className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete Articles</button>
+                                                                    <button onClick={() => deleteArticle(event)}className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete events</button>
                                                                 </div>
 
                                                                 <div className='bg-primary h-10 w-10 mr-2 flex items-center justify-center rounded-full hover:bg-green-500'>
@@ -131,10 +145,11 @@ const CategoryArticles = () => {
                                                                     </Link>
                                                                 </div>
                                                             </div> }
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </div>}
+                                        </Link>
                                     )
                                 })}
                             </div>

@@ -18,7 +18,6 @@ const Header = () =>{
     const dispatch = useDispatch()
     const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)   
-    const [searchValue, setSearchValue] = React.useState()
 
 
     React.useEffect(() => {
@@ -36,13 +35,10 @@ const Header = () =>{
             navigate("/signin")
         }
     }
-    const handleClearClick = () => {
-        setSearchValue("")
-    }
+    
     const onSearch = (values) => {
         const qs = new URLSearchParams(values).toString()
         navigate(`/searcharticles?${qs}`)
-        // setSeacrhParams(values, "/Search")
     }
  
     return (
@@ -100,12 +96,11 @@ const Header = () =>{
                                         name='search'
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        value={searchValue}
                                         placeholder='Search ...' 
                                         className='gap-3 h-11 w-full max-w-xs outline-none hover:outline-none hover:border-0' />
                                 </div>
                                 <div>
-                                    <button type='submit' onClick={handleClearClick} >  <MdOutlineClear size={25} color='#19A7CE'/></button>
+                                    <button type='reset'  >  <MdOutlineClear size={25} color='#19A7CE'/></button>
                                 </div>
                             
                             </form>
