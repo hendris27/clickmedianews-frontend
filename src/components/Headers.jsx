@@ -190,7 +190,7 @@ const Header = (props) => {
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
                                     <li><a className='hover:bg-white'>
                                         <Link to='/waitinglist'>
-                                            <div className='font-bold text-medium hover:text-primary'> Waiiting list</div>
+                                            <div className='font-bold text-medium hover:text-primary'> Waiting list</div>
                                         </Link>
                                     </a></li>
                                     <li><a className='hover:bg-white'>
