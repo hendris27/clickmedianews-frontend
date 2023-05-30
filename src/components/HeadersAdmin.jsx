@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom"
 import logoBrand from "../assets/img/logo_brand.png"
 import profile from "../assets/img/picture_login.png"
-// import defaultProfile from "../assets/img/default_picture.jpg"
-
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear} from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
 
@@ -18,7 +16,7 @@ const Header = () =>{
                     </Link>
                 </div>
              
-                <div className='flex font-bold gap-12 hidden md:flex md:block'>
+                <div className='font-bold gap-12 hidden md:flex'>
                     <Link to='/home-admin' className='hover:text-[#19A7CE] font-bold'>
                         Home
                     </Link>
@@ -110,7 +108,7 @@ const Header = () =>{
                         <img className='objcet-cover h-full w-full' src={profile} alt='' />
                     </div></div>
                 </div>
-                <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
+                <div className='items-center gap-8 font-bold hidden md:flex'>
                     <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
                         <button className='btn btn-primary text-white w-full h-[20px] '>
                             <Link
