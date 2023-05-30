@@ -18,6 +18,7 @@ const CategoryArticles = () => {
     const token = useSelector(state => state.auth.token)
     const [article, setArticle] = useState([])
     const { state } = useLocation()
+    const categories = state?.categories
 
     useEffect(()=> {
         async function getCategory(){
@@ -78,7 +79,7 @@ const CategoryArticles = () => {
                 }
             }
         }
-        getArticleCategory(state.categories)
+        getArticleCategory(categories)
     }, [])
 
     async function deleteArticle(id){
