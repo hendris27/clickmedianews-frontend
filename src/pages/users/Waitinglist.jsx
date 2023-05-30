@@ -1,4 +1,5 @@
 import Header from "../../components/Headers"
+import { FaChevronLeft } from "react-icons/fa"
 
 import { BiLike, BiTimeFive } from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
@@ -63,14 +64,19 @@ const CategoryArticles = () => {
             <div className='bg-white-300 px-[60px] pt-[95px] pb-[90px]'>
                 <div>
                     <div className='flex justify-between px-[50px]'> 
-                        <div className='flex gap-4 items-center'>
-                            <div className='text-xl'>Back to Home</div>
-                        </div>
+                        <Link to='/'>
+                            <div className='flex gap-4 items-center'>
+                                <div>
+                                    <FaChevronLeft />
+                                </div>
+                                <div className='text-xl'>Back to Home</div>
+                            </div>
+                        </Link>
                         <div className='font-bold text-2xl'>Waiting List</div>
 
                         <div></div>
                     </div>
-                    <div className='w-full flex justify-between pt-16'>
+                    <div className='w-full flex justify-between pt-16 px-[60px]'>
                         <div className='flex gap-5'>
                             <img src={Filter} className='w-6' />
                             <div className='dropdown'>
@@ -86,12 +92,12 @@ const CategoryArticles = () => {
                     </div>
                  
                 </div>
-                <div className=''>
-                    <div className='flex gap-4'>
+                <div className='px-[60px]'>
+                    <div className='grid grid-cols-3 gap-x-36'>
                         {article.map(event=>{                            return(
                             <div key={`article${event.id}`}>
                                 <Link to={`/articleview/${event.id}`}>
-                                    { event.status === false && <div className='flex bg-white w-[396px] rounded-3xl mt-8 drop-shadow-2xl'>
+                                    { event.status === false && <div className='border-2 flex bg-gray-100 w-[396px] rounded-3xl mt-8 drop-shadow-2xl'>
                                         <div className='flex justify-between items-center' >
                                             <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
                                                 <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
