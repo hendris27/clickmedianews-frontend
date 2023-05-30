@@ -18,7 +18,6 @@ const CategoryArticles = () => {
     const token = useSelector(state => state.auth.token)
     const [article, setArticle] = useState([])
     const { state } = useLocation()
-    const categories = state?.categories
 
     useEffect(()=> {
         async function getCategory(){
@@ -66,22 +65,6 @@ const CategoryArticles = () => {
         getUser()
     }, [token])
 
-    useEffect(() => {
-        async function getArticleCategory(categories){
-            try {
-                const {data} = await http().get("/articles", {params: {category: categories}})
-                console.log(data)
-                setArticle(data.results)
-            } catch (error) {
-                const message = error?.response?.data?.message
-                if(message){
-                    console.log(message)
-                }
-            }
-        }
-        getArticleCategory(state?.categories)
-    }, [])
-
     async function deleteArticle(id){
         try {
             const {data} = await http(token).delete(`/admin/articles/${id}`)
@@ -97,10 +80,37 @@ const CategoryArticles = () => {
         }
     }
 
+    useEffect(()=> {
+        async function getArticleCategory(name){
+            try {
+                const {data} = await http().get("/articles", {params: {category: name}})
+                if(state.categories){
+                    await http().get("/articles", {params: {category: state.categories}})
+                }
+                setArticle(data.results)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }
+
+        let data
+        if (state?.categories){
+            data = state.categories
+        }
+
+        getArticleCategory(data)
+
+    }, [])
+
     async function getArticleCategory(name){
         try {
             const {data} = await http().get("/articles", {params: {category: name}})
-            console.log(data)
+            if(state.categories){
+                await http().get("/articles", {params: {category: state.categories}})
+            }
             setArticle(data.results)
         } catch (error) {
             const message = error?.response?.data?.message
