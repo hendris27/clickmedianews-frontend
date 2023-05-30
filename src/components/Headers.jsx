@@ -9,14 +9,14 @@ import { useNavigate } from "react-router-dom"
 import { logout as logoutAction } from "../redux/reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
 import { Formik } from "formik"
-
+import { useLocation } from "react-router-dom"
 
 const Header = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)
-
+    const location = useLocation()
 
     React.useEffect(() => {
         async function getProfileData() {
@@ -49,29 +49,18 @@ const Header = () => {
                 </div>
 
                 <div className='font-bold gap-12 hidden md:flex'>
-                    <Link to='/' className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'>
+                    <Link to='/' className={location.pathname === "/" ? "active" : "text-[#CDCDCD] hover:text-[#3738dc] font-bold"}>
                         Home
                     </Link>
-                    <Link
-                        to='/articles'
-                        className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'
-                    >
+                    <Link to='/articles' className={location.pathname === "/articles" ? "active" : "text-[#CDCDCD] hover:text-[#3738dc] font-bold"}>
                         Articles
                     </Link>
-                    <Link
-                        to='/categories'
-                        className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'
-                    >
+                    <Link to='/categories' className={location.pathname === "/categories" ? "active" : "text-[#CDCDCD] hover:text-[#3738dc] font-bold"}>
                         Category
                     </Link>
-
-
-                    <a
-                        href=''
-                        className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'
-                    >
+                    <Link to='/' className={location.pathname === "/about" ? "active" : "text-[#CDCDCD] hover:text-[#3738dc] font-bold"}>
                         About
-                    </a>
+                    </Link>
                 </div>
                 <div className='flex gap-4 items-center'>
                     <Formik
