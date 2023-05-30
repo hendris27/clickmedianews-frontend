@@ -95,11 +95,12 @@ const Header = (props) => {
                             handleBlur,
                             handleChange,
                             handleSubmit,
+                            resetForm
                             
                         }) =>
                             (<form onSubmit={handleSubmit} className='bg-white flex border-2 rounded-xl px-6 items-center gap-2 h-12'>
                                 <div>
-                                    <button type='submit'>  <BsSearch size={25} color='#444cd4' /></button>
+                                    <button type='submit'><BsSearch size={25} color='#444cd4' className='pt-2' /></button>
                                 </div>
                                 <div>
                                     <input
@@ -112,7 +113,7 @@ const Header = (props) => {
                                         className='gap-3 h-11 w-full max-w-xs outline-none hover:outline-none hover:border-0' />
                                 </div>
                                 <div>
-                                    <button type='reset'><MdOutlineClear size={25} color='#444cd4' className='pt-2'/></button>
+                                    <button type='reset' onClick={() => resetForm()}><MdOutlineClear size={25} color='#444cd4' className='pt-2'/></button>
                                 </div>
 
                             </form>
