@@ -8,7 +8,8 @@ import Footer from "../../components/Footers"
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux"   
+import { useLocation } from "react-router-dom"
 
 const CategoryArticles = () => {
     const navigate = useNavigate()
@@ -16,6 +17,7 @@ const CategoryArticles = () => {
     const [user, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
     const [article, setArticle] = useState([])
+    const { state } = useLocation()
 
     useEffect(()=> {
         async function getCategory(){
@@ -62,6 +64,22 @@ const CategoryArticles = () => {
         }
         getUser()
     }, [token])
+
+    useEffect(() => {
+        async function getArticleCategory(categories){
+            try {
+                const {data} = await http().get("/articles", {params: {category: categories}})
+                console.log(data)
+                setArticle(data.results)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }
+        getArticleCategory(state?.categories)
+    }, [])
 
     async function deleteArticle(id){
         try {
