@@ -33,7 +33,7 @@ const Home = ()=> {
                             be afraid to express the facts. Be an author and share you 
                             prespective of something to the world.</div>
                                 <div className='mt-8 bg-[#444cd4] hover:bg-[#6261df] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center '>
-                                    <button>Start Exploring</button>
+                                    <button className='text-white'>Start Exploring</button>
                                 </div>
                             </div>
                         </div>
@@ -108,11 +108,11 @@ const Home = ()=> {
                     </div>
                     <div className='bg-[#ffffff] pl-[155px] pt-[135px] pb-[175px]'>
                         <div className='flex gap-16'>
-                            <div>
-                                <img src={image} alt='picture' />
-                            </div>
-                            <div className='absolute top-[2900px] left-5'>
-                                <img src= {card} alt='picture' />
+                            <div className='flex relative'>
+                                <img src={image} />
+                                <div className='absolute -inset-x-20 -bottom-20'>
+                                    <img src= {card} alt='picture' />
+                                </div>
                             </div>
                             <div className='flex flex-col gap-8'>
                                 <div className='flex flex-col gap-4'>
@@ -127,7 +127,7 @@ const Home = ()=> {
                                     </div>
                                 </div>
                                 <div className='bg-[#444cd4] hover:bg-[#6261df] text-white w-[180px] h-16 flex items-center justify-center rounded-xl'>
-                                    <button>Start Exploring</button>
+                                    <button className='text-white'>Start Exploring</button>
                                 </div>
                             </div>
                         </div>

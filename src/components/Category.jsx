@@ -5,7 +5,7 @@ const Category = () => {
     const [category, setCategory] = useState([])
     useEffect(()=> {
         async function getCategory(){
-            const {data} = await http().get("/categories")
+            const {data} = await http().get("/categories/all")
             setCategory(data.results)
         }
         getCategory()
@@ -23,7 +23,8 @@ const Category = () => {
                             <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
                                 <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
                             </div>
-                            <div>{category.category}</div>
+                            <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
+                           
                         </div>
                     )
                 })}

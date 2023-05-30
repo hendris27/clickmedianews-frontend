@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom"
 import logoBrand from "../assets/img/logo_brand.png"
-// import profile from "../assets/img/picture_login.png"
-// import defaultProfile from "../assets/img/default_picture.jpg"
 import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear } from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
@@ -12,7 +10,7 @@ import { logout as logoutAction } from "../redux/reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
 import { Formik } from "formik"
 import PropTypes from "prop-types"
-
+import { useLocation } from "react-router-dom"
 
 const Header = (props) => {
     const navigate = useNavigate()
@@ -20,7 +18,7 @@ const Header = (props) => {
     const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
-
+    const location = useLocation()
 
     React.useEffect(() => {
         async function getProfileData() {
@@ -28,7 +26,7 @@ const Header = (props) => {
             setProfile(data.results)
         }
         getProfileData()
-    }, [])
+    }, [token])
 
     const doLogout = () => {
         const confirmed = window.confirm("Are you sure you want to logout?")
@@ -72,30 +70,19 @@ const Header = (props) => {
                     </Link>
                 </div>
 
-                <div className='flex font-bold gap-12 hidden md:flex md:block'>
-                    <Link to='/' className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'>
+                <div className='font-bold gap-12 hidden md:flex'>
+                    <Link to='/' className={location.pathname === "/" ? "active" : "text-[#CDCDCD] hover:text-[#3738dc] font-bold"}>
                         Home
                     </Link>
-                    <Link
-                        to='/articles'
-                        className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'
-                    >
+                    <Link to='/articles' className={location.pathname === "/articles" ? "active" : "text-[#CDCDCD] hover:text-[#3738dc] font-bold"}>
                         Articles
                     </Link>
-                    <Link
-                        to='/categories'
-                        className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'
-                    >
+                    <Link to='/categories' className={location.pathname === "/categories" ? "active" : "text-[#CDCDCD] hover:text-[#3738dc] font-bold"}>
                         Category
                     </Link>
-
-
-                    <a
-                        href=''
-                        className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'
-                    >
+                    <Link to='/' className={location.pathname === "/about" ? "active" : "text-[#CDCDCD] hover:text-[#3738dc] font-bold"}>
                         About
-                    </a>
+                    </Link>
                 </div>
                 <div className='flex gap-4 items-center'>
                     <Formik
@@ -125,7 +112,7 @@ const Header = (props) => {
                                         className='gap-3 h-11 w-full max-w-xs outline-none hover:outline-none hover:border-0' />
                                 </div>
                                 <div>
-                                    <button type='reset'  >  <MdOutlineClear size={25} color='#444cd4' /></button>
+                                    <button type='reset'><MdOutlineClear size={25} color='#444cd4' className='pt-2'/></button>
                                 </div>
 
                             </form>
@@ -201,6 +188,11 @@ const Header = (props) => {
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
                                     <li><a className='hover:bg-white'>
+                                        <Link to='/waitinglist'>
+                                            <div className='font-bold text-medium hover:text-primary'> Waiiting list</div>
+                                        </Link>
+                                    </a></li>
+                                    <li><a className='hover:bg-white'>
                                         <Link to='/edit-profile'>
                                             <div className='font-bold text-medium hover:text-primary'> See Profile</div>
                                         </Link>
@@ -215,7 +207,7 @@ const Header = (props) => {
                     </div>
 
                 ) : (
-                    <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
+                    <div className=' items-center gap-8 font-bold hidden md:flex'>
                         <div className='bg-[#444cd4] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
                             <button className='btn btn-primary text-white w-full h-[20px] '>
                                 <Link

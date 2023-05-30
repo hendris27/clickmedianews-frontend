@@ -2,14 +2,16 @@ import Header from "../../components/Headers.jsx"
 import Footer from "../../components/Footers.jsx"
 import { IoIosArrowForward } from "react-icons/io"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http.js"
 import { Formik } from "formik"
 import { FaEye } from "react-icons/fa"
 import { FaEyeSlash } from "react-icons/fa"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { logout as LogoutAction } from "../../redux/reducers/auth.js"
 import defaultPicture from "../../assets/img/default.jpg"
+import * as Yup from "yup"
 
 const EditProfile = () => {
     const token = useSelector((state) => state.auth.token)
@@ -20,6 +22,7 @@ const EditProfile = () => {
     const [openModal, setOpenModal] = useState(false)
     const [successMessage, setSuccessMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
+    const dispatch = useDispatch()
 
     useEffect(() => { 
         async function getProfile(){
@@ -73,14 +76,24 @@ const EditProfile = () => {
             setSuccessMessage(data.message)
             setTimeout(()=>{setSuccessMessage(false)}, 2000)
         } catch (err) {
-            const results = err.response?.data?.results[0].msg
-            setErrorMessage(results)
-            setTimeout(()=>{setErrorMessage(false)}, 2000)
+            const message = err.response.data.message
+            if (message) {
+                setErrorMessage(message)
+            }
         }
 
         getProfile()
         setOpenModal(false)
     }
+
+    const validationSchema = Yup.object({
+        username: Yup.string().required("Username is required"),
+        fullName: Yup.string().required("Full Name is required"),
+        email: Yup.string().email().required("Email is required"),
+        password: Yup.string().required("Password is required"),
+        profession: Yup.string().required("Profession is required"),
+        about: Yup.string().required("About is required"),
+    })
 
     return(
         <>
@@ -89,12 +102,12 @@ const EditProfile = () => {
                     <Header/>
                 </nav>
                 <div className='flex'>
-                    <div className='w-[500px] border-r-2 p-24 border-black flex flex-col gap-10  bg-secondary'>
+                    <div className='w-[500px] p-24  flex flex-col gap-10'>
                         <div>
                             <p className='text-[24px] mt-[40px] font-bold'>Profile</p>
                         </div>
                         <div>
-                            <div className='w-[295px] h-[284px] shadow-2xl rounded-2xl bg-red-100 relative'>
+                            <div className='w-[295px] h-[284px] shadow-2xl rounded-2xl bg-secondary relative'>
                                 <div className='flex gap-5 items-center w-full h-[120px] px-10'>
                                     <div className='border-2 rounded-3xl border-blue-500 p-1'>
                                         <div className='rounded-3xl border-2 border-gray-50 overflow-hidden w-16 h-16'>
@@ -149,15 +162,15 @@ const EditProfile = () => {
                                 <div><IoIosArrowForward/></div>
                             </Link>
                             <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
-                                <div className='font-bold'>Logout</div>
+                                <div className='font-bold'><button onClick={dispatch(LogoutAction)}>Logout</button></div>
                                 <div><IoIosArrowForward/></div>
                             </Link>
                        
                         </div>
                     </div>
-                    <div className=' pt-28 flex-1 bg-secondary '>
-                        <Formik initialValues={{username: "", fullName: "", email: "", password: "", profession: "", about: ""}} onSubmit={editProfile} enableReinitialize={true}>
-                            {({values,  handleBlur, handleChange, handleSubmit, isSubmitting}) => {
+                    <div className=' pt-28 flex-1'>
+                        <Formik initialValues={{username: "", fullName: "", email: "", password: "", profession: "", about: ""}} onSubmit={editProfile} enableReinitialize={true} validationSchema={validationSchema}>
+                            {({values, touched, errors, handleBlur, handleChange, handleSubmit, isSubmitting}) => {
                                 function showEye(){
                                     setOpen(!open)
                                 }
@@ -183,7 +196,7 @@ const EditProfile = () => {
                                                     successMessage && <div className='alert alert-success flex items-center justify-center mt-5'>{successMessage}</div>
                                                 }
                                                 {
-                                                    errorMessage && <div className='alert alert-success flex items-center justify-center mt-5'>{errorMessage}</div>
+                                                    errorMessage && <div className='alert alert-error flex items-center justify-center mt-5'>{errorMessage}</div>
                                                 }
                                                 <div className='pt-4'>
                                                     <div className=' rounded-xl'>
@@ -214,6 +227,11 @@ const EditProfile = () => {
                                                 />
                                                 <label className='label'>
                                                 </label>
+                                                {errors.username && touched.username && (
+                                                    <label htmlFor='username' className='label'>
+                                                        <span className='label-text-alt text-error'>{errors.username}</span>
+                                                    </label>
+                                                )}
                                             </div>
                                             <div className='form-control w-full max-w-xs'>
                                                 <label className='label'>
@@ -222,6 +240,11 @@ const EditProfile = () => {
                                                 <input type='text' placeholder='Type here' name='fullName' className='input input-bordered w-full max-w-xs' onChange={handleChange} onBlur={handleBlur} value={values.fullName} />
                                                 <label className='label'>
                                                 </label>
+                                                {errors.fullName && touched.fullName && (
+                                                    <label htmlFor='fullName' className='label'>
+                                                        <span className='label-text-alt text-error'>{errors.fullName}</span>
+                                                    </label>
+                                                )}
                                             </div>
                                         </div>
                                         <div className='flex justify-between px-[60px] '>
@@ -232,6 +255,11 @@ const EditProfile = () => {
                                                 <input type='email' name='email' placeholder='Type here' className='input input-bordered w-full max-w-xs' onChange={handleChange} onBlur={handleBlur} value={values.email}/>
                                                 <label className='label'>
                                                 </label>
+                                                {errors.email && touched.email && (
+                                                    <label htmlFor='email' className='label'>
+                                                        <span className='label-text-alt text-error'>{errors.email}</span>
+                                                    </label>
+                                                )}
                                             </div>
                                             <div className='form-control w-full max-w-xs'>
                                                 <label className='label'>
@@ -245,6 +273,11 @@ const EditProfile = () => {
                                                 </div>
                                                 <label className='label'>
                                                 </label>
+                                                {errors.password && touched.password && (
+                                                    <label htmlFor='password' className='label'>
+                                                        <span className='label-text-alt text-error'>{errors.password}</span>
+                                                    </label>
+                                                )}
                                             </div>
                                         </div>
                                         <div className='flex justify-between px-[60px] '>
@@ -255,6 +288,11 @@ const EditProfile = () => {
                                                 <input type='text' name='profession' placeholder='Type here' className='input input-bordered w-full max-w-xs' onChange={handleChange} onBlur={handleBlur} value={values.profession}/>
                                                 <label className='label'>
                                                 </label>
+                                                {errors.profession && touched.profession && (
+                                                    <label htmlFor='profession' className='label'>
+                                                        <span className='label-text-alt text-error'>{errors.profession}</span>
+                                                    </label>
+                                                )}
                                             </div>
                                             <div className='form-control w-full max-w-xs'>
                                                 <label className='label'>
@@ -263,16 +301,21 @@ const EditProfile = () => {
                                                 <input type='text' name='about' placeholder='About' className='input input-bordered w-full  h-[115px] max-w-xs' onChange={handleChange} onBlur={handleBlur} value={values.about}/>
                                                 <label className='label'>
                                                 </label>
+                                                {errors.about && touched.about && (
+                                                    <label htmlFor='about' className='label'>
+                                                        <span className='label-text-alt text-error'>{errors.about}</span>
+                                                    </label>
+                                                )}
                                             </div>
                             
                                         </div>
                                         <div className='flex justify-center mt-32'>
-                                            <div className='mb-24'><button className='btn btn-primary'>Request to be an author </button></div>
+                                            <div className='mb-24'><button type='button' className='btn btn-primary normal-case text-white'>Request to be an author </button></div>
                                         </div>
                                     </form>
                                 )
                             }}
-                        </Formik>
+                        </Formik> 
                     </div>
                     <input type='checkbox' id='loading' className='modal-toggle' checked={openModal} />
                     <div className='modal'>

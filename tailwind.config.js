@@ -9,7 +9,7 @@ export default {
             {
                 clickmedianews: {
                     primary: "#19A7CE",
-                    secondary: "#E5E5CB",
+                    secondary: "#D7DDEC",
                     accent: "#1FB2A5",
                     neutral: "#191D24",
                     "base-100": "#FFFFFF",
