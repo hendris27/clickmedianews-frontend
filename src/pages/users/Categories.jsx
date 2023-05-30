@@ -87,6 +87,7 @@ const Categories = () => {
                                 <button onClick={() => handleDelete(category.id)} className='btn opacity-75 text-white font-light mt-6'>Delete</button>
                             </div>
                             <div className='font-semibold'>{category.category}</div>
+                            <div className='font-semibold'>{category.name}</div>
                         </div>
                     )
                 })}
