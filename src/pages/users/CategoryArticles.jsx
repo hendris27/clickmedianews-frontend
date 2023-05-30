@@ -61,7 +61,7 @@ const CategoryArticles = () => {
             }
         }
         getUser()
-    }, [])
+    }, [token])
 
     async function deleteArticle(id){
         try {
