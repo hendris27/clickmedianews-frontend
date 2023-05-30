@@ -74,12 +74,8 @@ const EditProfile = () => {
             setTimeout(()=>{setSuccessMessage(false)}, 2000)
         } catch (err) {
             const message = err.response.data.message
-            const results = err.response?.data?.results[0].msg
             if (message) {
                 setErrorMessage(message)
-            }
-            if(results) {
-                setErrorMessage(results)
             }
         }
 
