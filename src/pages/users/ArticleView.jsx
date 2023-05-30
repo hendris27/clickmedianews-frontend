@@ -13,6 +13,7 @@ import moment from "moment"
 const ArticleView = () => {
     const navigate = useNavigate()
     const [article, setArticle] = useState([])
+    const [savePost, setSavePost] = useState([])
     const [user, setUser] = useState({})
     const [category, setCategory] = useState([])
     const [selectedCategoryId, setSelectedCategoryId] = useState("")
@@ -33,6 +34,15 @@ const ArticleView = () => {
     function publishButton(){
         setEdit(false)
         publishArticle(selectedCategoryId, descriptions )
+    }
+
+    async function createSavePost() {
+        try {
+            const {data} = await http(token).post("/saved-article");
+            setSavePost(data.results);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     async function deleteArticle(){
@@ -144,7 +154,7 @@ const ArticleView = () => {
                             <div className='flex gap-5 items-center'>
                                 <button><img src={Like} alt='' /></button>
                                 <div className='font-bold'>{article?.likeCount}</div>
-                                <button><img src={Save} alt='' /></button>
+                                <button onClick={createSavePost}><img src={Save} alt='' /></button>
                             </div>
                             <div className='w-full flex flex-col gap-3'>
                                 {user !== "superadmin" && <button className='btn normal-case w-full font-bold max-w-full'>Share Article Link</button>}
