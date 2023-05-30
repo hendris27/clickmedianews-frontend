@@ -120,29 +120,6 @@ const Header = (props) => {
                     </Formik>
                 </div>
 
-
-                {/* <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
-                    <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
-                        <button className='btn btn-primary normal-case text-white w-full h-[20px] '>
-                            <Link
-                                to='/signup'
-                                className='font-bold'
-                            >
-                                    Sign Up
-                            </Link>
-                        </button>
-                    </div>
-                    <div>
-                        <Link
-                            to='/signin'
-                            className='hover:text-[#19A7CE] font-bold'
-                        >
-                                Log In
-                        </Link>
-                    </div>
-                </div> */}
-
-
                 {token ? (
 
                     <div className='flex justify-center items-center'>
