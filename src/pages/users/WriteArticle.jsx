@@ -6,14 +6,20 @@ import ScrollToTop from "../../components/ScrollToTop"
 import { FaChevronLeft } from "react-icons/fa"
 import { HiPlus } from "react-icons/hi"
 import http from "../../helpers/http"
-import { Link, useParams } from "react-router-dom"
+import { Link, } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { BsCheckCircleFill } from "react-icons/bs"
+import {MdError} from "react-icons/md"
 
 const WriteArticles = () => {
     const token = useSelector((state) => state.auth.token)
-    const [category, setCategory] = useState([])
-    const [selectedCoverPhoto, setSelectedCoverPhoto] = useState(null)
-    const {id} = useParams()
+    const [categories, setCategory] = useState([])
+    // const [selectedCoverPhoto, setSelectedCoverPhoto] = useState(null)
+    const [successMessage, setSuccessMessage] = useState("")
+    const [selectedPIcture, setSelectedPicture] = useState(null)
+    const [warningMessage, setWarningMessage] = useState("")
+    const profile = useSelector((state)=>state.profile.data)
+    // const {id} = useParams()
 
     useEffect(() => {
         getCategory()
@@ -30,31 +36,32 @@ const WriteArticles = () => {
         }
     }
 
-    const handleCoverPhotoChange = (e) => {
-        setSelectedCoverPhoto(URL.createObjectURL(e.target.files[0]))
-    }
-
-    useEffect(() => {
-        console.log(selectedCoverPhoto)
-    }, [selectedCoverPhoto])
-
-    const addArticle = async () => {
-        try {
-            const form = new URLSearchParams({
-                createdBy: id,
-                status: false
+    const createArticle = async (values)=>{
+        if(profile.isAuthor === true ){
+            const form = new FormData()
+            Object.keys(values).forEach((key) => {
+                if(values[key]){
+                    form.append(key, values[key])
+                }
+            
             })
-            if (selectedCoverPhoto) {
-                form.append("picture", selectedCoverPhoto)
+            if(selectedPIcture){
+                form.append("picture", selectedPIcture)
             }
-            const {data} = await http(token).post("/articles/manage", form)
-            console.log(data.results)
-        } catch (err) {
-            const message = err?.response?.data?.message
-            if (message) {
-                console.log(message)
+            console.log(form)
+            if(token){
+                const {data} = await http(token).post("/write-article", form, {
+                    headers: {
+                        "Content-Type" : "multipart/form-data"
+                    }
+                })
+                console.log(data.message)
+                setSuccessMessage(data.message)
             }
+        }else{
+            setWarningMessage("You are not an author yet")
         }
+        
     }
 
     return (
@@ -78,13 +85,15 @@ const WriteArticles = () => {
                             <div>Save as draft</div>
                         </Link>
                     </div>
+                    {successMessage && (<div className='flex flex-row justify-center alert alert-info shadow-lg text-white text-lg my-3'><BsCheckCircleFill size={30}/>{successMessage}</div>)}
+                    {warningMessage && (<div className='flex flex-row justify-center alert alert-warning shadow-lg text-white text-lg'><MdError size={30}/>{warningMessage}</div>)}
                     <Formik 
                         initialValues={{
                             title: "",
-                            selectedCategory: "",
-                            content: "",
+                            categoryId: "",
+                            descriptions: "",
                         }}
-                        onSubmit={addArticle}
+                        onSubmit={createArticle}
                     >
                         {({
                             handleChange,
@@ -96,9 +105,9 @@ const WriteArticles = () => {
                                 <div className='flex gap-8'>
                                     <div className='w-[342px] h-[535px]  border-4 p-4 rounded-xl '>
                                         <div className='w-full h-full border-4 border-dashed flex justify-center items-center rounded-xl'>
-                                            {selectedCoverPhoto ? (
+                                            {selectedPIcture ? (
                                                 <img
-                                                    src={selectedCoverPhoto}
+                                                    src={selectedPIcture}
                                                     alt='Selected Cover Photo'
                                                     className='w-full h-full object-cover'
                                                 />
@@ -123,17 +132,17 @@ const WriteArticles = () => {
                                             <div className='w-[50%]'>
                                                 <select
                                                     className='select w-full max-w-xs'
-                                                    name='selectedCategory'
+                                                    name='categoryId'
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    value={values.selectedCategory}
+                                                    value={values.categoryId}
                                                 >
                                                     <option disabled value=''>
                                                     Articles Category
                                                     </option>
-                                                    {category.map((category) => {
+                                                    {categories.map((category) => {
                                                         return (
-                                                            <option key={category.id} value={category.name}>
+                                                            <option key={`category${category.id}`} value={category.id}>
                                                                 {category.name}
                                                             </option>
                                                         )
@@ -145,23 +154,24 @@ const WriteArticles = () => {
                                             <textarea
                                                 className='rounded-2xl h-full w-full p-8 outline-none border-2'
                                                 placeholder='Type Here'
-                                                name='content'
+                                                name='descriptions'
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                value={values.content}
+                                                value={values.descriptions}
                                             ></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div className='flex gap-8 text-white font-bold text-[20px]'>
+                                <div className='flex gap-8 pt-6 text-white font-bold text-[20px]'>
                                     <div className='w-[342px] bg-accent hover:bg-[#19A7CE] rounded-xl flex justify-center items-center'>
-                                        <label className='btn btn-accent w-full h-full'>
-                                            <span>Choose Photo Cover</span>
+                                        <label className='btn btn-accent normal-case w-full h-full'>
+                                            <span className='text-white font-bold'>Choose Photo Cover</span>
                                             <input
                                                 className='hidden'
                                                 type='file'
                                                 name='coverPhoto'
-                                                onChange={handleCoverPhotoChange}
+                                                onChange={(e)=> setSelectedPicture(e.target.files[0])}
+                                                onBlur={handleBlur}
                                             />
                                         </label>
                                     </div>
