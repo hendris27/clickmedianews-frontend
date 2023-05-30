@@ -16,6 +16,7 @@ import Categories from "./pages/users/Categories"
 import Profile from "./pages/users/Profile"
 import SignIn from "./pages/users/auth/SignIn"
 import SignUp from "./pages/users/auth/SignUp"
+import WaitingList from "./pages/users/Waitinglist"
 
 /*Admin*/
 import HomeAdmin from "./pages/admin/HomeAdmin"
@@ -51,6 +52,9 @@ const App = () => {
                     </Routes>
                     <Routes>
                         <Route path='/articleview/:id' element={<ArticleView />} />
+                    </Routes>
+                    <Routes>
+                        <Route path='/waitinglist' element={<WaitingList/>} />
                     </Routes>
                     <Routes>
                         <Route path='/writearticles' element={<WriteArticles />} />
