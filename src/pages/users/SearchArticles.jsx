@@ -1,17 +1,36 @@
 import Header from "../../components/Headers"
-import picture_category from "../../assets/img/articel.jpg"
 
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import Filter from "../../assets/img/filter.png"
 import Footer from "../../components/Footers"
+import { Link, useSearchParams } from "react-router-dom"
+import React from "react"
+import http from "../../helpers/http"
 
 const SearchArticles = () => {
+    const [article, setArticle] = React.useState([])
+    const [searchParams] = useSearchParams()
+
+    React.useEffect(()=>{
+        async function searchResults(){
+            const {data} = await http().get("/articles", {params: searchParams})
+            if(!data.results){
+                console.log("data not found")
+            }
+            if(data.results){
+                setArticle(data.results)
+                
+            }
+        }searchResults()
+    },[searchParams])
+    
+
     return (
         <>
             <div>
                 <nav>
-                    <Header/>
+                    <Header onSearch = {searchParams}></Header>
                 </nav>
                
             </div>
@@ -45,260 +64,52 @@ const SearchArticles = () => {
                 <div>
                 </div>
                 <div className='flex flex-col gap-4'>
-                    <div className='pt-8'>
-                        <div className='flex flex-col gap-8'>
-                            <div className='flex gap-8'>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
+                    <div className='flex pt-8 gap-6'>
+                        {article.map(event=>{
+                            return(
+                                <div key={`article${event.id}`}>
+                                    <Link to={`/articleview/${event.id}`}>
+                                        {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
+                                            <div className='flex justify-between items-center' >
+                                                <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                                                    <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
                                                 </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
+                                                <div className='flex-1 pl-8'>
+                                                    <div className='flex flex-col gap-8' >
+                                                        <div className='flex flex-col gap-4'>
+                                                            <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
+                                                            <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
+                                                        </div>
+                                                        <div className='flex gap-4'>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiLike /></div>
+                                                                <div>{event.likeCount}</div>
+                                                            </div>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiTimeFive /></div>
+                                                                <div>3m ago</div>
+                                                            </div>
+                                                            <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
+                                                            {/* <div className='flex gap-3 justify-start items-center'>
+                                                            <div className='flex items-center'>
+                                                                <button type='button' onClick={() => deleteArticle(event.id)} className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete Article</button>
+                                                            </div>
+
+                                                            <div className='bg-primary h-10 w-10 mr-2 flex items-center justify-center rounded-full hover:bg-green-500'>
+                                                                <Link to='/writearticles'>
+                                                                    <button><FiEdit2 color='white' className='pt-[4px]' size={25} /></button>
+                                                                </Link>
+                                                            </div>*/}
+                                                        </div> 
                                                     </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div>}
+                                    </Link>
                                 </div>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-3xl drop-shadow-2xl '>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='pt-8'>
-                        <div className='flex flex-col gap-8'>
-                            <div className='flex gap-8'>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-3xl drop-shadow-2xl '>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='pt-8'>
-                        <div className='flex flex-col gap-8'>
-                            <div className='font-bold text-[24px]'>Today’s Popular</div>
-                            <div className='flex gap-8'>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-3xl drop-shadow-2xl '>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                            )
+                        })}
+                    </div>                  
                 </div>
             </div>
            

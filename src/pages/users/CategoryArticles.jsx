@@ -65,10 +65,7 @@ const CategoryArticles = () => {
 
     async function deleteArticle(id){
         try {
-            const body = new URLSearchParams({
-                articleId: id,
-            })
-            const {data} = await http(token).delete("/admin/waiting-lists", body)
+            const {data} = await http(token).delete(`/admin/articles/${id}`)
             console.log(data.results)
             if(data.results){
                 navigate("/categoryarticles")
@@ -170,14 +167,14 @@ const CategoryArticles = () => {
                                                                     <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
                                                                 </div>}
                                                                 {user === "superadmin" && 
-                                                            <div className='flex gap-3 justify-between items-center'>
+                                                            <div className='flex gap-3 justify-start items-center'>
                                                                 <div className='flex items-center'>
-                                                                    <button type='submit' onClick={() => deleteArticle(event.id)} className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete Article</button>
+                                                                    <button type='button' onClick={() => deleteArticle(event.id)} className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete Article</button>
                                                                 </div>
 
                                                                 <div className='bg-primary h-10 w-10 mr-2 flex items-center justify-center rounded-full hover:bg-green-500'>
                                                                     <Link to='/writearticles'>
-                                                                        <button><FiEdit2 color='white' size={15} /></button>
+                                                                        <button><FiEdit2 color='white' className='pt-[4px]' size={25} /></button>
                                                                     </Link>
                                                                 </div>
                                                             </div> }
