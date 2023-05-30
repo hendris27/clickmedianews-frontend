@@ -94,7 +94,7 @@ const ArticlesPage = () => {
                     <div className='pt-8'>
                         <div className='flex flex-col gap-8'>
                             <div className='font-bold text-[24px]'>Sport</div>
-                            <div className='grid grid-cols-3'>
+                            <div className='grid grid-cols-3 grid-strat'>
                                 {article.map(event=>{
                                     return (
                                         <div key={`articles${event.id}`}>
