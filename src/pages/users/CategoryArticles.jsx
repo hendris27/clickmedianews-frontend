@@ -108,9 +108,6 @@ const CategoryArticles = () => {
     async function getArticleCategory(name){
         try {
             const {data} = await http().get("/articles", {params: {category: name}})
-            if(state.categories){
-                await http().get("/articles", {params: {category: state.categories}})
-            }
             setArticle(data.results)
         } catch (error) {
             const message = error?.response?.data?.message
