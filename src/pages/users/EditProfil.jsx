@@ -73,9 +73,10 @@ const EditProfile = () => {
             setSuccessMessage(data.message)
             setTimeout(()=>{setSuccessMessage(false)}, 2000)
         } catch (err) {
-            const results = err.response?.data?.results[0].msg
-            setErrorMessage(results)
-            setTimeout(()=>{setErrorMessage(false)}, 2000)
+            const message = err.response.data.message
+            if (message) {
+                setErrorMessage(message)
+            }
         }
 
         getProfile()
@@ -183,7 +184,7 @@ const EditProfile = () => {
                                                     successMessage && <div className='alert alert-success flex items-center justify-center mt-5'>{successMessage}</div>
                                                 }
                                                 {
-                                                    errorMessage && <div className='alert alert-success flex items-center justify-center mt-5'>{errorMessage}</div>
+                                                    errorMessage && <div className='alert alert-error flex items-center justify-center mt-5'>{errorMessage}</div>
                                                 }
                                                 <div className='pt-4'>
                                                     <div className=' rounded-xl'>
