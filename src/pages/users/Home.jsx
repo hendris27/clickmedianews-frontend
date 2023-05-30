@@ -53,7 +53,7 @@ const Home = ()=> {
                                 <div className='hover:text-black'>#jokowidodo</div>
                                 <div className='hover:text-black'>#dayniki</div>
                                 <div className='hover:text-black'>#ladygaga</div>
-                                <div className='hover:text-black'>#ladygaga</div>
+                                <div className='hover:text-black'>##dayniki</div>
                                 <div className='hover:text-black'>#jokowidodo</div>
                                 <div className='hover:text-black'>#dayniki</div>
                                 <div className='hover:text-black'>#jokowidodo</div>
