@@ -33,7 +33,7 @@ const Home = ()=> {
                             be afraid to express the facts. Be an author and share you 
                             prespective of something to the world.</div>
                                 <div className='mt-8 bg-[#444cd4] hover:bg-[#6261df] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center '>
-                                    <button>Start Exploring</button>
+                                    <button className='text-white'>Start Exploring</button>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@ const Home = ()=> {
                                     </div>
                                 </div>
                                 <div className='bg-[#444cd4] hover:bg-[#6261df] text-white w-[180px] h-16 flex items-center justify-center rounded-xl'>
-                                    <button>Start Exploring</button>
+                                    <button className='text-white'>Start Exploring</button>
                                 </div>
                             </div>
                         </div>
