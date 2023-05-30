@@ -29,6 +29,7 @@ const EditProfile = () => {
         async function getProfile(){
             const { data } = await http(token).get("/profile")
             setProfile(data.results)
+            console.log(data)
         }
 
         getProfile()
@@ -72,6 +73,11 @@ const EditProfile = () => {
                     "Content-Type": "multipart/form-data",
                 },
             })
+            
+            const email = values.email
+            const password = values.password
+            const body = new URLSearchParams({email: email, password: password})
+            await http(token).patch("/auth/change-password", body)
       
             setProfile(data.results)
             setSuccessMessage(data.message)
@@ -125,14 +131,14 @@ const EditProfile = () => {
                                         </div>
                                     </div>
                                     <div className='flex flex-col flex-1'>
-                                        <div>{profile.username}</div>
-                                        <div className='font-bold'>{profile?.fullName}</div>
+                                        <div>{profile?.username === null ? "Not set" : profile?.username}</div>
+                                        <div className='font-bold'>{profile?.fullName === null ? "Name is not set" : profile?.fullName}</div>
                                         <div>Member</div>
                                     </div>
                                 </div>
                                 <div className='px-10'>
                                     <div className='font-bold'>About Me</div>
-                                    <div>{profile.about}</div>
+                                    <div>{profile?.about === null ? "About is not set" : profile?.about}</div>
                                 </div>
                                 <div className='w-[255px] rounded-2xl absolute bottom-[-20px] right-5 h-[50px] bg-blue-500 pr-5 flex justify-between text-white text-center'>
                                     <div className='rounded-r-2xl border-1 pt-1 rounded-l-2xl w-[70px] justify-center bg-blue-600'>
