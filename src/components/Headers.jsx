@@ -11,13 +11,15 @@ import { useNavigate } from "react-router-dom"
 import { logout as logoutAction } from "../redux/reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
 import { Formik } from "formik"
+import PropTypes from "prop-types"
 
 
-const Header = () => {
+const Header = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)
+    const [search, setSearch] = React.useState("")
 
 
     React.useEffect(() => {
@@ -36,10 +38,30 @@ const Header = () => {
         }
     }
 
-    const onSearch = (values) => {
+    const doSearch = async (values) => {
         const qs = new URLSearchParams(values).toString()
         navigate(`/searcharticles?${qs}`)
+        setSearch(qs)
     }
+
+    React.useEffect(() => {
+        async function getProfileData() {
+            const { data } = await http(token).get("/profile")
+            setProfile(data.results)
+        }
+        getProfileData()
+    }, [])
+
+    const {onSearch} = props
+
+    React.useEffect(()=>{
+        function searchResults(articelData){
+            if(typeof onSearch === "function"){
+                onSearch(articelData)
+            }
+        }
+        searchResults(search)
+    },[search, onSearch])
 
     return (
         <>
@@ -80,15 +102,17 @@ const Header = () => {
                         initialValues={{
                             search: ""
                         }}
-                        onSubmit={onSearch}>
+                        onSubmit={doSearch}>
                         {({
+                            values,
                             handleBlur,
                             handleChange,
                             handleSubmit,
+                            
                         }) =>
                             (<form onSubmit={handleSubmit} className='bg-white flex border-2 rounded-xl px-6 items-center gap-2 h-12'>
                                 <div>
-                                    <button>  <BsSearch size={25} color='#444cd4' /></button>
+                                    <button type='submit'>  <BsSearch size={25} color='#444cd4' /></button>
                                 </div>
                                 <div>
                                     <input
@@ -97,6 +121,7 @@ const Header = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         placeholder='Search ...'
+                                        value={values.search} 
                                         className='gap-3 h-11 w-full max-w-xs outline-none hover:outline-none hover:border-0' />
                                 </div>
                                 <div>
@@ -218,6 +243,11 @@ const Header = () => {
 
             </header>
         </>
-    )
+    )   
 }
+
+Header.propTypes = {
+    onSearch: PropTypes.func
+}
+
 export default Header
