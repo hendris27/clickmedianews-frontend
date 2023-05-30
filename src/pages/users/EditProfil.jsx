@@ -1,7 +1,7 @@
 import Header from "../../components/Headers.jsx"
 import Footer from "../../components/Footers.jsx"
 import { IoIosArrowForward } from "react-icons/io"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http.js"
@@ -9,7 +9,7 @@ import { Formik } from "formik"
 import { FaEye } from "react-icons/fa"
 import { FaEyeSlash } from "react-icons/fa"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
-import { logout as LogoutAction } from "../../redux/reducers/auth.js"
+import { logout as logoutAction } from "../../redux/reducers/auth.js"
 import defaultPicture from "../../assets/img/default.jpg"
 import * as Yup from "yup"
 
@@ -23,6 +23,7 @@ const EditProfile = () => {
     const [successMessage, setSuccessMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => { 
         async function getProfile(){
@@ -95,6 +96,12 @@ const EditProfile = () => {
         about: Yup.string().required("About is required"),
     })
 
+    const doLogout = ()=> {
+        window.localStorage.removeItem("token")
+        dispatch(logoutAction())
+        navigate("/signin")
+    }
+
     return(
         <>
             <div className='h-min-screen'>
@@ -149,7 +156,7 @@ const EditProfile = () => {
                                 <div className='font-bold'>Edit Profile</div>
                                 <div><IoIosArrowForward/></div>
                             </Link>
-                            <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
+                            <Link to='/savedarticle' className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
                                 <div className='font-bold'>Saved Post</div>
                                 <div><IoIosArrowForward/></div>
                             </Link>
@@ -161,10 +168,10 @@ const EditProfile = () => {
                                 <div className='font-bold'>Help</div>
                                 <div><IoIosArrowForward/></div>
                             </Link>
-                            <Link className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
-                                <div className='font-bold'><button onClick={dispatch(LogoutAction)}>Logout</button></div>
+                            <button onClick={doLogout} className='flex w-full justify-between items-center border-2 p-3 rounded-2xl hover:bg-blue-100 hover:text-blue-600'>
+                                <div className='font-bold'><button>Logout</button></div>
                                 <div><IoIosArrowForward/></div>
-                            </Link>
+                            </button>
                        
                         </div>
                     </div>
