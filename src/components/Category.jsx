@@ -16,11 +16,11 @@ const Category = () => {
                 <div>Category</div>
                 <div className='text-[#444cd4] cursor-pointer'>More</div>
             </div>
-            <div className='flex overflow-scroll'>
-                <div className='inline-flex gap-8'>
+            <div className=''>
+                <div className='grid grid-cols-4 drop-shadow-3xl gap-y-12'>
                     {category.map(category => {
                         return (
-                            <div key={`category-${category.id}`} className='flex flex-col items-center gap-4 drop-shadow-2xl' >
+                            <div key={`category-${category.id}`} className='flex flex-col items-center gap-2 drop-shadow-2xl' >
                                 <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
                                     <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
                                 </div>
