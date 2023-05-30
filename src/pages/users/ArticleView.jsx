@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 import http from "../../helpers/http"
 import { useSelector } from "react-redux"
 import moment from "moment"
+import { Formik } from "formik"
 
 const ArticleView = () => {
     const navigate = useNavigate()
@@ -18,6 +19,7 @@ const ArticleView = () => {
     const [selectedCategoryId, setSelectedCategoryId] = useState("")
     const [edit, setEdit] = useState(false)
     const [descriptions, setDescriptions] = useState(article?.descriptions)
+    const [comments, setComments] = useState([])
 
     const {id} = useParams()
     const token = useSelector(state => state.auth.token)
@@ -52,7 +54,6 @@ const ArticleView = () => {
         async function getArticle(){
             try {
                 const {data} = await http().get(`/article-view/${id}`)
-                console.log(data.results)
                 setArticle(data.results)
                 setDescriptions(data.results.descriptions)
             } catch (error) {
@@ -83,7 +84,6 @@ const ArticleView = () => {
             try {
                 const {data} = await http().get("/categories?limit=10")
                 setCategory(data.results)
-                console.log(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
                 if(message){
@@ -92,6 +92,22 @@ const ArticleView = () => {
             }
         }
         getCategory()
+
+        async function getComment(){
+            try {
+                console.log(id)
+                const {data} = await http().get(`/article-comments/${id}`)
+                console.log(data.results)
+                setComments(data.results)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }
+        getComment()
+
     },[])
     async function publishArticle(){
         try {
@@ -101,6 +117,28 @@ const ArticleView = () => {
 
             const {data} = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
             console.log(data.results)
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
+        }
+    }
+
+    async function createComments(values){
+        try {
+            const formData = new URLSearchParams({
+                articleId: id,
+                commentText: values.commentText
+            }).toString()
+            const {data} = await http(token).post("/article-comments", formData)
+            if(!data.results){
+                console.log("create comment failed")
+            }
+            const dataComent = await http().get(`/article-comments/${id}`)
+            console.log(dataComent)
+            setComments(dataComent.data.results)
+
         } catch (error) {
             const message = error?.response?.data?.message
             if(message){
@@ -176,37 +214,77 @@ const ArticleView = () => {
                                 <div>{descriptions}</div>
                             </div>}
                     </div>
-                    {user !== "superadmin" ? (<div className='flex flex-col gap-8'>
-                        <p className='font-bold text-[24px]'>2 Comments</p>
-                        <div className='flex gap-5'>
-                            <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
-                                <img src={Picture} className='object-cover' />
+                    {user !== "superadmin" ? (
+                        <div className='flex flex-col gap-8'>
+                            <p className='font-bold text-[24px]'>2 Comments</p>
+                            <div className='flex gap-5'>
+                                <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
+                                    <img src={Picture} className='object-cover' />
+                                </div>
+                                <Formik
+                                    initialValues={
+                                        {commentText: ""}
+                                    }
+                                    onSubmit={createComments}>
+                                    {({
+                                        values,
+                                        handleChange,
+                                        handleBlur,
+                                        handleSubmit,
+                                        resetForm
+                                    }) => (
+                                        <form onSubmit={handleSubmit}  className='flex flex-col gap-3 w-full'>
+                                            <div className='font-bold'>You</div>
+                                            <textarea 
+                                                name='commentText'
+                                                placeholder='Comment' 
+                                                defaultValue=''
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                className='textarea textarea-bordered textarea-lg w-full'
+                                                value={values.commentText}>
+                                            </textarea>
+                                            <button 
+                                                type='submit' 
+                                                className='btn bg-primary border-none normal-case text-white max-w-xs'>
+                                                Submit
+                                            </button>
+                                        </form>
+                                    )}
+                                </Formik>
                             </div>
-                            <div className='flex flex-col gap-3 w-full'>
-                                <div className='font-bold'>You</div>
-                                <textarea placeholder='Bio' className='textarea textarea-bordered textarea-lg w-full' ></textarea>
-                                <button className='btn bg-primary border-none normal-case text-white max-w-xs'>Submit</button>
+                            {comments.map(comment =>{
+                                return(
+                                    <div className='flex gap-5' key={`comments${comment.id}`}>
+                                        <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
+                                            <img src={comment.picture} className='object-cover' />
+                                        </div>
+                                        <div>
+                                            <div className='font-bold'>{comment.fullName} - {moment(comment.createdAt).format("MMMM Do YYYY, h:mm")}</div>
+                                            <div>{comment.commentText}</div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                            {/* <div className='flex gap-5'>
+                                <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
+                                    <img src={Picture} className='object-cover' />
+                                </div>
+                                <div>
+                                    <div className='font-bold'>Regina - 1m ago</div>
+                                    <div>Couldn’t agree more!</div>
+                                </div>
                             </div>
-                        </div>
-                        <div className='flex gap-5'>
-                            <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
-                                <img src={Picture} className='object-cover' />
-                            </div>
-                            <div>
-                                <div className='font-bold'>Regina - 1m ago</div>
-                                <div>Couldn’t agree more!</div>
-                            </div>
-                        </div>
-                        <div className='flex gap-5'>
-                            <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
-                                <img src={Picture} className='object-cover' />
-                            </div>
-                            <div>
-                                <div className='font-bold'>Lyonna - 3m ago</div>
-                                <div>But, can we just focus for the vaccine?</div>
-                            </div>
-                        </div>
-                    </div>) : (
+                            <div className='flex gap-5'>
+                                <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
+                                    <img src={Picture} className='object-cover' />
+                                </div>
+                                <div>
+                                    <div className='font-bold'>Lyonna - 3m ago</div>
+                                    <div>But, can we just focus for the vaccine?</div>
+                                </div>
+                            </div> */}
+                        </div>) : (
                         <div className='flex gap-16'>
                             <button onClick={publishButton} className='h-16 btn btn-primary flex-1 normal-case text-white font-bold max-w-full'>Publish Article</button>
                             <button onClick={deleteArticle} className='h-16 btn btn-secondary flex-1 normal-case text-primary font-bold max-w-full'>Decline Article Request </button>
