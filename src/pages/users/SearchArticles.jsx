@@ -37,8 +37,16 @@ const SearchArticles = () => {
             
             <div className='bg-white px-[60px] pt-[125px] pb-[90px]'>
                 <div className='flex flex-col gap-8'>
-                    <div className='font-bold'>Search result for &quot;COVID 19 &quot;</div>
+                    {setArticle.length > 0 && (
+                        <div className='text-2xl font-bold'> Search results for &quot;{searchParams.get("search")}&quot;
+                        </div>
+                    )}
+                    {setArticle.length < 1 && (
+                        <div className='text-2xl font-bold'> Search results for &quot;{searchParams.get("search")}&quot;
+                        </div>
+                    )}
                     <div className='font-bold'>Related Tags</div>
+                   
                     <div className='font-bold flex gap-20'>
                         <div className='bg-blue-100 text-[#19A7CE] px-2'>#ladygaga</div>
                         <div className='bg-blue-100 text-[#19A7CE] px-2'>#ladygaga</div>
@@ -61,10 +69,15 @@ const SearchArticles = () => {
                         </div>
                     </div>
                 </div>
+                {setArticle.length < 1 && (
+                    <div className='text-2xl font-bold text-red-700'>
+                                                Article &quot;{searchParams.get("search")}&quot;Not Found!
+                    </div>
+                )}
                 <div>
                 </div>
                 <div className='flex flex-col gap-4'>
-                    <div className='flex pt-8 gap-6'>
+                    <div className='grid grid-cols-3 gap-y-12'>
                         {article.map(event=>{
                             return(
                                 <div key={`article${event.id}`}>
@@ -105,10 +118,12 @@ const SearchArticles = () => {
                                                 </div>
                                             </div>
                                         </div>}
+                                       
                                     </Link>
                                 </div>
                             )
                         })}
+                       
                     </div>                  
                 </div>
             </div>
