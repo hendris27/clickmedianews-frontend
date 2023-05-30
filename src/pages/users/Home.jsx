@@ -9,6 +9,7 @@ import picture_category from "../../assets/img/articel.jpg"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import Category from "../../components/Category"
+import { Link } from "react-router-dom"
 
 
 const Home = ()=> {
@@ -33,7 +34,10 @@ const Home = ()=> {
                             be afraid to express the facts. Be an author and share you 
                             prespective of something to the world.</div>
                                 <div className='mt-8 bg-[#444cd4] hover:bg-[#6261df] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center '>
-                                    <button className='text-white'>Start Exploring</button>
+                                    <Link to='/writearticles'>
+                                        <button className='text-white'>Start Writing</button>
+
+                                    </Link>
                                 </div>
                             </div>
                         </div>
