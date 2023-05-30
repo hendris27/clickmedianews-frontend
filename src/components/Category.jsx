@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
 import http from "../helpers/http"
+import { useNavigate } from "react-router-dom"
 
 const Category = () => {
     const [category, setCategory] = useState([])
+    const navigate = useNavigate()
     useEffect(()=> {
         async function getCategory(){
             const {data} = await http().get("/categories/all")
@@ -10,6 +12,14 @@ const Category = () => {
         }
         getCategory()
     }, [])
+
+
+
+    const handleClick = (category) => {
+        const state = { categories: category}
+        navigate("/categoryarticles", { state })
+    }
+
     return (
         <div className='flex flex-col gap-8 pt-[20px]'>
             <div className='flex justify-between font-semibold'>
@@ -20,13 +30,15 @@ const Category = () => {
                 <div className='inline-flex gap-8'>
                     {category.map(category => {
                         return (
-                            <div key={`category-${category.id}`} className='flex flex-col items-center gap-4 drop-shadow-2xl' >
-                                <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
-                                    <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
-                                </div>
-                                <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
+                            <button onClick={() => handleClick(category.category)} key={`category-${category.id}`} >
+                                <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
+                                    <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
+                                        <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
+                                    </div>
+                                    <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
                            
-                            </div>
+                                </div>
+                            </button>
                         )
                     })}
                 </div>
