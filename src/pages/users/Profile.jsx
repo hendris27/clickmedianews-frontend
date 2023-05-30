@@ -7,7 +7,9 @@ import { BsFillBookmarkFill } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { getProfileAction } from "../../redux/actions/profile.js"
+import { Link } from "react-router-dom"
 import defaultPicture from "../../assets/img/default.jpg"
+import ScrollToTop from "../../components/ScrollToTop"
 
 const Profile = () => {
     const token = useSelector((state) => state.auth.token)
@@ -28,8 +30,10 @@ const Profile = () => {
                 <div className='pt-28 px-28 flex flex-col gap-20 bg-secondary'>
                     <div className='flex justify-between px-[50px]'> 
                         <div className='flex gap-4 items-center'>
-                            <div><FaChevronLeft/></div>
-                            <div className='font-bold'>Category</div>
+                            <Link to='/categories' className='flex gap-5 items-center'>
+                                <div><FaChevronLeft/></div>
+                                <div className='font-bold'>Category</div>
+                            </Link>
                         </div>
                         <div className='font-bold text-[24px]'>{profile?.fullName}</div>
                         <div></div>
@@ -76,13 +80,13 @@ const Profile = () => {
                             </div>
                         </div>
                         <div className='flex flex-col gap-4'>
-                            <div><button className='btn btn-primary min-w-[295px] '>Messages</button></div>
+                            <div><button className='btn btn-primary min-w-[295px] text-white'>Messages</button></div>
                             <div><button className='btn btn-gray-400 min-w-[295px] hover:bg-primary '>Following</button></div>
-                            <div><button className='btn bg-green-500 min-w-[295px] text-black hover:bg-primary outline-none border-0 '>Accept Author Request</button></div>
+                            <div><button className='btn bg-green-500 min-w-[295px] hover:bg-primary outline-none border-0 text-white'>Accept Author Request</button></div>
                         </div>
                     </div>
                     <div className='pt-28'>
-                        <div className=' border-l-2 h-[400px] border-black '></div>
+                        <div className=' border-l-2 h-[400px] border-gray-400'></div>
                     </div>
                     <div className='flex-1 w-full px-[70px] pt-24 pb-24 flex flex-col items-center'>
                         <div className='flex flex-col gap-8'>
@@ -204,6 +208,7 @@ const Profile = () => {
             <footer>
                 <Footer />
             </footer>
+            <ScrollToTop/>
         </>
     )
 }

@@ -1,5 +1,5 @@
 import Header from "../../components/Headers"
-
+import ScrollToTop from "../../components/ScrollToTop"
 import { BiLike, BiTimeFive } from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import { FiEdit2 } from "react-icons/fi"
@@ -203,6 +203,7 @@ const CategoryArticles = () => {
             <footer>
                 <Footer />
             </footer>
+            <ScrollToTop/>
         </>
     )
 }
