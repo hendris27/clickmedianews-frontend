@@ -11,6 +11,8 @@ import { useSelector } from "react-redux"
 import moment from "moment"
 
 const ArticleView = () => {
+    const [isSaved, setIsSaved] = useState(false)
+    const [savePost, setSavePost] = useState([])
     const navigate = useNavigate()
     const [article, setArticle] = useState([])
     const [user, setUser] = useState({})
@@ -18,6 +20,18 @@ const ArticleView = () => {
     const [selectedCategoryId, setSelectedCategoryId] = useState("")
     const [edit, setEdit] = useState(false)
     const [descriptions, setDescriptions] = useState(article?.descriptions)
+
+    async function createSavePost(){
+        try {
+            const {data} = await http(token).post("/saved-article")
+            const addSavePost = data.results
+            setSavePost([...savePost, addSavePost])
+            setIsSaved(true)
+        }catch(err) {
+            console.log(err)
+        }
+    }
+    createSavePost()
 
     console.log(selectedCategoryId)
     const {id} = useParams()
@@ -140,7 +154,7 @@ const ArticleView = () => {
                             <div className='flex gap-5 items-center'>
                                 <button><img src={Like} alt='' /></button>
                                 <div className='font-bold'>{article?.likeCount}</div>
-                                <button><img src={Save} alt='' /></button>
+                                <button onClick={createSavePost}><img src={Save} alt='' /></button>
                             </div>
                             <div className='w-full flex flex-col gap-3'>
                                 {user !== "superadmin" && <button className='btn normal-case w-full font-bold max-w-full'>Share Article Link</button>}
@@ -211,6 +225,7 @@ const ArticleView = () => {
                 </div>
             </div>
             <Footer />
+            {isSaved && <p className='alert alert-success'>Post saved successfully!</p>}
         </>
     )
 }
