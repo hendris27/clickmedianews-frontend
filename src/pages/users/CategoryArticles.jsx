@@ -79,7 +79,7 @@ const CategoryArticles = () => {
                 }
             }
         }
-        getArticleCategory(categories)
+        getArticleCategory(state?.categories)
     }, [])
 
     async function deleteArticle(id){
