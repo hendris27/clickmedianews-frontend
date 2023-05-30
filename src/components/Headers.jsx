@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom"
 import logoBrand from "../assets/img/logo_brand.png"
-// import profile from "../assets/img/picture_login.png"
-// import defaultProfile from "../assets/img/default_picture.jpg"
 import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear } from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
@@ -26,7 +24,7 @@ const Header = () => {
             setProfile(data.results)
         }
         getProfileData()
-    }, [])
+    }, [token])
 
     const doLogout = () => {
         const confirmed = window.confirm("Are you sure you want to logout?")
@@ -50,7 +48,7 @@ const Header = () => {
                     </Link>
                 </div>
 
-                <div className='flex font-bold gap-12 hidden md:flex md:block'>
+                <div className='font-bold gap-12 hidden md:flex'>
                     <Link to='/' className='text-[#CDCDCD] hover:text-[#3738dc] font-bold'>
                         Home
                     </Link>
@@ -88,7 +86,7 @@ const Header = () => {
                         }) =>
                             (<form onSubmit={handleSubmit} className='bg-white flex border-2 rounded-xl px-6 items-center gap-2 h-12'>
                                 <div>
-                                    <button>  <BsSearch size={25} color='#444cd4' /></button>
+                                    <button>  <BsSearch size={25} color='#444cd4' className='pt-2'/></button>
                                 </div>
                                 <div>
                                     <input
@@ -100,7 +98,7 @@ const Header = () => {
                                         className='gap-3 h-11 w-full max-w-xs outline-none hover:outline-none hover:border-0' />
                                 </div>
                                 <div>
-                                    <button type='reset'  >  <MdOutlineClear size={25} color='#444cd4' /></button>
+                                    <button type='reset'><MdOutlineClear size={25} color='#444cd4' className='pt-2'/></button>
                                 </div>
 
                             </form>
@@ -190,7 +188,7 @@ const Header = () => {
                     </div>
 
                 ) : (
-                    <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
+                    <div className=' items-center gap-8 font-bold hidden md:flex'>
                         <div className='bg-[#444cd4] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
                             <button className='btn btn-primary text-white w-full h-[20px] '>
                                 <Link
