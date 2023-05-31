@@ -4,6 +4,7 @@ import { IoIosArrowForward } from "react-icons/io"
 import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
+import {BsCheckCircleFill} from "react-icons/bs"
 import http from "../../helpers/http.js"
 import { Formik } from "formik"
 import { FaEye } from "react-icons/fa"
@@ -22,6 +23,7 @@ const EditProfile = () => {
     const [openModal, setOpenModal] = useState(false)
     const [successMessage, setSuccessMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
+    const [statusMassage, setSatusMessage] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [user, setUser] = useState({})
@@ -114,6 +116,19 @@ const EditProfile = () => {
 
         getProfile()
         setOpenModal(false)
+    }
+
+    async function doRequestAuthor(){
+        try {
+            const {data} = await http(token).post("/request-author")
+            console.log(data)
+            setSatusMessage(data.message)
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
+        }
     }
 
     const validationSchema = Yup.object({
@@ -347,7 +362,10 @@ const EditProfile = () => {
                             
                                         </div>
                                         <div className='flex justify-center mt-32'>
-                                            <div className='mb-24'><button type='button' className='btn btn-primary normal-case text-white'>Request to be an author </button></div>
+                                            {user !== "superadmin" && <div className='mb-24 flex flex-col gap-3'>
+                                                {statusMassage && <span className='text-center text-info flex gap-2 items-center'><BsCheckCircleFill size={30}/>{statusMassage}</span>}
+                                                <button onClick={doRequestAuthor} type='button' className='btn btn-primary normal-case text-white'>Request to be an author </button>
+                                            </div>}
                                         </div>
                                     </form>
                                 )
