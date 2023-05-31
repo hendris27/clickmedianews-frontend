@@ -18,11 +18,7 @@ import {HiOutlineThumbUp, HiThumbUp} from "react-icons/hi"
 const ArticleView = () => {
     const navigate = useNavigate()
     const [article, setArticle] = useState([])
-
-    const [ setSavePost] = useState([])
-
     const [savePost, setSavePost] = useState(false)
-
     const [user, setUser] = useState({})
     const [category, setCategory] = useState([])
     const [selectedCategoryId, setSelectedCategoryId] = useState("")
