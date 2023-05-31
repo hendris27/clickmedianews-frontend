@@ -14,8 +14,6 @@ import { Formik } from "formik"
 import PropTypes from "prop-types"
 import { useLocation } from "react-router-dom"
 import {getProfileAction} from "../redux/actions/profile"
-import React, { useState } from "react"
-import http from "../helpers/http"
 
 const Header = (props) => {
     const navigate = useNavigate()
@@ -30,20 +28,6 @@ const Header = (props) => {
     React.useEffect(()=>{
         dispatch(getProfileAction(token))
     },[])
-
-    React.useEffect(() => {
-        async function getUser(){
-            try {
-                const {data} =  await http(token).get("/admin/users/detail")
-                console.log(data.results)
-                if(data.results.role === "superadmin"){
-    
-    const profile = useSelector((state)=>state.profile.data)
-    const token = useSelector((state) => state.auth.token)
-    const [search, setSearch] = React.useState("")
-    const location = useLocation()
-    console.log(profile)
-    const [user, setUser] = useState({})
 
     useState(()=>{
         async function getUser() {
@@ -77,8 +61,6 @@ const Header = (props) => {
         navigate(`/searcharticles?${qs}`)
         setSearch(qs)
     }
-
-
     const {onSearch} = props
 
     React.useEffect(()=>{
