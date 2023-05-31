@@ -94,12 +94,12 @@ const EditProfile = () => {
     }
 
     const validationSchema = Yup.object({
-        username: Yup.string().required("Username is required"),
-        fullName: Yup.string().required("Full Name is required"),
-        email: Yup.string().email().required("Email is required"),
-        password: Yup.string().required("Password is required"),
-        profession: Yup.string().required("Profession is required"),
-        about: Yup.string().required("About is required"),
+        username: Yup.string().optional(),
+        fullName: Yup.string().optional(),
+        email: Yup.string().email().optional(),
+        password: Yup.string().optional(),
+        profession: Yup.string().optional(),
+        about: Yup.string().optional(),
     })
 
     const doLogout = ()=> {
