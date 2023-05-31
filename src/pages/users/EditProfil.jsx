@@ -24,6 +24,8 @@ const EditProfile = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [user, setUser] = useState({})
+
 
     useEffect(() => { 
         async function getProfile(){
@@ -34,6 +36,20 @@ const EditProfile = () => {
 
         getProfile()
     }, [token])
+    async function getUser(){
+        try {
+            const {data} =  await http(token).get("/admin/users/detail")
+            console.log(data.results)
+            if(data.results.role === "superadmin"){
+                setUser(data.results.role)
+            }
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
+        }
+    }getUser
 
     const fileToDataUrl = (file) => {
         const reader = new FileReader()
@@ -137,7 +153,8 @@ const EditProfile = () => {
                                     <div className='flex flex-col flex-1'>
                                         <div>{profile?.username === null ? "Not set" : profile?.username}</div>
                                         <div className='font-bold'>{profile?.fullName === null ? "Name is not set" : profile?.fullName}</div>
-                                        <div>Member</div>
+                                        {user !== "superadmin" && <div>Member</div>}
+                                        {user === "superadmin" && <div>Administrator</div>}
                                     </div>
                                 </div>
                                 <div className='px-10'>
