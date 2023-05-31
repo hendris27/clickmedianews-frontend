@@ -10,9 +10,19 @@ import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import Category from "../../components/Category"
 import { Link } from "react-router-dom"
-
+import { useState, useEffect } from "react"
+import http from "../../helpers/http"
+import moment from "moment"
 
 const Home = ()=> {
+    const [article, setArticle] = useState([])
+    useEffect(()=> {
+        async function getArticle(){
+            const {data} = await http().get("/articles?limit=5")
+            setArticle(data.results)
+        }
+        getArticle()
+    }, [])
     return (
         <>
             <div className='h-min-screen'>
@@ -65,32 +75,36 @@ const Home = ()=> {
                                     <div>Recomended</div>
                                     <div className='text-[#444cd4] cursor-pointer'>More</div>
                                 </div>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl '>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#444cd4] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
+                                {article.map(article => {
+                                    return (
+                                        <div key={article.id} className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl '>
+                                            <div className='flex justify-between items-center' >
+                                                <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                                                    <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
                                                 </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
+                                                <div className='pl-8'>
+                                                    <div className='flex flex-col gap-8' >
+                                                        <div className='flex flex-col gap-4'>
+                                                            <div className='text-[#444cd4] text-[20px] leading-[20px] '>{article.title}</div>
+                                                            <div className='text-[18px] leading-[20px] font-medium '>{article.descriptions}</div>
+                                                        </div>
+                                                        <div className='flex gap-4'>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiLike/></div>
+                                                                <div>2.1k</div>
+                                                            </div>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiTimeFive/></div>
+                                                                <div>{moment(article.createdAt).fromNow("mm")} ago</div>
+                                                            </div>
+                                                            <div className='flex items-center'><BsFillBookmarkFill color='#444cd4'/></div>
+                                                        </div>
                                                     </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#444cd4'/></div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
@@ -140,32 +154,36 @@ const Home = ()=> {
                         <div className='flex flex-col gap-8'>
                             <div className='font-bold text-[24px]'>Latest News</div>
                             <div className='flex gap-8'>
-                                <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                    <div className='flex justify-between items-center' >
-                                        <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='pl-8'>
-                                            <div className='flex flex-col gap-8' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#444cd4] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
+                                {article.map(article => {
+                                    return (
+                                        <div key={`article-${article.id}`} className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
+                                            <div className='flex justify-between items-center' >
+                                                <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                                                    <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
                                                 </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
+                                                <div className='pl-8'>
+                                                    <div className='flex flex-col gap-8' >
+                                                        <div className='flex flex-col gap-4'>
+                                                            <div className='text-[#444cd4] text-[20px] leading-[20px] '>{article.title}</div>
+                                                            <div className='text-[18px] leading-[20px] font-medium '>{article.descriptions}</div>
+                                                        </div>
+                                                        <div className='flex gap-4'>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiLike/></div>
+                                                                <div>2.1k</div>
+                                                            </div>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiTimeFive/></div>
+                                                                <div>{moment(article.createdAt).fromNow("mm")} ago</div>
+                                                            </div>
+                                                            <div className='flex items-center'><BsFillBookmarkFill color='#444cd4'/></div>
+                                                        </div>
                                                     </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#444cd4'/></div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    )
+                                })}
                                 <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
                                     <div className='flex justify-between items-center' >
                                         <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden'>
