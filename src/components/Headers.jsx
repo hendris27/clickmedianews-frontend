@@ -14,10 +14,13 @@ import { Formik } from "formik"
 import PropTypes from "prop-types"
 import { useLocation } from "react-router-dom"
 import {getProfileAction} from "../redux/actions/profile"
+import React, { useState } from "react"
+import http from "../helpers/http"
 
 const Header = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
     const [user, setUser] = useState({})
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
@@ -34,17 +37,32 @@ const Header = (props) => {
                 const {data} =  await http(token).get("/admin/users/detail")
                 console.log(data.results)
                 if(data.results.role === "superadmin"){
+    
+    const profile = useSelector((state)=>state.profile.data)
+    const token = useSelector((state) => state.auth.token)
+    const [search, setSearch] = React.useState("")
+    const location = useLocation()
+    console.log(profile)
+    const [user, setUser] = useState({})
+
+    useState(()=>{
+        async function getUser() {
+            try {
+                const { data } = await http(token).get("/admin/users/detail")
+                console.log(data.results)
+                if (data.results.role === "superadmin") {
+
                     setUser(data.results.role)
                 }
             } catch (error) {
                 const message = error?.response?.data?.message
+
                 if(message){
                     console.log(message)
                 }
             }
         }getUser
     }, [token])
-
 
     const doLogout = () => {
         const confirmed = window.confirm("Are you sure you want to logout?")
