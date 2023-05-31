@@ -2,7 +2,7 @@ import Header from "../../components/Headers"
 import Picture from "../../assets/img/picture_login.png"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import ArrowBack from "../../assets/img/arrow-back.svg"
-import Save from "../../assets/img/save.png"
+// import Save from "../../assets/img/save.png"
 import Like from "../../assets/img/like.png"
 import Footer from "../../components/Footers.jsx"
 import { useEffect, useState } from "react"
@@ -10,11 +10,12 @@ import http from "../../helpers/http"
 import { useSelector } from "react-redux"
 import moment from "moment"
 import { Formik } from "formik"
+import { BsBookmark } from "react-icons/bs"
 
 const ArticleView = () => {
     const navigate = useNavigate()
     const [article, setArticle] = useState([])
-    const [savePost, setSavePost] = useState([])
+    const [savePost, setSavePost] = useState(false)
     const [user, setUser] = useState({})
     const [category, setCategory] = useState([])
     const [selectedCategoryId, setSelectedCategoryId] = useState("")
@@ -40,10 +41,15 @@ const ArticleView = () => {
         publishArticle(selectedCategoryId, descriptions)
     }
 
-    async function createSavePost() {
+    async function createSavePost(id) {
         try {
-            const { data } = await http(token).post("/saved-article")
-            setSavePost(data.results)
+            if(savePost) {
+                await http(token).delete(`/saved-article/${id}`)
+                setSavePost(false)
+            }else {
+                await http(token).post(`/saved-article/${id}`)
+                setSavePost(true)
+            }
         } catch (err) {
             console.log(err)
         }
@@ -225,7 +231,10 @@ const ArticleView = () => {
                                 </button>
                                 <div className='font-bold'>{likeCount}</div>
                                 {/* <div className='font-bold'>{article?.likeCount}</div> */}
-                                <button onClick={createSavePost}><img src={Save} alt='' /></button>
+                                <button onClick={() => createSavePost(article.id)}>
+                                    {!savePost && <BsBookmark size={35} />}
+                                    {savePost && <BsBookmark size={35} className='text-primary'/>}
+                                </button>
                             </div>
                             <div className='w-full flex flex-col gap-3'>
                                 {user !== "superadmin" && <button className='btn normal-case w-full font-bold max-w-full'>Share Article Link</button>}
