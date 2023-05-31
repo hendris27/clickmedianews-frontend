@@ -17,37 +17,46 @@ const CategoryArticles = () => {
     const [article, setArticle] = useState([])
 
     async function doAcc(id){
-        try {
-            const formData = new FormData()
-            formData.append("status", true)
-
-            const { data } = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
-            await http().get("/articles?limit=1000")
-            console.log(data.results)
-            if(data.results){
-                navigate("/waitinglist")
+        const confirmed = window.confirm("Are you sure to Accept this Articles")
+        if (confirmed) {
+          
+            try {
+                const formData = new FormData()
+                formData.append("status", true)
+                const { data } = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
+                await http().get("/articles?limit=1000")
+                console.log(data.results)
+                if(data.results){
+                    navigate("/waitinglist")
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if (message) {
+                    console.log(message)
+                }
             }
-        } catch (error) {
-            const message = error?.response?.data?.message
-            if (message) {
-                console.log(message)
-            }
-        }
+        }  
     }
 
     async function doIgnore(id){
-        try {
-            const {data} = await http(token).delete(`/admin/articles/${id}`)
-            console.log(data.results)
-            if(data.results){
-                navigate("/waitinglist")
+        const confirmed = window.confirm("Are you sure to Deleted this Articles")
+        if (confirmed) {
+            try {
+                const {data} = await http(token).delete(`/admin/articles/${id}`)
+                console.log(data.results)
+                if(data.results){
+                    navigate("/waitinglist")
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
             }
-        } catch (error) {
-            const message = error?.response?.data?.message
-            if(message){
-                console.log(message)
-            }
+        }else{
+            navigate("/waitinglist")
         }
+
     }
 
     useEffect(()=> {

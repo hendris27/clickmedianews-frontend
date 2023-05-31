@@ -14,7 +14,7 @@ import { Formik } from "formik"
 const ArticleView = () => {
     const navigate = useNavigate()
     const [article, setArticle] = useState([])
-    const [savePost, setSavePost] = useState([])
+    const [ setSavePost] = useState([])
     const [user, setUser] = useState({})
     const [category, setCategory] = useState([])
     const [selectedCategoryId, setSelectedCategoryId] = useState("")
@@ -36,8 +36,11 @@ const ArticleView = () => {
     }
 
     function publishButton() {
-        setEdit(false)
-        publishArticle(selectedCategoryId, descriptions)
+        const confirmed = window.confirm("Are you sure to Publish this Articles")
+        if (confirmed) {
+            setEdit(false)
+            publishArticle(selectedCategoryId, descriptions)
+        }
     }
 
     async function createSavePost() {
@@ -50,16 +53,19 @@ const ArticleView = () => {
     }
 
     async function deleteArticle() {
-        try {
-            const { data } = await http(token).delete(`/admin/articles/${id}`)
-            console.log(data.results)
-            navigate("/categoryarticles")
-        } catch (error) {
-            const message = error?.response?.data?.message
-            if (message) {
-                console.log(message)
+        const confirmed = window.confirm("Are you sure to Deleted this Articles")
+        if (confirmed) {  
+            try {
+                const { data } = await http(token).delete(`/admin/articles/${id}`)
+                console.log(data.results)
+                navigate("/categoryarticles")
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if (message) {
+                    console.log(message)
+                }
             }
-        }
+        } 
     }
 
     useEffect(() => {
@@ -274,7 +280,7 @@ const ArticleView = () => {
                                         handleChange,
                                         handleBlur,
                                         handleSubmit,
-                                        resetForm
+                                        
                                     }) => (
                                         <form onSubmit={handleSubmit} className='flex flex-col gap-3 w-full'>
                                             <div className='font-bold'>You</div>
