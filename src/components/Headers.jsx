@@ -28,24 +28,22 @@ const Header = (props) => {
     React.useEffect(()=>{
         dispatch(getProfileAction(token))
     },[])
-
-    useState(()=>{
-        async function getUser() {
+    React.useEffect(() => {
+        async function getUser(){
             try {
-                const { data } = await http(token).get("/admin/users/detail")
+                const {data} =  await http(token).get("/admin/users/detail")
                 console.log(data.results)
-                if (data.results.role === "superadmin") {
-
+                if(data.results.role === "superadmin"){
                     setUser(data.results.role)
                 }
             } catch (error) {
                 const message = error?.response?.data?.message
-
                 if(message){
                     console.log(message)
                 }
             }
-        }getUser
+        }
+        getUser()
     }, [token])
 
     const doLogout = () => {
