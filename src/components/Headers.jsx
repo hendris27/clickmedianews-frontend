@@ -4,29 +4,27 @@ import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear } from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
 import React from "react"
-import http from "../helpers/http"
+// import http from "../helpers/http"
 import { useNavigate } from "react-router-dom"
 import { logout as logoutAction } from "../redux/reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
 import { Formik } from "formik"
 import PropTypes from "prop-types"
 import { useLocation } from "react-router-dom"
+import {getProfileAction} from "../redux/actions/profile"
 
 const Header = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [profile, setProfile] = React.useState({})
+    // const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
     const location = useLocation()
+    const  profile =useSelector((state) =>state.profile.data)
 
-    React.useEffect(() => {
-        async function getProfileData() {
-            const { data } = await http(token).get("/profile")
-            setProfile(data.results)
-        }
-        getProfileData()
-    }, [token])
+    React.useEffect(()=>{
+        dispatch(getProfileAction(token))
+    },[])
 
     const doLogout = () => {
         const confirmed = window.confirm("Are you sure you want to logout?")
@@ -42,13 +40,6 @@ const Header = (props) => {
         setSearch(qs)
     }
 
-    React.useEffect(() => {
-        async function getProfileData() {
-            const { data } = await http(token).get("/profile")
-            setProfile(data.results)
-        }
-        getProfileData()
-    }, [])
 
     const {onSearch} = props
 
@@ -184,13 +175,13 @@ const Header = (props) => {
                                     <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#444cd4]'>
                                         {profile.picture === null ? (
                                             <img src={defaultPicture} className='object-cover h-full w-full' />
-                                        ) : <img src={profile.picture} className='object-cover h-full w-full' />}
+                                        ) : <img src={profile?.picture} className='object-cover h-full w-full' />}
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
                                     <li><a className='hover:bg-white'>
                                         <Link to='/waitinglist'>
-                                            <div className='font-bold text-medium hover:text-primary'> Waiting list</div>
+                                            <div className='font-bold text-medium hover:text-primary'> Waiiting list</div>
                                         </Link>
                                     </a></li>
                                     <li><a className='hover:bg-white'>
