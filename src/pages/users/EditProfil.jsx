@@ -36,7 +36,8 @@ const EditProfile = () => {
 
         getProfile()
     }, [token])
-    async function getUser(){
+
+    useEffect(() => {   async function getUser(){
         try {
             const {data} =  await http(token).get("/admin/users/detail")
             console.log(data.results)
@@ -49,7 +50,9 @@ const EditProfile = () => {
                 console.log(message)
             }
         }
-    }getUser
+    }getUser()
+    },[])
+
 
     const fileToDataUrl = (file) => {
         const reader = new FileReader()
@@ -114,12 +117,12 @@ const EditProfile = () => {
     }
 
     const validationSchema = Yup.object({
-        username: Yup.string().required("Username is required"),
-        fullName: Yup.string().required("Full Name is required"),
-        email: Yup.string().email().required("Email is required"),
-        password: Yup.string().required("Password is required"),
-        profession: Yup.string().required("Profession is required"),
-        about: Yup.string().required("About is required"),
+        username: Yup.string().required().optional(),
+        fullName: Yup.string().required().optional(),
+        email: Yup.string().email().required().optional(),
+        password: Yup.string().required().optional(),
+        profession: Yup.string().required().optional(),
+        about: Yup.string().required().optional(),
     })
 
     const doLogout = ()=> {
