@@ -3,7 +3,10 @@ import logoBrand from "../assets/img/logo_brand.png"
 import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear } from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
-
+import React from "react"
+// import http from "../helpers/http"
+import  { useState } from "react"
+import http from "../helpers/http"
 import { useNavigate } from "react-router-dom"
 import { logout as logoutAction } from "../redux/reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
@@ -15,11 +18,32 @@ import {getProfileAction} from "../redux/actions/profile"
 const Header = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    const [user, setUser] = useState({})
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
     const location = useLocation()
     const  profile =useSelector((state) =>state.profile.data)
+
+    React.useEffect(()=>{
+        dispatch(getProfileAction(token))
+    },[])
+
+    React.useEffect(() => {
+        async function getUser(){
+            try {
+                const {data} =  await http(token).get("/admin/users/detail")
+                console.log(data.results)
+                if(data.results.role === "superadmin"){
+                    setUser(data.results.role)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }getUser
+    }, [token])
 
 
     const doLogout = () => {
@@ -107,29 +131,6 @@ const Header = (props) => {
                             )}
                     </Formik>
                 </div>
-
-
-                {/* <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
-                    <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
-                        <button className='btn btn-primary normal-case text-white w-full h-[20px] '>
-                            <Link
-                                to='/signup'
-                                className='font-bold'
-                            >
-                                    Sign Up
-                            </Link>
-                        </button>
-                    </div>
-                    <div>
-                        <Link
-                            to='/signin'
-                            className='hover:text-[#19A7CE] font-bold'
-                        >
-                                Log In
-                        </Link>
-                    </div>
-                </div> */}
-
 
                 {token ? (
 
@@ -229,5 +230,4 @@ const Header = (props) => {
 Header.propTypes = {
     onSearch: PropTypes.func
 }
-
 export default Header
