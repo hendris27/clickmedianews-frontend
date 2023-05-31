@@ -21,7 +21,7 @@ const CategoryArticles = () => {
 
         async function getArticle(){
             try {
-                const {data} = await http().get("/articles?limit=100")
+                const {data} = await http().get("/articles?limit=1000")
                 console.log(data.results)
                 if(data.results){
                     setArticle(data.results)
@@ -94,32 +94,33 @@ const CategoryArticles = () => {
                 </div>
                 <div className='px-[60px]'>
                     <div className='grid grid-cols-3 gap-x-36'>
-                        {article.map(event=>{                            return(
-                            <div key={`article${event.id}`}>
-                                <Link to={`/articleview/${event.id}`}>
-                                    { event.status === false && <div className='border-2 flex bg-gray-100 w-[396px] rounded-3xl mt-8 drop-shadow-2xl'>
-                                        <div className='flex justify-between items-center' >
-                                            <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                                <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
-                                            </div>
-                                            <div className='flex-1 pl-8'>
-                                                <div className='flex flex-col gap-8' >
-                                                    <div className='flex flex-col gap-4'>
-                                                        <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
-                                                        <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
-                                                    </div>
-                                                    {user !== "superadmin" && <div className='flex gap-4'>
-                                                        <div className='flex gap-2 items-center'>
-                                                            <div><BiLike /></div>
-                                                            <div>{event.likeCount}</div>
+                        {article.map(event=>{                   
+                            return(
+                                <div key={`article${event.id}`}>
+                                    <Link to={`/articleview/${event.id}`}>
+                                        { event.status === false && <div className='border-2 flex bg-gray-100 w-[396px] rounded-3xl mt-8 drop-shadow-2xl'>
+                                            <div className='flex justify-between items-center' >
+                                                <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                                                    <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
+                                                </div>
+                                                <div className='flex-1 pl-8'>
+                                                    <div className='flex flex-col gap-8' >
+                                                        <div className='flex flex-col gap-4'>
+                                                            <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
+                                                            <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
                                                         </div>
-                                                        <div className='flex gap-2 items-center'>
-                                                            <div><BiTimeFive /></div>
-                                                            <div>3m ago</div>
-                                                        </div>
-                                                        <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
-                                                    </div>}
-                                                    {user === "superadmin" && 
+                                                        {user !== "superadmin" && <div className='flex gap-4'>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiLike /></div>
+                                                                <div>{event.likeCount}</div>
+                                                            </div>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiTimeFive /></div>
+                                                                <div>3m ago</div>
+                                                            </div>
+                                                            <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
+                                                        </div>}
+                                                        {user === "superadmin" && 
                                                             <div className='flex gap-3 justify-between items-center'>
                                                                 <div className='flex items-center'>
                                                                     <button type='submit'  className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-green-500'>Accept</button>
@@ -130,13 +131,13 @@ const CategoryArticles = () => {
                                                                     
                                                                 </div>
                                                             </div> }
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>}
-                                </Link>
-                            </div>
-                        )
+                                        </div>}
+                                    </Link>
+                                </div>
+                            )
                         })}
                         
                      

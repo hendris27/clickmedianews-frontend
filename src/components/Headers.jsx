@@ -3,7 +3,9 @@ import logoBrand from "../assets/img/logo_brand.png"
 import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear } from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
-import React, { useState } from "react"
+import React from "react"
+// import http from "../helpers/http"
+import  { useState } from "react"
 import http from "../helpers/http"
 import { useNavigate } from "react-router-dom"
 import { logout as logoutAction } from "../redux/reducers/auth"
@@ -11,23 +13,22 @@ import { useDispatch, useSelector } from "react-redux"
 import { Formik } from "formik"
 import PropTypes from "prop-types"
 import { useLocation } from "react-router-dom"
+import {getProfileAction} from "../redux/actions/profile"
 
 const Header = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
     const [user, setUser] = useState({})
-    const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
     const location = useLocation()
+    const  profile =useSelector((state) =>state.profile.data)
 
+    React.useEffect(()=>{
+        dispatch(getProfileAction(token))
+    },[])
     React.useEffect(() => {
-        async function getProfileData() {
-            const { data } = await http(token).get("/profile")
-            setProfile(data.results)
-        }
-        getProfileData()
-
         async function getUser(){
             try {
                 const {data} =  await http(token).get("/admin/users/detail")
@@ -41,7 +42,8 @@ const Header = (props) => {
                     console.log(message)
                 }
             }
-        }getUser
+        }
+        getUser()
     }, [token])
 
     const doLogout = () => {
@@ -57,15 +59,6 @@ const Header = (props) => {
         navigate(`/searcharticles?${qs}`)
         setSearch(qs)
     }
-
-    React.useEffect(() => {
-        async function getProfileData() {
-            const { data } = await http(token).get("/profile")
-            setProfile(data.results)
-        }
-        getProfileData()
-    }, [])
-
     const {onSearch} = props
 
     React.useEffect(()=>{
@@ -137,29 +130,6 @@ const Header = (props) => {
                     </Formik>
                 </div>
 
-
-                {/* <div className='flex items-center gap-8 font-bold hidden md:block md:flex'>
-                    <div className='bg-[#19A7CE] rounded-[5px] w-24 h-8 flex items-center justify-center hover:bg-[#E5E5CB] '>
-                        <button className='btn btn-primary normal-case text-white w-full h-[20px] '>
-                            <Link
-                                to='/signup'
-                                className='font-bold'
-                            >
-                                    Sign Up
-                            </Link>
-                        </button>
-                    </div>
-                    <div>
-                        <Link
-                            to='/signin'
-                            className='hover:text-[#19A7CE] font-bold'
-                        >
-                                Log In
-                        </Link>
-                    </div>
-                </div> */}
-
-
                 {token ? (
 
                     <div className='flex justify-center items-center'>
@@ -200,13 +170,13 @@ const Header = (props) => {
                                     <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#444cd4]'>
                                         {profile.picture === null ? (
                                             <img src={defaultPicture} className='object-cover h-full w-full' />
-                                        ) : <img src={profile.picture} className='object-cover h-full w-full' />}
+                                        ) : <img src={profile?.picture} className='object-cover h-full w-full' />}
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
                                     {user === "superadmin" && <li><a className='hover:bg-white'>
                                         <Link to='/waitinglist'>
-                                            <div className='font-bold text-medium hover:text-primary'> Waiting list</div>
+                                            <div className='font-bold text-medium hover:text-primary'> Waiiting list</div>
                                         </Link>
                                     </a></li>}
                                     <li><a className='hover:bg-white'>
@@ -258,5 +228,4 @@ const Header = (props) => {
 Header.propTypes = {
     onSearch: PropTypes.func
 }
-
 export default Header
