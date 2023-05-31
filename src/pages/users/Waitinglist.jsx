@@ -5,24 +5,55 @@ import { BiLike, BiTimeFive } from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import Filter from "../../assets/img/filter.png"
 import Footer from "../../components/Footers"
-import { Link} from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
 import { useSelector } from "react-redux"
 
 const CategoryArticles = () => {
+    const navigate = useNavigate()
     const [user, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
     const [article, setArticle] = useState([])
 
-    useEffect(()=> {
-       
-        
+    async function doAcc(id){
+        try {
+            const formData = new FormData()
+            formData.append("status", true)
 
+            const { data } = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
+            await http().get("/articles?limit=1000")
+            console.log(data.results)
+            if(data.results){
+                navigate("/waitinglist")
+            }
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if (message) {
+                console.log(message)
+            }
+        }
+    }
+
+    async function doIgnore(id){
+        try {
+            const {data} = await http(token).delete(`/admin/articles/${id}`)
+            console.log(data.results)
+            if(data.results){
+                navigate("/waitinglist")
+            }
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
+        }
+    }
+
+    useEffect(()=> {
         async function getArticle(){
             try {
                 const {data} = await http().get("/articles?limit=1000")
-                console.log(data.results)
                 if(data.results){
                     setArticle(data.results)
                 }
@@ -51,8 +82,6 @@ const CategoryArticles = () => {
         getUser()
     }, [])
 
-
-   
     return (
         <>
             <div>
@@ -94,7 +123,7 @@ const CategoryArticles = () => {
                 </div>
                 <div className='px-[60px]'>
                     <div className='grid grid-cols-3 gap-x-36'>
-                        {article.map(event=>{                   
+                        {article.filter(items => items.status === false).map(event=>{                   
                             return(
                                 <div key={`article${event.id}`}>
                                     <Link to={`/articleview/${event.id}`}>
@@ -121,13 +150,12 @@ const CategoryArticles = () => {
                                                             <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
                                                         </div>}
                                                         {user === "superadmin" && 
-                                                            <div className='flex gap-3 justify-between items-center'>
+                                                            <div className='flex gap-3 justify-start items-center py-2'>
                                                                 <div className='flex items-center'>
-                                                                    <button type='submit'  className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-green-500'>Accept</button>
+                                                                    <button onClick={()=> doAcc(event.id)} type='submit'  className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-green-500'>Accept</button>
                                                                 </div>
-
                                                                 <div>
-                                                                    <button type='submit'  className='bg-[#C7CBD4] h-10 px-4 text-white rounded-xl hover:bg-red-500'>Decline</button>
+                                                                    <button onClick={()=>doIgnore(event.id)} type='submit'  className='bg-[#C7CBD4] h-10 px-4 text-white rounded-xl hover:bg-red-500'>Decline</button>
                                                                     
                                                                 </div>
                                                             </div> }
