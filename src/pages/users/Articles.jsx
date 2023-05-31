@@ -25,7 +25,7 @@ const ArticlesPage = () => {
     useEffect(() => {
         async function getDataArticles() {
             try {
-                const { data } = await http ().get("/articles?")
+                const { data } = await http ().get("/articles?limit=100")
                 setArticles(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
@@ -92,9 +92,9 @@ const ArticlesPage = () => {
                 </div>
                 <div className='flex flex-col gap-4'>
                     <div className='pt-8'>
-                        <div className='flex flex-col gap-8'>
+                        <div className=''>
                             <div className='font-bold text-[24px]'>Sport</div>
-                            <div className='flex gap-5'>
+                            <div className='grid grid-cols-3 gap-y-12 gap-x-12'>
                                 {article.map(event=>{
                                     return (
                                         <div key={`articles${event.id}`}>
