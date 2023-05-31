@@ -86,6 +86,10 @@ const EditProfile = () => {
             const message = err.response.data.message
             if (message) {
                 setErrorMessage(message)
+                setTimeout(()=>{
+                    setErrorMessage(false)
+                },1000)
+            
             }
         }
 

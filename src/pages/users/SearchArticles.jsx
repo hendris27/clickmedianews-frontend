@@ -14,13 +14,14 @@ const SearchArticles = () => {
 
     React.useEffect(()=>{
         async function searchResults(){
-            const {data} = await http().get("/articles", {params: searchParams})
+            const {data} = await http().get("/articles?limit=100", {params: searchParams})
+            console.log(data)
             if(!data.results){
                 console.log("data not found")
             }
             if(data.results){
                 setArticle(data.results)
-                
+                console.log(data)
             }
         }searchResults()
     },[searchParams])
@@ -38,10 +39,6 @@ const SearchArticles = () => {
             <div className='bg-white px-[60px] pt-[125px] pb-[90px]'>
                 <div className='flex flex-col gap-8'>
                     {setArticle.length > 0 && (
-                        <div className='text-2xl font-bold'> Search results for &quot;{searchParams.get("search")}&quot;
-                        </div>
-                    )}
-                    {setArticle.length < 1 && (
                         <div className='text-2xl font-bold'> Search results for &quot;{searchParams.get("search")}&quot;
                         </div>
                     )}
@@ -69,15 +66,15 @@ const SearchArticles = () => {
                         </div>
                     </div>
                 </div>
-                {setArticle.length < 1 && (
+                {article.length < 1 && (
                     <div className='text-2xl font-bold text-red-700'>
-                                                Article &quot;{searchParams.get("search")}&quot;Not Found!
+       Article &quot;{searchParams.get("search")}&quot;Not Found!
                     </div>
                 )}
                 <div>
                 </div>
                 <div className='flex flex-col gap-4'>
-                    <div className='grid grid-cols-3 gap-y-12'>
+                    <div className='grid grid-cols-3 gap-y-12 gap-x-12'>
                         {article.map(event=>{
                             return(
                                 <div key={`article${event.id}`}>
