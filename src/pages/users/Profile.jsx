@@ -1,23 +1,40 @@
 import Header from "../../components/Headers.jsx"
 import Footer from "../../components/Footers.jsx"
 import { FaChevronLeft } from "react-icons/fa"
-import picture_category from "../../assets/img/articel.jpg"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getProfileAction } from "../../redux/actions/profile.js"
 import { Link } from "react-router-dom"
 import defaultPicture from "../../assets/img/default.jpg"
 import ScrollToTop from "../../components/ScrollToTop"
+import http from "../../helpers/http.js"
 
 const Profile = () => {
     const token = useSelector((state) => state.auth.token)
     const profile = useSelector(state => state.profile.data)
+    const [articel, setArticle] = useState([])
     const dispatch = useDispatch()
 
     useEffect(() => { 
         dispatch(getProfileAction(token))
+
+        async function getArticleManage(){
+            try {
+                const {data} = await http(token).get("/articles/manage")
+                console.log(data.results)
+                if(data.results){
+                    setArticle(data.results)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }getArticleManage()
+
     }, [token, dispatch])
 
 
@@ -91,115 +108,38 @@ const Profile = () => {
                     <div className='flex-1 w-full px-[70px] pt-24 pb-24 flex flex-col items-center'>
                         <div className='flex flex-col gap-8'>
                             <div className='text-[25px]  font-bold'>Post</div>
-                            <div className='flex gap-4'>
-                                <div>
-                                    <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl '>
-                                        <div className='flex flex-col' >
-                                            <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
-                                                <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                            </div>
-                                            <div className='px-4 py-2'>
-                                                <div className='flex flex-col gap-2 items-center' >
-                                                    <div className='flex flex-col gap-4'>
-                                                        <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                        <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                    </div>
-                                                    <div className='flex gap-4'>
-                                                        <div className='flex gap-2 items-center'>
-                                                            <div><BiLike/></div>
-                                                            <div>2.1k</div>
+                            <div className='grid grid-cols-2 gap-6'>
+                                {articel.map(atcManage =>{
+                                    return(
+                                        <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl' key={`article-get${atcManage.id}`}>
+                                            <div className='flex flex-col' >
+                                                <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
+                                                    <img src={atcManage.picture} className='w-[100%] h-full object-cover' alt='' />
+                                                </div>
+                                                <div className='px-4 py-2'>
+                                                    <div className='flex flex-col gap-2 items-center' >
+                                                        <div className='flex flex-col gap-4'>
+                                                            <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{atcManage.title}</div>
+                                                            <div className='text-[18px] leading-[20px] font-medium '>{atcManage.descriptions}</div>
                                                         </div>
-                                                        <div className='flex gap-2 items-center'>
-                                                            <div><BiTimeFive/></div>
-                                                            <div>3m ago</div>
+                                                        <div className='flex gap-4'>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiLike/></div>
+                                                                <div>{atcManage.likeCount}</div>
+                                                            </div>
+                                                            <div className='flex gap-2 items-center'>
+                                                                <div><BiTimeFive/></div>
+                                                                <div>3m ago</div>
+                                                            </div>
+                                                            <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
                                                         </div>
-                                                        <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
+                                                        {atcManage.status === true ? (<span className='text-primary'>Status: Approved</span>) : (<span className='text-primary'>Status: Request Publish</span>) }
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl '>
-                                    <div className='flex flex-col' >
-                                        <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='px-4 py-2'>
-                                            <div className='flex flex-col gap-2 items-center' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='flex gap-4'>
-                                <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl '>
-                                    <div className='flex flex-col' >
-                                        <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='px-4 py-2'>
-                                            <div className='flex flex-col gap-2 items-center' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl '>
-                                    <div className='flex flex-col' >
-                                        <div className='w-[247px] h-[87px] rounded-2xl overflow-hidden bg-green-400'>
-                                            <img src={picture_category} className='w-[100%] h-full object-cover' alt='' />
-                                        </div>
-                                        <div className='px-4 py-2'>
-                                            <div className='flex flex-col gap-2 items-center' >
-                                                <div className='flex flex-col gap-4'>
-                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>COVID-19</div>
-                                                    <div className='text-[18px] leading-[20px] font-medium '>Why corona never ends? <br/> Let’s see how its facts</div>
-                                                </div>
-                                                <div className='flex gap-4'>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiLike/></div>
-                                                        <div>2.1k</div>
-                                                    </div>
-                                                    <div className='flex gap-2 items-center'>
-                                                        <div><BiTimeFive/></div>
-                                                        <div>3m ago</div>
-                                                    </div>
-                                                    <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE'/></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
