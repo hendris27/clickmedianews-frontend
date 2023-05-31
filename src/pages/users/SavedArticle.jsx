@@ -179,10 +179,10 @@ function SavedArticle(){
                                             <div className='flex gap-5'>
                                                 <img src={savedArticle.picture} className='w-28' alt='' />
                                                 <div className='flex flex-col gap-4'>
-                                                    <div className='font-bold text-[20px]'>
+                                                    <Link to={`/articleview/${savedArticle.id}`} className='font-bold text-[20px]'>
                                                         {savedArticle.title}
-                                                    </div>
-                                                    <div>{savedArticle.descriptions}</div>
+                                                    </Link >
+                                                    <Link to={`/articleview/${savedArticle.id}`}>{savedArticle.descriptions}</Link >
                                                     <div className='flex gap-2 items-center'>
                                                         <div className='flex'>
                                                             <AiOutlineLike size={25} />
@@ -190,7 +190,7 @@ function SavedArticle(){
                                                         </div>
                                                         <div className='flex'>
                                                             <BiTime size={25} />
-                                                            <p>{moment(savedArticle.createdAt).format("DD-MM-YYYY")}</p>
+                                                            <p>{moment(savedArticle.createdAt).fromNow("mm")} ago</p>
                                                         </div>
                                                         <button onClick={() => handleDelete(savedArticle.id)}>
                                                             <img src={Save} className='w-4' alt='' />
