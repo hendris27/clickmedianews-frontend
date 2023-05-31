@@ -10,14 +10,15 @@ import Footer from "../../components/Footers"
 import http from "../../helpers/http"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { FiEdit2 } from "react-icons/fi"
+import moment from "moment"
+
 
 
 
 
 const ArticlesPage = () => {
     const [article, setArticles] = useState([])
-    const [user, setUser] = useState([])
+    const [, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
 
 
@@ -95,33 +96,33 @@ const ArticlesPage = () => {
                         <div className=''>
                             <div className='font-bold text-[24px]'>Sport</div>
                             <div className='grid grid-cols-3 gap-y-12 gap-x-12'>
-                                {article.map(event=>{
+                                {article.filter((items)=>items.status === true).map(event=>{
                                     return (
                                         <div key={`articles${event.id}`}>
-                                            {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                                <div className='flex justify-between items-center' >
-                                                    <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                                        <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
-                                                    </div>
-                                                    <div className='flex-1 pl-8'>
-                                                        <div className='flex flex-col gap-8' >
-                                                            <div className='flex flex-col gap-4'>
-                                                                <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
-                                                                <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
-                                                            </div>
-                                                            <div className='flex gap-4'>
-                                                                {user !=="superadmin" && 
-                                                            <div className='flex gap-2 items-center'>
-                                                                <div><BiLike /></div>
-                                                                <div>{event.likeCount}</div>
-                                                            </div>}
-                                                                <div className='flex gap-2 items-center'>
-                                                                    <div><BiTimeFive /></div>
-                                                                    <div>3m ago</div>
+                                            <Link to={`/articleview/${event.id}`}>
+                                                {event.status === true && <div className='flex bg-white w-[426px] rounded-3xl drop-shadow-2xl'>
+                                                    <div className='flex justify-between' >
+                                                        <div className='w-[126px] h-[222px] overflow-hidden'>
+                                                            <img src={event.picture} className='h-full w-full object-cover  rounded-3xl' alt='' />
+                                                        </div>
+                                                        <div className='flex-1 pl-8 py-3'>
+                                                            <div className='flex flex-col gap-8' >
+                                                                <div className='flex flex-col gap-4'>
+                                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
+                                                                    <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
                                                                 </div>
-                                                                <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
-                                                            </div>
-                                                            {user === "superadmin" && 
+                                                                <div className='flex gap-4'>
+                                                                    <div className='flex gap-2 items-center'>
+                                                                        <div><button><BiLike /></button></div>
+                                                                        <div>{event.likeCount}</div>
+                                                                    </div>
+                                                                    <div className='flex gap-2 items-center'>
+                                                                        <div><BiTimeFive /></div>
+                                                                        <div>{moment(event.createdAt).fromNow("mm-hh")}&nbsp; ago</div>
+                                                                    </div>
+                                                                    <div className='flex items-center'><button><BsFillBookmarkFill color='#19A7CE'/></button></div>
+                                                                </div>
+                                                                {/* {user === "superadmin" && 
                                                             <div className='flex gap-3 justify-between items-center'>
                                                                 <div className='flex items-center'>
                                                                     <button className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete events</button>
@@ -132,11 +133,12 @@ const ArticlesPage = () => {
                                                                         <button><FiEdit2 color='white' size={15} /></button>
                                                                     </Link>
                                                                 </div>
-                                                            </div> }
+                                                            </div> } */}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>}
+                                                </div>}
+                                            </Link>
                                         </div>
                                     )
                                 })}
