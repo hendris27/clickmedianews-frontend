@@ -3,7 +3,7 @@ import logoBrand from "../assets/img/logo_brand.png"
 import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear } from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
-import React from "react"
+import React, { useState } from "react"
 import http from "../helpers/http"
 import { useNavigate } from "react-router-dom"
 import { logout as logoutAction } from "../redux/reducers/auth"
@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom"
 const Header = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [user, setUser] = useState({})
     const [profile, setProfile] = React.useState({})
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
@@ -26,6 +27,21 @@ const Header = (props) => {
             setProfile(data.results)
         }
         getProfileData()
+
+        async function getUser(){
+            try {
+                const {data} =  await http(token).get("/admin/users/detail")
+                console.log(data.results)
+                if(data.results.role === "superadmin"){
+                    setUser(data.results.role)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }getUser
     }, [token])
 
     const doLogout = () => {
@@ -188,11 +204,11 @@ const Header = (props) => {
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
-                                    <li><a className='hover:bg-white'>
+                                    {user === "superadmin" && <li><a className='hover:bg-white'>
                                         <Link to='/waitinglist'>
                                             <div className='font-bold text-medium hover:text-primary'> Waiting list</div>
                                         </Link>
-                                    </a></li>
+                                    </a></li>}
                                     <li><a className='hover:bg-white'>
                                         <Link to='/edit-profile'>
                                             <div className='font-bold text-medium hover:text-primary'> See Profile</div>
