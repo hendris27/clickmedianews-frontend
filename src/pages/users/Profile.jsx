@@ -15,6 +15,7 @@ const Profile = () => {
     const token = useSelector((state) => state.auth.token)
     const profile = useSelector(state => state.profile.data)
     const [articel, setArticle] = useState([])
+    const [user, setUser] = useState({})
     const dispatch = useDispatch()
 
     useEffect(() => { 
@@ -22,7 +23,7 @@ const Profile = () => {
 
         async function getArticleManage(){
             try {
-                const {data} = await http(token).get("/articles/manage")
+                const {data} = await http(token).get("/articles/manage?limit=100")
                 console.log(data.results)
                 if(data.results){
                     setArticle(data.results)
@@ -35,8 +36,25 @@ const Profile = () => {
             }
         }getArticleManage()
 
+        async function getUser() {
+            try {
+                const { data } = await http(token).get("/admin/users/detail")
+                console.log(data.results)
+                if (data.results.role === "superadmin") {
+                    setUser(data.results)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if (message) {
+                    console.log(message)
+                }
+            }
+        }
+        getUser()
+
     }, [token, dispatch])
 
+    
 
     return(
         <>
@@ -71,7 +89,7 @@ const Profile = () => {
                                 <div className='flex flex-col flex-1'>
                                     <div>{profile?.username}</div>
                                     <div className='font-bold'>{profile?.fullName}</div>
-                                    <div>Member</div>
+                                    <div>{user?.role}</div>
                                 </div>
                             </div>
                             <div className='px-10'>
@@ -106,7 +124,7 @@ const Profile = () => {
                         <div className=' border-l-2 h-[400px] border-gray-400'></div>
                     </div>
                     <div className='flex-1 w-full px-[70px] pt-24 pb-24 flex flex-col items-center'>
-                        <div className='flex flex-col gap-8'>
+                        <div className='flex flex-col h-[700px] overflow-x-scroll scrollbar-hidden scrollbar-w-0 gap-8'>
                             <div className='text-[25px]  font-bold'>Post</div>
                             <div className='grid grid-cols-2 gap-6'>
                                 {articel.map(atcManage =>{
