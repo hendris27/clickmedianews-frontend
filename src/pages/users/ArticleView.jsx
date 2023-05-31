@@ -21,128 +21,130 @@ const ArticleView = () => {
     const [edit, setEdit] = useState(false)
     const [descriptions, setDescriptions] = useState(article?.descriptions)
     const [comments, setComments] = useState([])
+    const [likeCount, setLikeCount] = useState(article?.likeCount || 0)
+    const [liked, setLiked] = useState(false)
 
-    const {id} = useParams()
+    const { id } = useParams()
     const token = useSelector(state => state.auth.token)
 
-    function editButton(){
+    function editButton() {
         setEdit(true)
     }
 
-    function saveButton(){
+    function saveButton() {
         setEdit(false)
     }
 
-    function publishButton(){
+    function publishButton() {
         setEdit(false)
-        publishArticle(selectedCategoryId, descriptions )
+        publishArticle(selectedCategoryId, descriptions)
     }
 
     async function createSavePost() {
         try {
-            const {data} = await http(token).post("/saved-article");
-            setSavePost(data.results);
+            const { data } = await http(token).post("/saved-article")
+            setSavePost(data.results)
         } catch (err) {
-            console.log(err);
+            console.log(err)
         }
     }
 
-    async function deleteArticle(){
+    async function deleteArticle() {
         try {
-            const {data} = await http(token).delete(`/admin/articles/${id}`)
+            const { data } = await http(token).delete(`/admin/articles/${id}`)
             console.log(data.results)
             navigate("/categoryarticles")
         } catch (error) {
             const message = error?.response?.data?.message
-            if(message){
+            if (message) {
                 console.log(message)
             }
         }
     }
 
-    useEffect(()=>{
-        async function getArticle(){
+    useEffect(() => {
+        async function getArticle() {
             try {
-                const {data} = await http().get(`/article-view/${id}`)
+                const { data } = await http().get(`/article-view/${id}`)
                 setArticle(data.results)
                 setDescriptions(data.results.descriptions)
             } catch (error) {
                 const message = error?.response?.data?.message
-                if(message){
+                if (message) {
                     console.log(message)
                 }
             }
-        }getArticle()
+        } getArticle()
 
-        async function getUser(){
+        async function getUser() {
             try {
-                const {data} =  await http(token).get("/admin/users/detail")
+                const { data } = await http(token).get("/admin/users/detail")
                 console.log(data.results)
-                if(data.results.role === "superadmin"){
+                if (data.results.role === "superadmin") {
                     setUser(data.results.role)
                 }
             } catch (error) {
                 const message = error?.response?.data?.message
-                if(message){
+                if (message) {
                     console.log(message)
                 }
             }
         }
         getUser()
 
-        async function getCategory(){
+        async function getCategory() {
             try {
-                const {data} = await http().get("/categories?limit=10")
+                const { data } = await http().get("/categories?limit=10")
                 setCategory(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
-                if(message){
+                if (message) {
                     console.log(message)
                 }
             }
         }
         getCategory()
 
-        async function getComment(){
+        async function getComment() {
             try {
                 console.log(id)
-                const {data} = await http().get(`/article-comments/${id}`)
+                const { data } = await http().get(`/article-comments/${id}`)
                 console.log(data.results)
                 setComments(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
-                if(message){
+                if (message) {
                     console.log(message)
                 }
             }
         }
         getComment()
 
-    },[])
-    async function publishArticle(){
+    }, [])
+    async function publishArticle() {
         try {
             const formData = new FormData()
             formData.append("categoryId", selectedCategoryId)
             formData.append("descriptions", descriptions)
 
-            const {data} = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
+            const { data } = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
             console.log(data.results)
         } catch (error) {
             const message = error?.response?.data?.message
-            if(message){
+            if (message) {
                 console.log(message)
             }
         }
     }
 
-    async function createComments(values){
+    async function createComments(values) {
         try {
             const formData = new URLSearchParams({
                 articleId: id,
                 commentText: values.commentText
             }).toString()
-            const {data} = await http(token).post("/article-comments", formData)
-            if(!data.results){
+            const { data } = await http(token).post("/article-comments", formData)
+            if (!data.results) {
                 console.log("create comment failed")
             }
             const dataComent = await http().get(`/article-comments/${id}`)
@@ -151,16 +153,40 @@ const ArticleView = () => {
 
         } catch (error) {
             const message = error?.response?.data?.message
-            if(message){
+            if (message) {
                 console.log(message)
             }
         }
     }
+    async function handleLike() {
+        try {
+            if (!liked) {
+                // Increment like count
+                setLikeCount(likeCount + 1)
+                setLiked(true)
+            } else {
+                // Decrement like count
+                setLikeCount(likeCount - 1)
+                setLiked(false)
+            }
+
+            // Send API request to update like status on the server
+            await http(token).post("/admin/article-likes")
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if (message) {
+                console.log(message)
+            }
+        }
+        console.log("Like status updated!")
+    }
+
+
     return (
         <>
             <div>
                 <nav>
-                    <Header/>
+                    <Header />
                 </nav>
                 <div className='pt-[150px]'>
                     <div className='flex w-full px-20 justify-between'>
@@ -174,7 +200,7 @@ const ArticleView = () => {
                             <div className='font-bold text-[24px]'>Article Viewer</div>
                         </div>
                         <div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -190,25 +216,32 @@ const ArticleView = () => {
                                 <div>{moment(article?.createdAt).format("MMMM Do YYYY, h:mm")}</div>
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <button><img src={Like} alt='' /></button>
-                                <div className='font-bold'>{article?.likeCount}</div>
+                                <button onClick={handleLike} className='like-button'>
+                                    <img
+                                        src={Like}
+                                        alt=''
+                                        className={liked ? "liked" : ""}
+                                    />
+                                </button>
+                                <div className='font-bold'>{likeCount}</div>
+                                {/* <div className='font-bold'>{article?.likeCount}</div> */}
                                 <button onClick={createSavePost}><img src={Save} alt='' /></button>
                             </div>
                             <div className='w-full flex flex-col gap-3'>
                                 {user !== "superadmin" && <button className='btn normal-case w-full font-bold max-w-full'>Share Article Link</button>}
                                 {user === "superadmin" && <div className='flex flex-col gap-3'>
-                                    {edit=== true ? (<button onClick={saveButton} className='btn normal-case w-full font-bold max-w-full'>Save article</button>) : (<button onClick={editButton} className='btn normal-case w-full font-bold max-w-full'>Edit article</button>)}
-                                    <select 
-                                        name='categoryId' 
+                                    {edit === true ? (<button onClick={saveButton} className='btn normal-case w-full font-bold max-w-full'>Save article</button>) : (<button onClick={editButton} className='btn normal-case w-full font-bold max-w-full'>Edit article</button>)}
+                                    <select
+                                        name='categoryId'
                                         className='h-12 rounded-md border-none bg-primary normal-case w-full font-bold max-w-full text-white'
                                         defaultValue={category}
                                         onChange={(e) => setSelectedCategoryId(e.target.value)}>
                                         <option className='text-center' disabled value=''>Add to category</option>
-                                        {category.map(event =>{
-                                            return(
+                                        {category.map(event => {
+                                            return (
                                                 <option className='text-center' key={`citySearch${event.id}`} value={event.id}>{event.name}</option>
                                             )
-                                        })}   
+                                        })}
                                     </select>
                                 </div>}
                             </div>
@@ -218,8 +251,8 @@ const ArticleView = () => {
                 <div className='w-full px-20 pt-20 pb-20 flex flex-col gap-10'>
                     <div>
                         {user === "superadmin" ? (<div className='flex flex-col gap-5'>
-                            {edit === true ? <textarea name='descriptions' className='h-[300px]' type='text' value={descriptions} onChange={(e) => setDescriptions(e.target.value)}/> : <div>{descriptions}</div> }
-                        </div>) : 
+                            {edit === true ? <textarea name='descriptions' className='h-[300px]' type='text' value={descriptions} onChange={(e) => setDescriptions(e.target.value)} /> : <div>{descriptions}</div>}
+                        </div>) :
                             <div className='flex flex-col gap-5'>
                                 <div>{descriptions}</div>
                             </div>}
@@ -233,7 +266,7 @@ const ArticleView = () => {
                                 </div>
                                 <Formik
                                     initialValues={
-                                        {commentText: ""}
+                                        { commentText: "" }
                                     }
                                     onSubmit={createComments}>
                                     {({
@@ -243,19 +276,19 @@ const ArticleView = () => {
                                         handleSubmit,
                                         resetForm
                                     }) => (
-                                        <form onSubmit={handleSubmit}  className='flex flex-col gap-3 w-full'>
+                                        <form onSubmit={handleSubmit} className='flex flex-col gap-3 w-full'>
                                             <div className='font-bold'>You</div>
-                                            <textarea 
+                                            <textarea
                                                 name='commentText'
-                                                placeholder='Comment' 
+                                                placeholder='Comment'
                                                 defaultValue=''
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 className='textarea textarea-bordered textarea-lg w-full'
                                                 value={values.commentText}>
                                             </textarea>
-                                            <button 
-                                                type='submit' 
+                                            <button
+                                                type='submit'
                                                 className='btn bg-primary border-none normal-case text-white max-w-xs'>
                                                 Submit
                                             </button>
@@ -263,8 +296,8 @@ const ArticleView = () => {
                                     )}
                                 </Formik>
                             </div>
-                            {comments.map(comment =>{
-                                return(
+                            {comments.map(comment => {
+                                return (
                                     <div className='flex gap-5' key={`comments${comment.id}`}>
                                         <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
                                             <img src={comment.picture} className='object-cover' />

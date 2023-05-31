@@ -3,8 +3,7 @@ import logoBrand from "../assets/img/logo_brand.png"
 import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear } from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
-import React from "react"
-// import http from "../helpers/http"
+
 import { useNavigate } from "react-router-dom"
 import { logout as logoutAction } from "../redux/reducers/auth"
 import { useDispatch, useSelector } from "react-redux"
@@ -16,15 +15,12 @@ import {getProfileAction} from "../redux/actions/profile"
 const Header = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    // const [profile, setProfile] = React.useState({})
+
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
     const location = useLocation()
     const  profile =useSelector((state) =>state.profile.data)
 
-    React.useEffect(()=>{
-        dispatch(getProfileAction(token))
-    },[])
 
     const doLogout = () => {
         const confirmed = window.confirm("Are you sure you want to logout?")
@@ -179,11 +175,11 @@ const Header = (props) => {
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
-                                    <li><a className='hover:bg-white'>
+                                    {user === "superadmin" && <li><a className='hover:bg-white'>
                                         <Link to='/waitinglist'>
                                             <div className='font-bold text-medium hover:text-primary'> Waiiting list</div>
                                         </Link>
-                                    </a></li>
+                                    </a></li>}
                                     <li><a className='hover:bg-white'>
                                         <Link to='/edit-profile'>
                                             <div className='font-bold text-medium hover:text-primary'> See Profile</div>
