@@ -19,7 +19,7 @@ const ArticleView = () => {
     const navigate = useNavigate()
     const [article, setArticle] = useState([])
 
-    const [ setSavePost] = useState([])
+    
 
     const [savePost, setSavePost] = useState(false)
 
