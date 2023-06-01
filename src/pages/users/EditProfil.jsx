@@ -364,7 +364,9 @@ const EditProfile = () => {
                                         <div className='flex justify-center mt-32'>
                                             {user !== "superadmin" && <div className='mb-24 flex flex-col gap-3'>
                                                 {statusMassage && <span className='text-center text-info flex gap-2 items-center'><BsCheckCircleFill size={30}/>{statusMassage}</span>}
-                                                <button onClick={doRequestAuthor} type='button' className='btn btn-primary normal-case text-white'>Request to be an author </button>
+                                                {profile.isAuthor === false ? (<button onClick={doRequestAuthor} type='button' className='btn btn-primary normal-case text-white'>Request to be an author </button>) 
+                                                    : (<div className='h-12 px-6 py-3 flex justify-center items-center gap-2 bg-[#19A7CE] rounded-xl text-white'><BsCheckCircleFill size={25}/>You are author </div>)}
+                                                
                                             </div>}
                                         </div>
                                     </form>
