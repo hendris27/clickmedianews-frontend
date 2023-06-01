@@ -161,7 +161,7 @@ const CategoryArticles = () => {
                                     return(
                                         <div key={`article${event.id}`}>
                                             <Link to={`/articleview/${event.id}`}>
-                                                {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
+                                                {event.status === true && <div className='flex bg-white w-[426px] rounded-3xl gap-8 drop-shadow-2xl'>
                                                     <div className='flex justify-between items-center' >
                                                         <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
                                                             <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
