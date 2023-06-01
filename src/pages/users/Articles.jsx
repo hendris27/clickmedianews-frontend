@@ -15,9 +15,6 @@ import moment from "moment"
 
 
 
-
-
-
 const ArticlesPage = () => {
     const [article, setArticles] = useState([])
     const [, setUser] = useState([])
@@ -114,8 +111,6 @@ const ArticlesPage = () => {
                                                                 <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
                                                             </div>
                                                             <div className='flex gap-4'>
-                                                              
-                                                               
                                                                 <div className='flex gap-4'>
                                                                     <div className='flex gap-2 items-center'>
                                                                         <div><button><BiLike /></button></div>
@@ -127,18 +122,6 @@ const ArticlesPage = () => {
                                                                     </div>
                                                                     <div className='flex items-center'><button><BsFillBookmarkFill color='#19A7CE'/></button></div>
                                                                 </div>
-                                                                {/* {user === "superadmin" && 
-                                                            <div className='flex gap-3 justify-between items-center'>
-                                                                <div className='flex items-center'>
-                                                                    <button className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete events</button>
-                                                                </div>
-
-                                                                <div className='bg-primary h-10 w-10 mr-2 flex items-center justify-center rounded-full hover:bg-green-500'>
-                                                                    <Link to='/writearticles'>
-                                                                        <button><FiEdit2 color='white' size={15} /></button>
-                                                                    </Link>
-                                                                </div>
-                                                            </div> } */}
                                                             </div>
                                                         </div>
                                                     </div>
