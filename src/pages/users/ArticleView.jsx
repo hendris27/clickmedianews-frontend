@@ -1,16 +1,19 @@
+/* eslint-disable no-unused-vars */
 import Header from "../../components/Headers"
 import Picture from "../../assets/img/picture_login.png"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import ArrowBack from "../../assets/img/arrow-back.svg"
 // import Save from "../../assets/img/save.png"
-import Like from "../../assets/img/like.png"
+// import Like from "../../assets/img/like.png"
 import Footer from "../../components/Footers.jsx"
 import { useEffect, useState } from "react"
 import http from "../../helpers/http"
 import { useSelector } from "react-redux"
+import React from "react"
 import moment from "moment"
 import { Formik } from "formik"
 import { BsBookmark } from "react-icons/bs"
+import {HiOutlineThumbUp, HiThumbUp} from "react-icons/hi"
 
 const ArticleView = () => {
     const navigate = useNavigate()
@@ -23,7 +26,7 @@ const ArticleView = () => {
     const [descriptions, setDescriptions] = useState(article?.descriptions)
     const [comments, setComments] = useState([])
     const [likeCount, setLikeCount] = useState(article?.likeCount || 0)
-    const [liked, setLiked] = useState(false)
+    const [isLike, setLike] = useState(false)
 
     const { id } = useParams()
     const token = useSelector(state => state.auth.token)
@@ -37,8 +40,11 @@ const ArticleView = () => {
     }
 
     function publishButton() {
-        setEdit(false)
-        publishArticle(selectedCategoryId, descriptions)
+        const confirmed = window.confirm("Are you sure to Publish this Articles")
+        if (confirmed) {
+            setEdit(false)
+            publishArticle(selectedCategoryId, descriptions)
+        }
     }
 
     async function createSavePost(id) {
@@ -56,16 +62,19 @@ const ArticleView = () => {
     }
 
     async function deleteArticle() {
-        try {
-            const { data } = await http(token).delete(`/admin/articles/${id}`)
-            console.log(data.results)
-            navigate("/categoryarticles")
-        } catch (error) {
-            const message = error?.response?.data?.message
-            if (message) {
-                console.log(message)
+        const confirmed = window.confirm("Are you sure to Deleted this Articles")
+        if (confirmed) {  
+            try {
+                const { data } = await http(token).delete(`/admin/articles/${id}`)
+                console.log(data.results)
+                navigate("/categoryarticles")
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if (message) {
+                    console.log(message)
+                }
             }
-        }
+        } 
     }
 
     useEffect(() => {
@@ -74,6 +83,7 @@ const ArticleView = () => {
                 const { data } = await http().get(`/article-view/${id}`)
                 setArticle(data.results)
                 setDescriptions(data.results.descriptions)
+                setLikeCount(data.results.likeCount)
             } catch (error) {
                 const message = error?.response?.data?.message
                 if (message) {
@@ -126,6 +136,7 @@ const ArticleView = () => {
         }
         getComment()
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     async function publishArticle() {
         try {
@@ -164,29 +175,14 @@ const ArticleView = () => {
             }
         }
     }
-    async function handleLike() {
-        try {
-            if (!liked) {
-                // Increment like count
-                setLikeCount(likeCount + 1)
-                setLiked(true)
-            } else {
-                // Decrement like count
-                setLikeCount(likeCount - 1)
-                setLiked(false)
-            }
-
-            // Send API request to update like status on the server
-            await http(token).post("/admin/article-likes")
-        } catch (error) {
-            const message = error?.response?.data?.message
-            if (message) {
-                console.log(message)
-            }
+    const toggleLike = React.useCallback(async() => {
+        if(!token){
+            navigate("/signin")
         }
-        console.log("Like status updated!")
-    }
-
+        console.log(token)
+        const {data} = await http(token).get("/admin/article-likes")
+        setLike(!isLike)
+    },[token, navigate, isLike])
 
     return (
         <>
@@ -196,7 +192,7 @@ const ArticleView = () => {
                 </nav>
                 <div className='pt-[150px]'>
                     <div className='flex w-full px-20 justify-between'>
-                        <Link>
+                        <Link to='/waitinglist'>
                             <div className='flex gap-4'>
                                 <img src={ArrowBack} className='w-2' />
                                 <div className='font-bold'>Back</div>
@@ -222,15 +218,17 @@ const ArticleView = () => {
                                 <div>{moment(article?.createdAt).format("MMMM Do YYYY, h:mm")}</div>
                             </div>
                             <div className='flex gap-5 items-center'>
-                                <button onClick={handleLike} className='like-button'>
-                                    <img
-                                        src={Like}
-                                        alt=''
-                                        className={liked ? "liked" : ""}
-                                    />
+                                <button onClick={toggleLike} className='flex items-center gap-3'>
+                                    {article?.isLike && <>
+                                        {!article.isLike && <HiOutlineThumbUp size={35} />}
+                                        {article.isLike && <HiThumbUp className='text-black' size={35} />}
+                                    </>}
+                                    {!article?.isLike && <>
+                                        {!isLike && <HiOutlineThumbUp size={35} />}
+                                        {isLike && <HiThumbUp className='text-black' size={35} />}
+                                    </>}
+                                    <span className='text-lg font-bold'>{article.likeCount}</span>
                                 </button>
-                                <div className='font-bold'>{likeCount}</div>
-                                {/* <div className='font-bold'>{article?.likeCount}</div> */}
                                 <button onClick={() => createSavePost(article.id)}>
                                     {!savePost && <BsBookmark size={35} />}
                                     {savePost && <BsBookmark size={35} className='text-primary'/>}
@@ -283,7 +281,7 @@ const ArticleView = () => {
                                         handleChange,
                                         handleBlur,
                                         handleSubmit,
-                                        resetForm
+                                        
                                     }) => (
                                         <form onSubmit={handleSubmit} className='flex flex-col gap-3 w-full'>
                                             <div className='font-bold'>You</div>
