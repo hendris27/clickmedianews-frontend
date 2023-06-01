@@ -22,19 +22,19 @@ const WriteArticles = () => {
     // const {id} = useParams()
 
     useEffect(() => {
+        async function getCategory(){
+            try {
+                const {data} = await http().get("/categories?limit=9")
+                setCategory(data.results)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }
         getCategory()
     }, [])
-
-    async function getCategory() {
-        try {
-            const { data } = await http().get("/categories", {
-                params: {limit: 1000}
-            })
-            setCategory(data.results)
-        } catch (error) {
-            console.log("Error fetching categories: ", error)
-        }
-    }
 
     const createArticle = async (values)=>{
         if(profile.isAuthor === true ){
