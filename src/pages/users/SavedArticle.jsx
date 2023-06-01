@@ -35,7 +35,6 @@ function SavedArticle(){
             console.log(err)
         }
     }
-    deleteSavePost()
 
     useEffect(()=> {
         async function getSavePost(){
@@ -51,10 +50,6 @@ function SavedArticle(){
 
         getProfile()
     }, [token, savePost])
-
-    const handleDelete = (id) => {
-        deleteSavePost(id)
-    }
 
     const doLogout = ()=> {
         window.localStorage.removeItem("token")
@@ -192,7 +187,7 @@ function SavedArticle(){
                                                             <BiTime size={25} />
                                                             <p>{moment(savedArticle.createdAt).fromNow("mm")} ago</p>
                                                         </div>
-                                                        <button onClick={() => handleDelete(savedArticle.id)}>
+                                                        <button onClick={() => deleteSavePost(savedArticle.id)}>
                                                             <img src={Save} className='w-4' alt='' />
                                                         </button>
                                                     </div>
