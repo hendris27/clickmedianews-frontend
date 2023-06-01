@@ -8,8 +8,6 @@ import { Link, useNavigate } from "react-router-dom"
 // import CategoryImage from "../../assets/img/category-image-3.png"
 import { AiOutlineLike } from "react-icons/ai"
 import { BiTime } from "react-icons/bi"
-import Save from "../../assets/img/save.png"
-
 
 import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
@@ -18,6 +16,7 @@ import http from "../../helpers/http"
 import moment from "moment/moment.js"
 import { logout as logoutAction } from "../../redux/reducers/auth.js"
 import defaultPicture from "../../assets/img/default.jpg"
+import { BsBookmarkFill } from "react-icons/bs"
 
 function SavedArticle(){
     const [savePost, setSavePost] = useState([])
@@ -35,7 +34,6 @@ function SavedArticle(){
             console.log(err)
         }
     }
-    deleteSavePost()
 
     useEffect(()=> {
         async function getSavePost(){
@@ -48,13 +46,8 @@ function SavedArticle(){
             const { data } = await http(token).get("/profile")
             setProfile(data.results)
         }
-
         getProfile()
     }, [token, savePost])
-
-    const handleDelete = (id) => {
-        deleteSavePost(id)
-    }
 
     const doLogout = ()=> {
         window.localStorage.removeItem("token")
@@ -192,8 +185,8 @@ function SavedArticle(){
                                                             <BiTime size={25} />
                                                             <p>{moment(savedArticle.createdAt).fromNow("mm")} ago</p>
                                                         </div>
-                                                        <button onClick={() => handleDelete(savedArticle.id)}>
-                                                            <img src={Save} className='w-4' alt='' />
+                                                        <button onClick={() => deleteSavePost(savedArticle.id)}>
+                                                            <BsBookmarkFill className='text-primary'/>
                                                         </button>
                                                     </div>
                                                 </div>

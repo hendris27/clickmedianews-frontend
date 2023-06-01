@@ -12,7 +12,7 @@ import { useSelector } from "react-redux"
 import React from "react"
 import moment from "moment"
 import { Formik } from "formik"
-import { BsBookmark } from "react-icons/bs"
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs"
 import {HiOutlineThumbUp, HiThumbUp} from "react-icons/hi"
 
 const ArticleView = () => {
@@ -50,11 +50,17 @@ const ArticleView = () => {
         }
     }
 
+    useEffect(()=> {
+        async function getSavePost(id) {
+            const {data} = await http(token).get(`/saved-article/${id}`)
+            setSavePost(data.results)
+        }
+        getSavePost()
+    }, [token])
+
     async function createSavePost(id) {
         try {
-            await http(token).get("/saved-article")
-            setSavePost(!savePost)
-            if(!savePost) {
+            if(savePost) {
                 await http(token).delete(`/saved-article/${id}`)
                 setSavePost(false)
             }else {
@@ -71,7 +77,6 @@ const ArticleView = () => {
         if (confirmed) {  
             try {
                 const { data } = await http(token).delete(`/admin/article-view/${id}`)
-                console.log(data.results)
                 navigate("/categoryarticles")
             } catch (error) {
                 const message = error?.response?.data?.message
@@ -100,7 +105,6 @@ const ArticleView = () => {
         async function getUser() {
             try {
                 const { data } = await http(token).get("/admin/users/detail")
-                console.log(data.results)
                 if (data.results.role === "superadmin") {
                     setUser(data.results.role)
                 }
@@ -128,7 +132,6 @@ const ArticleView = () => {
 
         async function getComment() {
             try {
-                console.log(id)
                 const dataComment = await http().get(`/article-comments/${id}`)
                 setComments(dataComment.data.results)
                 setTotalData(dataComment.data.pageInfo.totalData)
@@ -149,7 +152,6 @@ const ArticleView = () => {
             formData.append("descriptions", descriptions)
 
             const { data } = await http(token).patch(`/admin/article-view/${id}`, formData)
-            console.log(data.results)
         } catch (error) {
             const message = error?.response?.data?.message
             if (message) {
@@ -237,8 +239,8 @@ const ArticleView = () => {
                                 </button>
                                 <button onClick={() => createSavePost(article.id)}>
                                     {savePost ? 
-                                        <BsBookmark size={35} /> :
-                                        <BsBookmark size={35} className='text-primary'/> }
+                                        <BsBookmarkFill size={35} className='text-primary'/> :
+                                        <BsBookmark size={35} /> }
                                 </button>
                             </div>
                             <div className='w-full flex flex-col gap-3'>
