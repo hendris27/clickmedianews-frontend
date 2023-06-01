@@ -155,7 +155,7 @@ const Home = ()=> {
                     <div className='bg-white px-[60px] pt-[65px] pb-[150px]'>
                         <div className='flex flex-col gap-8'>
                             <div className='font-bold text-[24px]'>Latest News</div>
-                            <div className='flex gap-8'>
+                            <div className='grid grid-cols-3 gap-y-12 gap-x-16'>
                                 {article.map(article => {
                                     return (
                                         <Link to={`/articleView/${article.id}`} key={`article-${article.id}`} className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
@@ -163,7 +163,7 @@ const Home = ()=> {
                                                 <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
                                                     <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
                                                 </div>
-                                                <div className='pl-8'>
+                                                <div className='flex-1 pl-8'>
                                                     <div className='flex flex-col gap-8' >
                                                         <div className='flex flex-col gap-4'>
                                                             <div className='text-[#444cd4] text-[20px] leading-[20px] '>{article.title}</div>
