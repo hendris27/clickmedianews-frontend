@@ -69,10 +69,10 @@ function SavedArticle(){
                     <div className='flex h-auto'>
                         <div className='max-w-[500px] border-r-2 p-20 flex flex-col gap-10'>
                             <div>
-                                <p className='text-24px font-bold'>Profile</p>
+                                <p className='text-2xl font-bold'>Profile</p>
                             </div>
                             <div>
-                                <div className='mb-2 text-center w-[295px]'>
+                                <div className='mb-2 text-center w-[295px] text-slate-400'>
                   Click profile card to see profile
                                 </div>
                                 <div className='w-[295px] h-[284px] shadow-2xl rounded-2xl bg-white relative'>
@@ -173,17 +173,17 @@ function SavedArticle(){
                                 {savePost.map((savedArticle) => (
                                     <div
                                         key={`saved-article-${savedArticle.id}`}
-                                        className='w-[366px] h-[146px] rounded-lg shadow-2xl'
+                                        className='w-[366px] h-[152px] rounded-lg shadow-xl'
                                     >
                                         <div>
                                             <div className='flex gap-5'>
-                                                <img src={savedArticle.picture} className='w-28' alt='' />
-                                                <div className='flex flex-col gap-4'>
-                                                    <Link to={`/articleview/${savedArticle.id}`} className='font-bold text-[20px]'>
+                                                <img src={savedArticle.picture} className='w-[126px] h-[152px] rounded-lg' alt='' />
+                                                <div className='flex flex-col gap-3'>
+                                                    <Link to={`/articleview/${savedArticle.id}`} className='font-bold text-md'>
                                                         {savedArticle.title}
                                                     </Link >
-                                                    <Link to={`/articleview/${savedArticle.id}`}>{savedArticle.descriptions}</Link >
-                                                    <div className='flex gap-2 items-center'>
+                                                    <Link to={`/articleview/${savedArticle.id}`} className='text-sm'>{savedArticle.descriptions}</Link >
+                                                    <div className='flex gap-4 items-center'>
                                                         <div className='flex'>
                                                             <AiOutlineLike size={25} />
                                                             <p>2.1k</p>
