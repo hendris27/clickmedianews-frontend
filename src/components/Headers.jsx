@@ -4,7 +4,6 @@ import defaultPicture from "../assets/img/default.jpg"
 import { MdDensitySmall, MdNotificationsNone, MdOutlineClear } from "react-icons/md"
 import { BsSearch } from "react-icons/bs"
 import React from "react"
-// import http from "../helpers/http"
 import  { useState } from "react"
 import http from "../helpers/http"
 import { useNavigate } from "react-router-dom"
@@ -32,7 +31,6 @@ const Header = (props) => {
         async function getUser(){
             try {
                 const {data} =  await http(token).get("/admin/users/detail")
-                console.log(data.results)
                 if(data.results.role === "superadmin"){
                     setUser(data.results.role)
                 }

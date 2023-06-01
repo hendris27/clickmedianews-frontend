@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
 import Header from "../../components/Headers"
-import Picture from "../../assets/img/picture_login.png"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import ArrowBack from "../../assets/img/arrow-back.svg"
-// import Save from "../../assets/img/save.png"
-// import Like from "../../assets/img/like.png"
 import Footer from "../../components/Footers.jsx"
 import { useEffect, useState } from "react"
 import http from "../../helpers/http"
@@ -14,10 +11,12 @@ import moment from "moment"
 import { Formik } from "formik"
 import { BsBookmark } from "react-icons/bs"
 import {HiOutlineThumbUp, HiThumbUp} from "react-icons/hi"
+import axios from "axios"
+import ScrollToTop from "../../components/ScrollToTop"
 
 const ArticleView = () => {
     const navigate = useNavigate()
-    const [article, setArticle] = useState([])
+    const [article, setArticle] = useState({})
     const [savePost, setSavePost] = useState(false)
     const [user, setUser] = useState({})
     const [category, setCategory] = useState([])
@@ -27,10 +26,8 @@ const ArticleView = () => {
     const [comments, setComments] = useState([])
     const [totalData, setTotalData] = useState(0)
     const [likeCount, setLikeCount] = useState(article?.likeCount || 0)
-
-    const [liked, setLiked] = useState(false)
+    const [isLike, setLike] = useState(false)
     const profile = useSelector((state)=> state.profile.data)
-
     const { id } = useParams()
     const token = useSelector(state => state.auth.token)
 
@@ -100,7 +97,6 @@ const ArticleView = () => {
         async function getUser() {
             try {
                 const { data } = await http(token).get("/admin/users/detail")
-                console.log(data.results)
                 if (data.results.role === "superadmin") {
                     setUser(data.results.role)
                 }
@@ -128,7 +124,6 @@ const ArticleView = () => {
 
         async function getComment() {
             try {
-                console.log(id)
                 const dataComment = await http().get(`/article-comments/${id}`)
                 setComments(dataComment.data.results)
                 setTotalData(dataComment.data.pageInfo.totalData)
@@ -142,6 +137,7 @@ const ArticleView = () => {
         getComment()
 
     }, [])
+
     async function publishArticle() {
         try {
             const formData = new FormData()
@@ -180,15 +176,36 @@ const ArticleView = () => {
         }
     }
 
+    const getArticleData = React.useCallback(async() => {
+        let data = {}
+        if (token) {
+            const {data: res} = await http(token).get(`/articles/${id}/logged`)
+            data = res
+            setLike(res.results.isLike)
+        } else {
+            const {data: res} = await axios.get(`http://localhost:8888/articles/${id}`)
+            data = res
+        }
+        setArticle(data.results)
+        setLikeCount(data.results.likeCount)
+    }, [token, id])
+
     const toggleLike = React.useCallback(async() => {
         if(!token){
             navigate("/signin")
+        }    
+        await http(token).get(`/articles/${id}/likes`)
+        if (isLike) {
+            setLikeCount(likeCount - 1)
+        } else {
+            setLikeCount(likeCount + 1)
         }
-        console.log("Like status updated!")      
-        const {data} = await http(token).get("/admin/article-likes")
-        setLiked(!liked)
-    },[token, navigate, liked])
+        setLike(!isLike)
+    }, [token, id, navigate, isLike, likeCount])
 
+    React.useEffect(() => {
+        getArticleData()
+    }, [getArticleData])
 
     return (
         <>
@@ -225,15 +242,9 @@ const ArticleView = () => {
                             </div>
                             <div className='flex gap-5 items-center'>
                                 <button onClick={toggleLike} className='flex items-center gap-3'>
-                                    {article?.isLike && <>
-                                        {!article.isLike && <HiOutlineThumbUp size={35} />}
-                                        {article.isLike && <HiThumbUp color='#19A7CE' className='text-black' size={35} />}
-                                    </>}
-                                    {!article?.isLike && <>
-                                        {!liked && <HiOutlineThumbUp size={35} />}
-                                        {liked && <HiThumbUp color='#19A7CE' className='text-black' size={35} />}
-                                    </>}
-                                    <span className='text-lg font-bold'>{article.likeCount}</span>
+                                    {!isLike && <HiOutlineThumbUp size={35} />}
+                                    {isLike && <HiThumbUp color='#19A7CE' className='text-black' size={35} />}
+                                    <span className='text-lg font-bold'>{likeCount}</span>
                                 </button>
                                 <button onClick={() => createSavePost(article.id)}>
                                     {savePost ? 
@@ -350,6 +361,7 @@ const ArticleView = () => {
                 </div>
             </div>
             <Footer />
+            <ScrollToTop />
         </>
     )
 }
