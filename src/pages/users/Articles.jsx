@@ -69,7 +69,7 @@ const ArticlesPage = () => {
                         <img src={CategoryFade} className='absolute top-0 w-full'/>
                     </div>
                     <div className='absolute top-0 left-0 w-[668px] p-20'>
-                        <p className='text-[65px]'>Start Writing an Article</p>
+                        <p className='text-[65px]'>Start Writing an Articlee</p>
                         <div className='w-[497px] text-[20px] '>
                             <p>
                             You can be an author by being active in reading artciles in a month or you can request to be an author if you have been a member for three months.
