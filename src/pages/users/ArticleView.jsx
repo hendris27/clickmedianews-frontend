@@ -25,12 +25,11 @@ const ArticleView = () => {
     const [edit, setEdit] = useState(false)
     const [descriptions, setDescriptions] = useState(article?.descriptions)
     const [comments, setComments] = useState([])
+    const [totalData, setTotalData] = useState(0)
     const [likeCount, setLikeCount] = useState(article?.likeCount || 0)
 
     const [liked, setLiked] = useState(false)
-    const [profile, setProfile] = useState([])
-
-
+    const profile = useSelector((state)=> state.profile.data)
 
     const { id } = useParams()
     const token = useSelector(state => state.auth.token)
@@ -71,7 +70,7 @@ const ArticleView = () => {
         const confirmed = window.confirm("Are you sure to Deleted this Articles")
         if (confirmed) {  
             try {
-                const { data } = await http(token).delete(`/admin/articles/${id}`)
+                const { data } = await http(token).delete(`/admin/article-view/${id}`)
                 console.log(data.results)
                 navigate("/categoryarticles")
             } catch (error) {
@@ -130,9 +129,9 @@ const ArticleView = () => {
         async function getComment() {
             try {
                 console.log(id)
-                const { data } = await http().get(`/article-comments/${id}`)
-                console.log(data.results)
-                setComments(data.results)
+                const dataComment = await http().get(`/article-comments/${id}`)
+                setComments(dataComment.data.results)
+                setTotalData(dataComment.data.pageInfo.totalData)
             } catch (error) {
                 const message = error?.response?.data?.message
                 if (message) {
@@ -149,7 +148,7 @@ const ArticleView = () => {
             formData.append("categoryId", selectedCategoryId)
             formData.append("descriptions", descriptions)
 
-            const { data } = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
+            const { data } = await http(token).patch(`/admin/article-view/${id}`, formData)
             console.log(data.results)
         } catch (error) {
             const message = error?.response?.data?.message
@@ -180,11 +179,6 @@ const ArticleView = () => {
             }
         }
     }
-    async function getProfile(){
-        const { data } = await http(token).get("/profile")
-        setProfile(data.results)
-    }
-    getProfile()
 
     const toggleLike = React.useCallback(async() => {
         if(!token){
@@ -279,10 +273,10 @@ const ArticleView = () => {
                     </div>
                     {user !== "superadmin" ? (
                         <div className='flex flex-col gap-8'>
-                            <p className='font-bold text-[24px]'>2 Comments</p>
+                            <p className='font-bold text-[24px]'>{totalData} Comments</p>
                             <div className='flex gap-5'>
                                 <div  className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
-                                    <img src={profile.picture} className='object-cover' />
+                                    <img src={profile?.picture} className='object-cover' />
                                 </div>
                                 <Formik
                                     initialValues={

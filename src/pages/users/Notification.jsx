@@ -48,7 +48,7 @@ const Notification = () => {
     async function doAccAuthor(userId, id){
         try {
             console.log(id)
-            const {data} = await http(token).patch(`/profile/${userId}`)
+            const {data} = await http(token).patch(`/request-author/${userId}`)
             if(data.results){
                 await http(token).delete(`/request-author/${id}`)
             }
