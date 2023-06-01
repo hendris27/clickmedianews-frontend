@@ -11,7 +11,6 @@ import http from "../../helpers/http"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
-import { FiEdit2 } from "react-icons/fi"
 import moment from "moment"
 
 
@@ -115,18 +114,8 @@ const ArticlesPage = () => {
                                                                 <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
                                                             </div>
                                                             <div className='flex gap-4'>
-                                                                {user !=="superadmin" && 
-                                                            <div className='flex gap-2 items-center'>
-                                                                <div><BiLike /></div>
-                                                                <div>{event.likeCount}</div>
-                                                            </div>}
-                                                                <div className='flex gap-2 items-center'>
-                                                                    <div><BiTimeFive /></div>
-                                                                    <div>{moment(event.createdAt).fromNow("mm")} ago</div>
-
-                                        
-
-                                                                </div>
+                                                              
+                                                               
                                                                 <div className='flex gap-4'>
                                                                     <div className='flex gap-2 items-center'>
                                                                         <div><button><BiLike /></button></div>

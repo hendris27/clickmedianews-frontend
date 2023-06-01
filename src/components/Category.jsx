@@ -58,9 +58,9 @@ const Category = () => {
                 <div className='grid grid-cols-4 drop-shadow-3xl gap-y-12'>
                     {category.map(category => {
                         return (
-<div key={`category-${category.id}`} >
+                            <div key={`category-${category.id}`} >
 
-                            <button onClick={() => handleClick(category.category)} key={`category-${category.id}`} >
+                           
 
                            
                             

@@ -140,7 +140,6 @@ const ArticleView = () => {
         }
         getComment()
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     async function publishArticle() {
         try {
@@ -179,27 +178,22 @@ const ArticleView = () => {
             }
         }
     }
-    const toggleLike = React.useCallback(async() => {
-        if(!token){
-            navigate("/signin")
-        }
-
-        console.log("Like status updated!")
-    }
-
-    
-
-
-        console.log(token)
-        const {data} = await http(token).get("/admin/article-likes")
-        setLike(!isLike)
-    },[token, navigate, isLike])
-
-async function getProfile(){
+    async function getProfile(){
         const { data } = await http(token).get("/profile")
         setProfile(data.results)
     }
     getProfile()
+
+    const toggleLike = React.useCallback(async() => {
+        if(!token){
+            navigate("/signin")
+        }
+        console.log("Like status updated!")      
+        const {data} = await http(token).get("/admin/article-likes")
+        setLiked(!liked)
+    },[token, navigate, liked])
+
+
     return (
         <>
             <div>
@@ -237,11 +231,11 @@ async function getProfile(){
                                 <button onClick={toggleLike} className='flex items-center gap-3'>
                                     {article?.isLike && <>
                                         {!article.isLike && <HiOutlineThumbUp size={35} />}
-                                        {article.isLike && <HiThumbUp className='text-black' size={35} />}
+                                        {article.isLike && <HiThumbUp color='#19A7CE' className='text-black' size={35} />}
                                     </>}
                                     {!article?.isLike && <>
-                                        {!isLike && <HiOutlineThumbUp size={35} />}
-                                        {isLike && <HiThumbUp className='text-black' size={35} />}
+                                        {!liked && <HiOutlineThumbUp size={35} />}
+                                        {liked && <HiThumbUp color='#19A7CE' className='text-black' size={35} />}
                                     </>}
                                     <span className='text-lg font-bold'>{article.likeCount}</span>
                                 </button>
