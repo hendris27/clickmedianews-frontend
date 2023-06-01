@@ -13,6 +13,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { logout as logoutAction } from "../../redux/reducers/auth.js"
 import defaultPicture from "../../assets/img/default.jpg"
 import * as Yup from "yup"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const EditProfile = () => {
     const token = useSelector((state) => state.auth.token)
@@ -21,8 +23,6 @@ const EditProfile = () => {
     const [pictureURI, setPictureURI] = useState("")
     const [open, setOpen] = useState(false)
     const [openModal, setOpenModal] = useState(false)
-    const [successMessage, setSuccessMessage] = useState("")
-    const [errorMessage, setErrorMessage] = useState("")
     const [statusMassage, setSatusMessage] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -101,16 +101,13 @@ const EditProfile = () => {
             await http(token).patch("/auth/change-password", body)
       
             setProfile(data.results)
-            setSuccessMessage(data.message)
-            setTimeout(()=>{setSuccessMessage(false)}, 2000)
+            toast.success("Profile Updated", {
+                toastId: "custom-id"
+            })
         } catch (err) {
             const message = err.response.data.message
             if (message) {
-                setErrorMessage(message)
-                setTimeout(()=>{
-                    setErrorMessage(false)
-                },1000)
-            
+                toast.error(message)
             }
         }
 
@@ -244,12 +241,6 @@ const EditProfile = () => {
                                                         
                                                     </div>
                                                 </div>
-                                                {
-                                                    successMessage && <div className='alert alert-success flex items-center justify-center mt-5'>{successMessage}</div>
-                                                }
-                                                {
-                                                    errorMessage && <div className='alert alert-error flex items-center justify-center mt-5'>{errorMessage}</div>
-                                                }
                                                 <div className='pt-4'>
                                                     <div className=' rounded-xl'>
                                                         <label className='btn bg-transparent hover:bg-transparent w-full h-full border-0'>

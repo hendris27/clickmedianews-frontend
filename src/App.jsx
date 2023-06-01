@@ -26,12 +26,25 @@ import AdminForgotPassword from "./pages/admin/auth/ForgotPassword"
 import AdminResetPassword from "./pages/admin/auth/ResetPassword"
 import AdminResetSuccess from "./pages/admin/auth/ResetSuccess"
 import EditProfil from "./pages/users/EditProfil"
+import { ToastContainer } from "react-toastify"
 
 const App = () => {
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <BrowserRouter>
+                    <ToastContainer
+                        position='top-right'
+                        autoClose={1000}
+                        hideProgressBar={false}
+                        newestOnTop
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme='colored'
+                    />
                     <Routes>
                         <Route path='/' element={<Home />} />
                     </Routes>
@@ -77,7 +90,6 @@ const App = () => {
                     <Routes>
                         <Route path='/categories' element={<Categories />} />
                     </Routes>
-
                     {/*Admin*/}
                     <Routes>
                         <Route path='/home-admin' element={<HomeAdmin />} />
