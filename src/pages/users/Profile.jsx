@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Header from "../../components/Headers.jsx"
 import Footer from "../../components/Footers.jsx"
 import { FaChevronLeft } from "react-icons/fa"
