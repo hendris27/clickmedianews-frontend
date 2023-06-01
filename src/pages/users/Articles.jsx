@@ -10,14 +10,18 @@ import Footer from "../../components/Footers"
 import http from "../../helpers/http"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+
 import { FiEdit2 } from "react-icons/fi"
 import moment from "moment"
 
 
 
+
+
+
 const ArticlesPage = () => {
     const [article, setArticles] = useState([])
-    const [user, setUser] = useState([])
+    const [, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
 
 
@@ -95,8 +99,9 @@ const ArticlesPage = () => {
                         <div className=''>
                             <div className='font-bold text-[24px]'>Sport</div>
                             <div className='grid grid-cols-3 gap-y-12 gap-x-12'>
-                                {article.map(event=>{
+                                {article.filter((items)=>items.status === true).map(event=>{
                                     return (
+
                                         <Link to={`/articleView/${event.id}`} key={`articles${event.id}`}>
                                             {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
                                                 <div className='flex justify-between items-center' >
@@ -118,10 +123,22 @@ const ArticlesPage = () => {
                                                                 <div className='flex gap-2 items-center'>
                                                                     <div><BiTimeFive /></div>
                                                                     <div>{moment(event.createdAt).fromNow("mm")} ago</div>
+
+                                        
+
                                                                 </div>
-                                                                <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
-                                                            </div>
-                                                            {user === "superadmin" && 
+                                                                <div className='flex gap-4'>
+                                                                    <div className='flex gap-2 items-center'>
+                                                                        <div><button><BiLike /></button></div>
+                                                                        <div>{event.likeCount}</div>
+                                                                    </div>
+                                                                    <div className='flex gap-2 items-center'>
+                                                                        <div><BiTimeFive /></div>
+                                                                        <div>{moment(event.createdAt).fromNow("mm-hh")}&nbsp; ago</div>
+                                                                    </div>
+                                                                    <div className='flex items-center'><button><BsFillBookmarkFill color='#19A7CE'/></button></div>
+                                                                </div>
+                                                                {/* {user === "superadmin" && 
                                                             <div className='flex gap-3 justify-between items-center'>
                                                                 <div className='flex items-center'>
                                                                     <button className='bg-primary h-10 px-4 text-white rounded-xl hover:bg-red-500'>Delete events</button>
@@ -132,12 +149,15 @@ const ArticlesPage = () => {
                                                                         <button><FiEdit2 color='white' size={15} /></button>
                                                                     </Link>
                                                                 </div>
-                                                            </div> }
+                                                            </div> } */}
+                                                            </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>}
                                         </Link>
+
                                     )
                                 })}
                             </div>

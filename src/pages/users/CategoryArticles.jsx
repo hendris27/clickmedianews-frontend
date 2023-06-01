@@ -35,7 +35,7 @@ const CategoryArticles = () => {
 
         async function getArticle(){
             try {
-                const {data} = await http().get("/articles")
+                const {data} = await http().get("/articles?limit=100")
                 console.log(data.results)
                 if(data.results){
                     setArticle(data.results)
@@ -66,18 +66,21 @@ const CategoryArticles = () => {
     }, [token])
 
     async function deleteArticle(id){
-        try {
-            const {data} = await http(token).delete(`/admin/articles/${id}`)
-            console.log(data.results)
-            if(data.results){
-                navigate("/categoryarticles")
+        const confirmed = window.confirm("Are you sure to deleted this Articles")
+        if (confirmed) {
+            try {
+                const {data} = await http(token).delete(`/admin/articles/${id}`)
+                console.log(data.results)
+                if(data.results){
+                    navigate("/categoryarticles")
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
             }
-        } catch (error) {
-            const message = error?.response?.data?.message
-            if(message){
-                console.log(message)
-            }
-        }
+        } 
     }
 
     useEffect(()=> {
@@ -149,24 +152,12 @@ const CategoryArticles = () => {
                         </div>
                         <p className='font-bold'>18 Categories</p>
                     </div>
-                    {/* <div className='flex gap-5'>
-                        <div><img src={Filter} className='w-6'/></div>
-                        <div>Filter Article : sort by 
-                            <select className='border-0 outline-none font-bold'>
-                                <option className='w-[420px]' value=''>Name (A-Z)</option>
-                                <option value=''>Name (Z-A)</option>
-                                <option value=''>Category</option>
-                                <option value=''>Last Added</option>
-                                <option value=''>Last Modified</option>
-                            </select>
-                        </div>
-                    </div> */}
                 </div>
                 <div className='flex flex-col gap-4'>
                     <div className='pt-8'>
                         <div className='flex flex-col'>
-                            <div className='flex gap-8'>
-                                {article.map(event=>{
+                            <div className='grid grid-cols-3 gap-y-12 gap-x-16'>
+                                {article.filter(items => items.status === true).map(event=>{
                                     return(
                                         <div key={`article${event.id}`}>
                                             <Link to={`/articleview/${event.id}`}>
