@@ -13,8 +13,10 @@ const Category = () => {
     const token = useSelector(state => state.auth.token)
 
     useEffect(()=> {
-        async function getCategory(){
-            const {data} = await http().get("/categories/all?limit=100")
+
+        async function getCategory(id){
+            const {data} = await http().get(`/articles/home/${id}`)
+
             setCategory(data.results)
         }
         getCategory()
@@ -56,9 +58,14 @@ const Category = () => {
                 <div className='grid grid-cols-4 drop-shadow-3xl gap-y-12'>
                     {category.map(category => {
                         return (
+<div key={`category-${category.id}`} >
+
+                            <button onClick={() => handleClick(category.category)} key={`category-${category.id}`} >
+
                            
-                            <div key={`category-${category.id}`} >
+                            
                               
+
                                 <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
                                     <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden relative '>
                                         <Link to='/categoryarticles'>
