@@ -6,8 +6,8 @@ const Category = () => {
     const [category, setCategory] = useState([])
     const navigate = useNavigate()
     useEffect(()=> {
-        async function getCategory(){
-            const {data} = await http().get("/categories/all")
+        async function getCategory(id){
+            const {data} = await http().get(`/articles/home/${id}`)
             setCategory(data.results)
         }
         getCategory()
@@ -30,14 +30,12 @@ const Category = () => {
                 <div className='grid grid-cols-4 drop-shadow-3xl gap-y-12'>
                     {category.map(category => {
                         return (
-                           
                             <button onClick={() => handleClick(category.category)} key={`category-${category.id}`} >
                                 <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
                                     <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden '>
                                         <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
                                     </div>
                                     <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
-                       
                                 </div>
                             </button>
                         )

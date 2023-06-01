@@ -11,7 +11,7 @@ import http from "../../helpers/http"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { FiEdit2 } from "react-icons/fi"
-
+import moment from "moment"
 
 
 
@@ -97,7 +97,7 @@ const ArticlesPage = () => {
                             <div className='grid grid-cols-3 gap-y-12 gap-x-12'>
                                 {article.map(event=>{
                                     return (
-                                        <div key={`articles${event.id}`}>
+                                        <Link to={`/articleView/${event.id}`} key={`articles${event.id}`}>
                                             {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
                                                 <div className='flex justify-between items-center' >
                                                     <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
@@ -117,7 +117,7 @@ const ArticlesPage = () => {
                                                             </div>}
                                                                 <div className='flex gap-2 items-center'>
                                                                     <div><BiTimeFive /></div>
-                                                                    <div>3m ago</div>
+                                                                    <div>{moment(event.createdAt).fromNow("mm")} ago</div>
                                                                 </div>
                                                                 <div className='flex items-center'><BsFillBookmarkFill color='#19A7CE' /></div>
                                                             </div>
@@ -137,7 +137,7 @@ const ArticlesPage = () => {
                                                     </div>
                                                 </div>
                                             </div>}
-                                        </div>
+                                        </Link>
                                     )
                                 })}
                             </div>

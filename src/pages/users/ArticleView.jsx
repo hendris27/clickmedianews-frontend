@@ -24,6 +24,7 @@ const ArticleView = () => {
     const [comments, setComments] = useState([])
     const [likeCount, setLikeCount] = useState(article?.likeCount || 0)
     const [liked, setLiked] = useState(false)
+    const [profile, setProfile] = useState([])
 
     const { id } = useParams()
     const token = useSelector(state => state.auth.token)
@@ -187,6 +188,12 @@ const ArticleView = () => {
         console.log("Like status updated!")
     }
 
+    async function getProfile(){
+        const { data } = await http(token).get("/profile")
+        setProfile(data.results)
+    }
+    getProfile()
+
 
     return (
         <>
@@ -270,8 +277,8 @@ const ArticleView = () => {
                         <div className='flex flex-col gap-8'>
                             <p className='font-bold text-[24px]'>2 Comments</p>
                             <div className='flex gap-5'>
-                                <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
-                                    <img src={Picture} className='object-cover' />
+                                <div  className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
+                                    <img src={profile.picture} className='object-cover' />
                                 </div>
                                 <Formik
                                     initialValues={

@@ -77,7 +77,7 @@ const Home = ()=> {
                                 </div>
                                 {article.map(article => {
                                     return (
-                                        <div key={article.id} className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl '>
+                                        <Link to={`/articleView/${article.id}`} key={article.id} className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl '>
                                             <div className='flex justify-between items-center' >
                                                 <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
                                                     <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
@@ -102,7 +102,7 @@ const Home = ()=> {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     )
                                 })}
                             </div>
@@ -156,7 +156,7 @@ const Home = ()=> {
                             <div className='flex gap-8'>
                                 {article.map(article => {
                                     return (
-                                        <div key={`article-${article.id}`} className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
+                                        <Link to={`/articleView/${article.id}`} key={`article-${article.id}`} className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
                                             <div className='flex justify-between items-center' >
                                                 <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
                                                     <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
@@ -181,7 +181,7 @@ const Home = ()=> {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     )
                                 })}
                                 <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
