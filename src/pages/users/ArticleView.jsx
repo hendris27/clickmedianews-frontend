@@ -53,7 +53,9 @@ const ArticleView = () => {
 
     async function createSavePost(id) {
         try {
-            if(savePost) {
+            await http(token).get("/saved-article")
+            setSavePost(!savePost)
+            if(!savePost) {
                 await http(token).delete(`/saved-article/${id}`)
                 setSavePost(false)
             }else {
@@ -240,8 +242,9 @@ const ArticleView = () => {
                                     <span className='text-lg font-bold'>{article.likeCount}</span>
                                 </button>
                                 <button onClick={() => createSavePost(article.id)}>
-                                    {!savePost && <BsBookmark size={35} />}
-                                    {savePost && <BsBookmark size={35} className='text-primary'/>}
+                                    {savePost ? 
+                                        <BsBookmark size={35} /> :
+                                        <BsBookmark size={35} className='text-primary'/> }
                                 </button>
                             </div>
                             <div className='w-full flex flex-col gap-3'>
