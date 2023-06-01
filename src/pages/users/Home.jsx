@@ -8,7 +8,7 @@ import card from "../../assets/img/Card.png"
 import picture_category from "../../assets/img/articel.jpg"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
-import Category from "../../components/Category"
+// import Category from "../../components/Category"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
@@ -16,6 +16,8 @@ import moment from "moment"
 
 const Home = ()=> {
     const [article, setArticle] = useState([])
+    const [category, setCategory] = useState([])
+
     useEffect(()=> {
         async function getArticle(){
             const {data} = await http().get("/articles?limit=5")
@@ -23,6 +25,15 @@ const Home = ()=> {
         }
         getArticle()
     }, [])
+
+    useEffect(()=> {
+        async function getCategory(id){
+            const {data} = await http().get(`/articles/home/${id}`)
+            setCategory(data.results)
+        }
+        getCategory()
+    }, [])
+
     return (
         <>
             <div className='h-min-screen'>
@@ -46,7 +57,6 @@ const Home = ()=> {
                                 <div className='mt-8 bg-[#444cd4] hover:bg-[#6261df] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center '>
                                     <Link to='/writearticles'>
                                         <button className='text-white'>Start Writing</button>
-
                                     </Link>
                                 </div>
                             </div>
@@ -69,7 +79,32 @@ const Home = ()=> {
                                 <div className='hover:text-black'>#jokowidodo</div>
                                 <div className='hover:text-black'>#ladygaga</div>
                             </div>
-                            <Category />
+                            <div className='flex flex-col gap-8 pt-[60px]'>
+                                <div className='flex justify-between font-semibold'>
+                                    <div>Category</div>
+                                    <Link to='/categoryarticles'>
+                                        <div className='text-[#444cd4] cursor-pointer'>More</div>
+                                    </Link>
+                                </div>
+                                <div className=''>
+                                    <div className='grid grid-cols-4 drop-shadow-3xl gap-y-12'>
+                                        {category.map(category => {
+                                            return (
+                                                <div key={`category-${category.id}`} >
+                                                    <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
+                                                        <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden relative '>
+                                                            <Link to='/categoryarticles'>
+                                                                <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
+                                                            </Link>
+                                                        </div>
+                                                        <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
                             <div className='flex flex-col gap-8 pt-[20px]'>
                                 <div className='flex justify-between font-semibold'>
                                     <div>Recomended</div>

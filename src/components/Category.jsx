@@ -59,20 +59,11 @@ const Category = () => {
                     {category.map(category => {
                         return (
                             <div key={`category-${category.id}`} >
-
-                           
-
-                           
-                            
-                              
-
                                 <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
                                     <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden relative '>
                                         <Link to='/categoryarticles'>
-
                                             <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
                                         </Link>
-
                                         <div className='absolute bottom-10 right-14'><button onClick={()=>deleteCategory(category.id)} className='btn btn-primary text-white hover:bg-red-300 bg-[#E5E5CB]  border-0'>Delete</button></div>
                                     </div>
                                     <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
