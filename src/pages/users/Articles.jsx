@@ -15,10 +15,12 @@ import moment from "moment"
 
 
 
+
 const ArticlesPage = () => {
     const [article, setArticles] = useState([])
     const [, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
+    const [category, setCategory] = useState([])
 
 
 
@@ -51,6 +53,21 @@ const ArticlesPage = () => {
             }
         }
         getUser()
+
+        async function getCategory(){
+            try {
+                const {data} = await http().get("/categories?limit=9")
+                setCategory(data.results)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }
+        getCategory()
+
+
 
 
     },[token])
@@ -90,49 +107,58 @@ const ArticlesPage = () => {
                         </div>
                     </div>
                 </div>
+                <div className='flex flex-col gap-8 cursor-pointer'>
+                    {category.map(category => {
+                        return (
+                            <div type='submit' key={`category-article-${category.id}`} className=' p-2 rounded-xl text-black text-[28px] font-bold'>{category.name}
+                                <div className='grid grid-cols-3 gap-y-12 gap-x-12 mt-8'>
+                                    {article.filter((items)=>items.status === true).map(event=>{
+                                        return (
+
+                                            <Link to={`/articleView/${event.id}`} key={`articles${event.id}`}>
+                                                {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
+                                                    <div className='flex justify-between items-center' >
+                                                        <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                                                            <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
+                                                        </div>
+                                                        <div className='flex-1 pl-8'>
+                                                            <div className='flex flex-col gap-8' >
+                                                                <div className='flex flex-col gap-4'>
+                                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
+                                                                    <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
+                                                                </div>
+                                                                <div className='flex gap-4 text-[16px]'>
+                                                                    <div className='flex gap-4'>
+                                                                        <div className='flex gap-2 items-center'>
+                                                                            <div><button><BiLike /></button></div>
+                                                                            <div>{event.likeCount}</div>
+                                                                        </div>
+                                                                        <div className='flex gap-2 items-center'>
+                                                                            <div><BiTimeFive /></div>
+                                                                            <div>{moment(event.createdAt).fromNow("mm-hh")}&nbsp; ago</div>
+                                                                        </div>
+                                                                        <div className='flex items-center'><button><BsFillBookmarkFill color='#19A7CE'/></button></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>}
+                                            </Link>
+
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        )
+                    })}    
+                </div>
                 <div className='flex flex-col gap-4'>
                     <div className='pt-8'>
                         <div className=''>
                             <div className='font-bold text-[24px]'>Sport</div>
-                            <div className='grid grid-cols-3 gap-y-12 gap-x-12'>
-                                {article.filter((items)=>items.status === true).map(event=>{
-                                    return (
-
-                                        <Link to={`/articleView/${event.id}`} key={`articles${event.id}`}>
-                                            {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                                <div className='flex justify-between items-center' >
-                                                    <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                                        <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
-                                                    </div>
-                                                    <div className='flex-1 pl-8'>
-                                                        <div className='flex flex-col gap-8' >
-                                                            <div className='flex flex-col gap-4'>
-                                                                <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
-                                                                <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
-                                                            </div>
-                                                            <div className='flex gap-4'>
-                                                                <div className='flex gap-4'>
-                                                                    <div className='flex gap-2 items-center'>
-                                                                        <div><button><BiLike /></button></div>
-                                                                        <div>{event.likeCount}</div>
-                                                                    </div>
-                                                                    <div className='flex gap-2 items-center'>
-                                                                        <div><BiTimeFive /></div>
-                                                                        <div>{moment(event.createdAt).fromNow("mm-hh")}&nbsp; ago</div>
-                                                                    </div>
-                                                                    <div className='flex items-center'><button><BsFillBookmarkFill color='#19A7CE'/></button></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>}
-                                        </Link>
-
-                                    )
-                                })}
-                            </div>
+                           
                         </div>
                     </div>
                    
