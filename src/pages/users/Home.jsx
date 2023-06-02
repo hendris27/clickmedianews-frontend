@@ -33,7 +33,7 @@ const Home = ()=> {
 
     useEffect(()=> {
         async function getCategory(){
-            const {data} = await http().get("articlesCategories")
+            const {data} = await http().get("/articles/home-category?limit=8")
             setCategory(data.results)
         }
         getCategory()
