@@ -19,15 +19,18 @@ const Header = (props) => {
     const dispatch = useDispatch()
 
     const [user, setUser] = useState({})
+    const [notif, setNotif] = useState([])
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
     const location = useLocation()
-    const  profile =useSelector((state) =>state.profile.data)
+    const profile = useSelector((state) =>state.profile.data)
+
+    const getDataNotif = React.useCallback(async () => {
+        const { data } = await http(token).get("/notifications")
+        setNotif(data.results)
+    }, [token])
 
     React.useEffect(()=>{
-        dispatch(getProfileAction(token))
-    },[])
-    React.useEffect(() => {
         async function getUser(){
             try {
                 const {data} =  await http(token).get("/admin/users/detail")
@@ -42,7 +45,9 @@ const Header = (props) => {
             }
         }
         getUser()
-    }, [token])
+        dispatch(getProfileAction(token))
+        getDataNotif()
+    },[dispatch, token, getDataNotif])
 
     const doLogout = () => {
         const confirmed = window.confirm("Are you sure you want to logout?")
@@ -134,28 +139,22 @@ const Header = (props) => {
                         <div className='dropdown dropdown-bottom dropdown-end'>
                             <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#444cd4' /></label>
                             <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[400px] px-2s flex flex-col items-center justify-between '>
-                                <li><a className='hover:bg-white'>
-                                    <div className='flex gap-8'>
-                                        <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#444cd4]'>
-                                            <img className='object-cover h-full w-full' src={profile.picture} alt='' />
-                                        </div>
-                                        <div className='flex flex-col'>
-                                            <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
-                                            <div>2m ago</div>
-                                        </div>
-                                    </div>
-                                </a></li>
-                                <li><a className='hover:bg-white'>
-                                    <div className='flex gap-8'>
-                                        <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#444cd4]'>
-                                            <img className='obj ct-cover h-full w-full' src={profile} alt='' />
-                                        </div>
-                                        <div className='flex flex-col'>
-                                            <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
-                                            <div>2m ago</div>
-                                        </div>
-                                    </div>
-                                </a></li>
+                                {notif.map(item => {
+                                    return (
+                                        <>
+                                            <li key={`notif-list-${item.id}`}>
+                                                <a className='hover:bg-white'>
+                                                    <div className='flex gap-8'>
+                                                        <div className='flex flex-col'>
+                                                            <div className='hover:text-primary font-bold'>{item.text}</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </>
+                                    )
+                                    
+                                })}
                                 <div className='border-b-2 w-full hover:bg-white'></div>
                                 <Link to='/notificaton'>
                                     <li className='font-bold text-primary'><a className='hover:bg-white text-[#444cd4] hover:text-black'>See More</a></li>

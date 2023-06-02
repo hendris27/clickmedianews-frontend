@@ -140,7 +140,7 @@ const ArticleView = () => {
         }
         getComment()
 
-    }, [])
+    }, [id, token])
 
     async function publishArticle() {
         try {
