@@ -7,6 +7,7 @@ import { useSelector } from "react-redux"
 import http from "../../helpers/http"
 import { useEffect, useState } from "react"
 import moment from "moment"
+import ScrollToTop from "../../components/ScrollToTop"
 
 
 const Notification = () => {
@@ -198,6 +199,7 @@ const Notification = () => {
             <footer>
                 <Footer/>
             </footer>
+            <ScrollToTop />
         </>
     )
 }
