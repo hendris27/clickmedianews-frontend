@@ -47,14 +47,6 @@ const ArticleView = () => {
         }
     }
 
-    useEffect(()=> {
-        async function getSavePost(id) {
-            const {data} = await http(token).get(`/saved-article/${id}`)
-            setSavePost(data.results)
-        }
-        getSavePost()
-    }, [token])
-
     async function createSavePost(id) {
         try {
             if(savePost) {
