@@ -139,17 +139,16 @@ const ArticlesPage = () => {
                         )}
                     </Formik>
                 </div>
-                <div className='flex flex-col gap-8 cursor-pointer'>
+                <div className='flex flex-col gap-8'>
                     {category.map(category => {
                         return (
                             <div type='submit' key={`category-article-${category.id}`} className=' p-2 rounded-xl text-black text-[28px] font-bold'>{category.name}
                                 <div className='grid grid-cols-3 gap-y-12 gap-x-12 mt-8'>
                                     {article.filter((items)=>items.status === true).map(event=>{
                                         return (
-
                                             <Link to={`/articleView/${event.id}`} key={`articles${event.id}`}>
                                                 {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                                    <div className='flex justify-between items-center' >
+                                                    <div className='flex justify-between items-center cursor-pointer' >
                                                         <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
                                                             <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
                                                         </div>
@@ -174,11 +173,9 @@ const ArticlesPage = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>}
                                             </Link>
-
                                         )
                                     })}
                                 </div>
