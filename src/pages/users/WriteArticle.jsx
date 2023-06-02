@@ -16,8 +16,9 @@ const WriteArticles = () => {
     const [categories, setCategory] = useState([])
     // const [selectedCoverPhoto, setSelectedCoverPhoto] = useState(null)
     const [successMessage, setSuccessMessage] = useState("")
-    const [selectedPIcture, setSelectedPicture] = useState(null)
-    const [warningMessage, setWarningMessage] = useState("")
+    const [selectedPIcture, setSelectedPicture] = useState(false)
+    const [pictureURI, setPictureURI] = useState("")
+    const [openModal, setOpenModal] = useState(false)
     const profile = useSelector((state)=>state.profile.data)
     // const {id} = useParams()
 
@@ -36,8 +37,23 @@ const WriteArticles = () => {
         getCategory()
     }, [])
 
+    const fileToDataUrl = (file) => {
+        const reader = new FileReader()
+        reader.addEventListener("load", () => {
+            setPictureURI(reader.result)
+        })
+        reader.readAsDataURL(file)
+    }
+    
+    const changePicture = (e) => {
+        const file = e.target.files[0]
+        setSelectedPicture(file)
+        fileToDataUrl(file)
+    }
+
     const createArticle = async (values)=>{
         if(profile.isAuthor === true ){
+            setOpenModal(true)
             const form = new FormData()
             Object.keys(values).forEach((key) => {
                 if(values[key]){
@@ -58,10 +74,8 @@ const WriteArticles = () => {
                 console.log(data.message)
                 setSuccessMessage(data.message)
             }
-        }else{
-            setWarningMessage("You are not an author yet")
         }
-        
+        setOpenModal(false)
     }
 
     return (
@@ -86,7 +100,7 @@ const WriteArticles = () => {
                         </Link>
                     </div>
                     {successMessage && (<div className='flex flex-row justify-center alert alert-info shadow-lg text-white text-lg my-3'><BsCheckCircleFill size={30}/>{successMessage}</div>)}
-                    {warningMessage && (<div className='flex flex-row justify-center alert alert-warning shadow-lg text-white text-lg'><MdError size={30}/>{warningMessage}</div>)}
+                    {profile?.isAuthor === false && (<div className='flex flex-row justify-center alert alert-warning shadow-lg text-white text-lg'><MdError size={30}/>You are not an author yet</div>)}
                     <Formik 
                         initialValues={{
                             title: "",
@@ -106,20 +120,18 @@ const WriteArticles = () => {
                                     <div className='w-[342px] h-[535px]  border-4 p-4 rounded-xl '>
                                         <div className='w-full h-full border-4 border-dashed flex justify-center items-center rounded-xl'>
                                             {selectedPIcture ? (
-                                                <img
-                                                    src={selectedPIcture}
-                                                    alt='Selected Cover Photo'
-                                                    className='w-full h-full object-cover'
-                                                />
-                                            ) : (
-                                                <HiPlus color='#CDCDCD' size={50} />
-                                            )}
+                                                <img src={pictureURI} alt='Selected Cover Photo'
+                                                    className='w-full h-full object-cover'/>
+                                            )
+                                                : (
+                                                    <HiPlus color='#CDCDCD' size={50} />
+                                                )}
                                         </div>
                                     </div>
                                     <div className='flex flex-col gap-8 w-full flex-1'>
                                         <div className='flex gap-8'>
                                             <div className='flex-1'>
-                                                <input
+                                                {profile?.isAuthor === true ? (<input
                                                     type='text'
                                                     className='px-8 input input-bordered w-full'
                                                     placeholder='Article Title'
@@ -127,10 +139,19 @@ const WriteArticles = () => {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     value={values.title}
-                                                />
+                                                />): (<input
+                                                    type='text'
+                                                    className='px-8 input input-bordered w-full'
+                                                    placeholder='Article Title'
+                                                    name='title'
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.title}
+                                                    disabled
+                                                />)}
                                             </div>
                                             <div className='w-[50%]'>
-                                                <select
+                                                {profile?.isAuthor === true ? (<select
                                                     className='select w-full max-w-xs'
                                                     name='categoryId'
                                                     onChange={handleChange}
@@ -147,33 +168,69 @@ const WriteArticles = () => {
                                                             </option>
                                                         )
                                                     })}
-                                                </select>
+                                                </select>) : (<select
+                                                    className='select w-full max-w-xs'
+                                                    name='categoryId'
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.categoryId}
+                                                    disabled
+                                                >
+                                                    <option disabled value=''>
+                                                    Articles Category
+                                                    </option>
+                                                    {categories.map((category) => {
+                                                        return (
+                                                            <option key={`category${category.id}`} value={category.id}>
+                                                                {category.name}
+                                                            </option>
+                                                        )
+                                                    })}
+                                                </select>)}
                                             </div>
                                         </div>
                                         <div className='h-full flex justify-center items-center'>
-                                            <textarea
+                                            {profile?.isAuthor === true ? (<textarea
                                                 className='rounded-2xl h-full w-full p-8 outline-none border-2'
                                                 placeholder='Type Here'
                                                 name='descriptions'
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 value={values.descriptions}
-                                            ></textarea>
+                                            ></textarea>) : (<textarea
+                                                className='rounded-2xl h-full w-full p-8 outline-none border-2'
+                                                placeholder='Type Here'
+                                                name='descriptions'
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.descriptions}
+                                                disabled
+                                            ></textarea>) }
                                         </div>
                                     </div>
                                 </div>
                                 <div className='flex gap-8 pt-6 text-white font-bold text-[20px]'>
                                     <div className='w-[342px] bg-accent hover:bg-[#19A7CE] rounded-xl flex justify-center items-center'>
-                                        <label className='btn btn-accent normal-case w-full h-full'>
+                                        {profile?.isAuthor ? (<label className='btn btn-accent normal-case w-full h-full'>
                                             <span className='text-white font-bold'>Choose Photo Cover</span>
                                             <input
                                                 className='hidden'
                                                 type='file'
-                                                name='coverPhoto'
-                                                onChange={(e)=> setSelectedPicture(e.target.files[0])}
+                                                name='picture'
+                                                onChange={changePicture}
                                                 onBlur={handleBlur}
                                             />
-                                        </label>
+                                        </label>) : (<label className='btn btn-accent normal-case w-full h-full'>
+                                            <span className='text-white font-bold'>Choose Photo Cover</span>
+                                            <input
+                                                className='hidden'
+                                                type='file'
+                                                name='picture'
+                                                onChange={changePicture}
+                                                onBlur={handleBlur}
+                                                disabled
+                                            />
+                                        </label>)}
                                     </div>
                                     <button
                                         className='flex-1 bg-[#19A7CE] h-[75px] hover:bg-green-500 rounded-xl flex justify-center items-center'
@@ -185,6 +242,7 @@ const WriteArticles = () => {
                             </form>
                         )}
                     </Formik>
+                    <input type='checkbox' id='loading' className='modal-toggle' checked={openModal} />
                 </div>
             </div>
             <footer>
