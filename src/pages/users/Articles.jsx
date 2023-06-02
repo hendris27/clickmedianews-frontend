@@ -94,6 +94,14 @@ const ArticlesPage = () => {
                             <p>
                             You can be an author by being active in reading artciles in a month or you can request to be an author if you have been a member for three months.
                             </p>
+                           
+                        </div>
+                        <div className='absolute bottom-0 left-30'>
+                            <Link to='/writearticles'>
+                                <div className='mt-8 bg-[#444cd4] hover:bg-[#6261df] w-36 h-16 rounded-xl text-[20px] flex items-center justify-center '>
+                                    <button className='btn btn-primary text-white w-full h-full'>Start Writing</button>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
