@@ -110,9 +110,9 @@ const ArticlesPage = () => {
                 <div className='flex flex-col gap-8 cursor-pointer'>
                     {category.map(category => {
                         return (
-                            <div type='submit' key={`category-article-${category.id}`} className=' p-2 rounded-xl text-black text-[28px] font-bold'>{category.name}
+                            <div  key={`category-article-${category.id}`} className=' p-2 rounded-xl text-black text-[28px] font-bold'>{category.name}
                                 <div className='grid grid-cols-3 gap-y-12 gap-x-12 mt-8'>
-                                    {article.filter((items)=>items.status === true).map(event=>{
+                                    {article.filter((items)=>items.status === true) .map(event=>{
                                         return (
 
                                             <Link to={`/articleView/${event.id}`} key={`articles${event.id}`}>
@@ -155,12 +155,7 @@ const ArticlesPage = () => {
                     })}    
                 </div>
                 <div className='flex flex-col gap-4'>
-                    <div className='pt-8'>
-                        <div className=''>
-                            <div className='font-bold text-[24px]'>Sport</div>
-                           
-                        </div>
-                    </div>
+                
                    
                 </div>
                 <div className='flex items-center justify-center'>
