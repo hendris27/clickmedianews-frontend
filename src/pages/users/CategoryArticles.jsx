@@ -119,6 +119,12 @@ const CategoryArticles = () => {
             }
         }
     }
+    async function filterName(value){
+        const {data} = await http().get(`/articles?sort=${value}`)
+        setArticle(data.results)
+
+    }
+  
     return (
         <>
             <div>
@@ -143,11 +149,14 @@ const CategoryArticles = () => {
                             <div className='dropdown'>
                                 <label tabIndex={0} className='m-1 cursor-pointer font-bold'>Filter Article : sort by</label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52'>
-                                    <li><a>Name</a></li>
+                                    <li><a name='sort' value='title' onClick={filterName}>Name</a></li>
                                     <li><a>Category</a></li>
                                     <li><a>Last Added</a></li>
                                     <li><a>Last Modified</a></li>
+
+                                    
                                 </ul>
+                              
                             </div>
                         </div>
                         <p className='font-bold'>18 Categories</p>
@@ -207,6 +216,11 @@ const CategoryArticles = () => {
                         </div>
                     </div>
                 </div>
+                {article.length < 1 && (
+                    <div className='text-2xl font-bold text-red-400 text-center'>
+                    Data Category Not Found!
+                    </div>
+                )}
                 <div className='flex items-center justify-center'>
                     <div className='pt-12'>
                         End of result
