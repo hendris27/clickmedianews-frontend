@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import Header from "../../components/Headers"
-
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"
 import Filter from "../../assets/img/filter.png"
@@ -8,6 +7,7 @@ import Footer from "../../components/Footers"
 import { Link, useSearchParams } from "react-router-dom"
 import React from "react"
 import http from "../../helpers/http"
+import ScrollToTop from "../../components/ScrollToTop"
 
 const SearchArticles = () => {
     const [article, setArticle] = React.useState([])
@@ -116,19 +116,17 @@ const SearchArticles = () => {
                                                 </div>
                                             </div>
                                         </div>}
-                                       
                                     </Link>
                                 </div>
                             )
                         })}
-                       
                     </div>                  
                 </div>
             </div>
-           
             <footer>
                 <Footer/>
             </footer>
+            <ScrollToTop />
         </>
     )
 }

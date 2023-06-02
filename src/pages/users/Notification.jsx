@@ -9,6 +9,7 @@ import { useEffect, useState, useCallback } from "react"
 import { useDispatch } from "react-redux"
 import { getProfileAction } from "../../redux/actions/profile"
 import moment from "moment"
+import ScrollToTop from "../../components/ScrollToTop"
 
 const Notification = () => {
     const [requestAuthor, setRequestAuthor] = useState([])
@@ -174,6 +175,7 @@ const Notification = () => {
             <footer>
                 <Footer/>
             </footer>
+            <ScrollToTop />
         </>
     )
 }

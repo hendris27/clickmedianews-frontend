@@ -171,19 +171,29 @@ const Header = (props) => {
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
-                                    {user === "superadmin" && <li><a className='hover:bg-white'>
-                                        <Link to='/waitinglist'>
-                                            <div className='font-bold text-medium hover:text-primary'> Waiiting list</div>
+                                    <li>
+                                        <Link to='/profile' className='hover:bg-white'>
+                                            <div className='font-bold text-medium hover:text-primary'>My Profile</div>
                                         </Link>
-                                    </a></li>}
-                                    <li><a className='hover:bg-white'>
-                                        <Link to='/edit-profile'>
-                                            <div className='font-bold text-medium hover:text-primary'> See Profile</div>
+                                    </li>
+                                    <li>
+                                        <Link to='/edit-profile' className='hover:bg-white'>
+                                            <div className='font-bold text-medium hover:text-primary'>Edit Profile</div>
                                         </Link>
-                                    </a></li>
+                                    </li>
+                                    {user === "superadmin" && <li>
+                                        <Link to='/waitinglist' className='hover:bg-white'>
+                                            <div className='font-bold text-medium hover:text-primary'>Waiting Lists</div>
+                                        </Link>
+                                    </li>}
                                     <div className='border-b-2 w-full hover:bg-white'></div>
-                                    <li className='font-bold text-primary'><a className='hover:bg-white hover:text-red-500'>
-                                        <div onClick={doLogout} className='text-[#ff0000] font-bold'>Logout</div></a></li>
+                                    <li className='font-bold text-primary'>
+                                        <a className='hover:bg-white'>
+                                            <div onClick={doLogout} className='text-[#ff0000] font-bold'>
+                                                Logout
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <div></div>
