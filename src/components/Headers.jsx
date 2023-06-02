@@ -172,13 +172,8 @@ const Header = (props) => {
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
                                     <li>
-                                        <Link to='/profile' className='hover:bg-white'>
-                                            <div className='font-bold text-medium hover:text-primary'>My Profile</div>
-                                        </Link>
-                                    </li>
-                                    <li>
                                         <Link to='/edit-profile' className='hover:bg-white'>
-                                            <div className='font-bold text-medium hover:text-primary'>Edit Profile</div>
+                                            <div className='font-bold text-medium hover:text-primary'>See My Profile</div>
                                         </Link>
                                     </li>
                                     {user === "superadmin" && <li>
