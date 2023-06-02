@@ -14,8 +14,8 @@ const Category = () => {
 
     useEffect(()=> {
 
-        async function getCategory(id){
-            const {data} = await http().get(`/articles/home/${id}`)
+        async function getCategory(){
+            const {data} = await http().get("articlesCategories")
 
             setCategory(data.results)
         }
@@ -67,6 +67,7 @@ const Category = () => {
                                         <div className='absolute bottom-10 right-14'><button onClick={()=>deleteCategory(category.id)} className='btn btn-primary text-white hover:bg-red-300 bg-[#E5E5CB]  border-0'>Delete</button></div>
                                     </div>
                                     <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
+                                    <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.name}</div>
                                 </div>
                             </div>
                         )
