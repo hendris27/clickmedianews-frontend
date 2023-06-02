@@ -219,7 +219,7 @@ const ArticleView = () => {
                 </nav>
                 <div className='pt-[150px]'>
                     <div className='flex w-full px-20 justify-between'>
-                        <Link to='/waitinglist'>
+                        <Link to='/articles'>
                             <div className='flex gap-4'>
                                 <img src={ArrowBack} className='w-2' />
                                 <div className='font-bold'>Back</div>
