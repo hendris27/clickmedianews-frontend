@@ -15,8 +15,10 @@ import http from "../../helpers/http.js"
 const Profile = () => {
     const token = useSelector((state) => state.auth.token)
     const profile = useSelector(state => state.profile.data)
+    const [totalPost, setTotalPost] = useState(0)
     const [articel, setArticle] = useState([])
     const [user, setUser] = useState({})
+    const [totalComment, setTotalComment] = useState([])
     const dispatch = useDispatch()
 
     useEffect(() => { 
@@ -24,10 +26,11 @@ const Profile = () => {
 
         async function getArticleManage(){
             try {
-                const {data} = await http(token).get("/articles/manage?limit=100")
-                console.log(data.results)
-                if(data.results){
-                    setArticle(data.results)
+                const articleManage = await http(token).get("/articles/manage?limit=100")
+                console.log(articleManage)
+                if(articleManage.data.results){
+                    setArticle(articleManage.data.results)
+                    setTotalPost(articleManage.data.pageInfo)
                 }
             } catch (error) {
                 const message = error?.response?.data?.message
@@ -53,7 +56,20 @@ const Profile = () => {
         }
         getUser()
 
-    }, [token, dispatch])
+        async function getComment() {
+            try {
+                const dataComment = await http().get(`/article-comments/total/${user.id}`)
+                setTotalComment(dataComment.data.pageInfo)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if (message) {
+                    console.log(message)
+                }
+            }
+        }
+        getComment()
+
+    }, [token, dispatch, user])
 
     
 
@@ -99,7 +115,7 @@ const Profile = () => {
                             </div>
                             <div className='h-[215px] w-[70px] rounded-2xl absolute bottom-[25px] right-[-30px]  bg-blue-500 flex flex-col text-white text-center'>
                                 <div className='rounded-r-2xl border-1 pt-1 rounded-l-2xl h-20 w-[70px] flex flex-col items-center justify-center bg-blue-600'>
-                                    <div className='font-bold'>52</div>
+                                    <div className='font-bold'>{totalPost?.totalData}</div>
                                     <div className='text-[10px]'>Post</div>
                                 </div>
                                 <div className='flex flex-col gap-2'>
@@ -108,7 +124,7 @@ const Profile = () => {
                                         <div className='text-[10px]'>Visitor</div>
                                     </div>
                                     <div className='flex flex-col gap-1 pt-1'>
-                                        <div className='font-bold'>4.5K</div>
+                                        <div className='font-bold'>{totalComment?.totalData}</div>
                                         <div className='text-[10px]'>Comments</div>
                                     </div>
 
