@@ -13,16 +13,11 @@ import { useSelector } from "react-redux"
 import moment from "moment"
 import { Formik } from "formik"
 
-
-
-
 const ArticlesPage = () => {
     const [article, setArticles] = useState([])
     const [, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
     const [category, setCategory] = useState([])
-
-
 
     useEffect(() => {
         async function getDataArticles() {

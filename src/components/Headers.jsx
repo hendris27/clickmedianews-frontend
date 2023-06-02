@@ -137,7 +137,7 @@ const Header = (props) => {
 
                     <div className='flex justify-center items-center'>
                         <div className='dropdown dropdown-bottom dropdown-end'>
-                            <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#444cd4' /></label>
+                            <label tabIndex={0} onClick={getDataNotif} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#444cd4' /></label>
                             <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[400px] px-2s flex flex-col items-center justify-between '>
                                 {notif.map(item => {
                                     return (
