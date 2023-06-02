@@ -11,6 +11,7 @@ import http from "../../helpers/http"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import moment from "moment"
+import { Formik } from "formik"
 
 
 
@@ -26,7 +27,7 @@ const ArticlesPage = () => {
     useEffect(() => {
         async function getDataArticles() {
             try {
-                const { data } = await http ().get("/articles?limit=100")
+                const { data } = await http().get("/articles?limit=100")
                 setArticles(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
@@ -55,7 +56,7 @@ const ArticlesPage = () => {
 
         async function getCategory(){
             try {
-                const {data} = await http().get("/categories?limit=9")
+                const {data} = await http().get("/categories?limit=20")
                 setCategory(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
@@ -66,10 +67,21 @@ const ArticlesPage = () => {
         }
         getCategory()
 
-
-
-
     },[token])
+
+    async function filterArticles(values, setArticles) {
+        try {
+            console.log(values)
+            const { data } = await http().get(`/articles?limit=100&sortBy=${values.sortBy}`)
+            setArticles(data.results)
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if (message) {
+                console.log(message)
+            }
+        }
+    }
+
     return (
         <>
             <div>
@@ -93,18 +105,39 @@ const ArticlesPage = () => {
             </div>
             <div className='bg-white px-[60px] pt-[65px] pb-[90px]'>
                 <div>
-                    <div className='flex gap-5'>
-                        <div><img src={Filter} className='w-6'/></div>
-                        <div>Filter Article : sort by 
-                            <select className='border-0 outline-none font-bold'>
-                                <option className='w-[420px]' value=''>Name (A-Z)</option>
-                                <option value=''>Name (Z-A)</option>
-                                <option value=''>Category</option>
-                                <option value=''>Last Added</option>
-                                <option value=''>Last Modified</option>
-                            </select>
-                        </div>
-                    </div>
+                    <Formik
+                        initialValues={{ sortBy: "ASC"}}
+                        onSubmit={(values) => filterArticles(values, setArticles)}>
+
+                        {({
+                            values,
+                            handleChange,
+                            handleBlur,
+                            handleSubmit
+
+                        }) => (
+                            <form onSubmit={handleSubmit} className='flex gap-5'>
+                                <div><img src={Filter} className='w-6'/></div>
+                                <div>Filter Article : sort by 
+                                    <select 
+                                        className='border-0 outline-none font-bold px-6'
+                                        name='sortBy'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.sortBy}
+                                    >
+                                        <option value={"ASC"}>Name (A-Z)</option>
+                                        <option value={"DSC"}>Name (Z-A)</option>
+                                        <option value=''>Category</option>
+                                        <option value=''>Last Added</option>
+                                        <option value=''>Last Modified</option>
+                                    </select>
+
+                                </div>
+                                <button type='submit' className='bg-white text-white'>submit</button>
+                            </form>
+                        )}
+                    </Formik>
                 </div>
                 <div className='flex flex-col gap-8 cursor-pointer'>
                     {category.map(category => {
