@@ -101,7 +101,7 @@ const EditProfile = () => {
             await http(token).patch("/auth/change-password", body)
       
             setProfile(data.results)
-            toast.success("Profile Updated", {
+            toast.success(data.message, {
                 toastId: "custom-id"
             })
         } catch (err) {

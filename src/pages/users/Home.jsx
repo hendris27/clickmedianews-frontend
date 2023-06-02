@@ -7,8 +7,10 @@ import image from "../../assets/img/Image.png"
 import card from "../../assets/img/Card.png"
 import picture_category from "../../assets/img/articel.jpg"
 import { BiLike, BiTimeFive} from "react-icons/bi"
+
 import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs"
 // import Category from "../../components/Category"
+
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
@@ -30,8 +32,8 @@ const Home = ()=> {
     }, [])
 
     useEffect(()=> {
-        async function getCategory(id){
-            const {data} = await http().get(`/articles/home/${id}`)
+        async function getCategory(){
+            const {data} = await http().get("articlesCategories")
             setCategory(data.results)
         }
         getCategory()
@@ -83,11 +85,12 @@ const Home = ()=> {
                                 <div className='text-[20px] w-[608px] leading-[32px] '>Everyone has their point of view of something, but just don’t 
                             be afraid to express the facts. Be an author and share you 
                             prespective of something to the world.</div>
-                                <div className='mt-8 bg-[#444cd4] hover:bg-[#6261df] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center '>
-                                    <Link to='/writearticles'>
+                                <Link to='/writearticles'>
+                                    <div className='mt-8 bg-[#444cd4] hover:bg-[#6261df] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center '>
                                         <button className='text-white'>Start Writing</button>
-                                    </Link>
-                                </div>
+                                    </div>
+                                </Link>
+
                             </div>
                         </div>
                     </div>
@@ -127,6 +130,7 @@ const Home = ()=> {
                                                             </Link>
                                                         </div>
                                                         <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
+                                                        <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.name}</div>
                                                     </div>
                                                 </div>
                                             )

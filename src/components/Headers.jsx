@@ -19,15 +19,18 @@ const Header = (props) => {
     const dispatch = useDispatch()
 
     const [user, setUser] = useState({})
+    const [notif, setNotif] = useState([])
     const token = useSelector((state) => state.auth.token)
     const [search, setSearch] = React.useState("")
     const location = useLocation()
-    const  profile =useSelector((state) =>state.profile.data)
+    const profile = useSelector((state) =>state.profile.data)
+
+    const getDataNotif = React.useCallback(async () => {
+        const { data } = await http(token).get("/notifications")
+        setNotif(data.results)
+    }, [token])
 
     React.useEffect(()=>{
-        dispatch(getProfileAction(token))
-    },[])
-    React.useEffect(() => {
         async function getUser(){
             try {
                 const {data} =  await http(token).get("/admin/users/detail")
@@ -42,7 +45,9 @@ const Header = (props) => {
             }
         }
         getUser()
-    }, [token])
+        dispatch(getProfileAction(token))
+        getDataNotif()
+    },[dispatch, token, getDataNotif])
 
     const doLogout = () => {
         const confirmed = window.confirm("Are you sure you want to logout?")
@@ -132,30 +137,24 @@ const Header = (props) => {
 
                     <div className='flex justify-center items-center'>
                         <div className='dropdown dropdown-bottom dropdown-end'>
-                            <label tabIndex={0} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#444cd4' /></label>
+                            <label tabIndex={0} onClick={getDataNotif} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#444cd4' /></label>
                             <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[400px] px-2s flex flex-col items-center justify-between '>
-                                <li><a className='hover:bg-white'>
-                                    <div className='flex gap-8'>
-                                        <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#444cd4]'>
-                                            <img className='object-cover h-full w-full' src={profile.picture} alt='' />
-                                        </div>
-                                        <div className='flex flex-col'>
-                                            <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
-                                            <div>2m ago</div>
-                                        </div>
-                                    </div>
-                                </a></li>
-                                <li><a className='hover:bg-white'>
-                                    <div className='flex gap-8'>
-                                        <div className='rounded-full overflow-hidden h-14 w-14 border-4 border-[#444cd4]'>
-                                            <img className='obj ct-cover h-full w-full' src={profile} alt='' />
-                                        </div>
-                                        <div className='flex flex-col'>
-                                            <div className='hover:text-primary font-bold'>Ryann just liked your post</div>
-                                            <div>2m ago</div>
-                                        </div>
-                                    </div>
-                                </a></li>
+                                {notif.map(item => {
+                                    return (
+                                        <>
+                                            <li key={`notif-list-${item.id}`}>
+                                                <a className='hover:bg-white'>
+                                                    <div className='flex gap-8'>
+                                                        <div className='flex flex-col'>
+                                                            <div className='hover:text-primary font-bold'>{item.text}</div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </>
+                                    )
+                                    
+                                })}
                                 <div className='border-b-2 w-full hover:bg-white'></div>
                                 <Link to='/notificaton'>
                                     <li className='font-bold text-primary'><a className='hover:bg-white text-[#444cd4] hover:text-black'>See More</a></li>
@@ -172,19 +171,29 @@ const Header = (props) => {
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[250px] px-2s flex flex-col items-center justify-between '>
-                                    {user === "superadmin" && <li><a className='hover:bg-white'>
-                                        <Link to='/waitinglist'>
-                                            <div className='font-bold text-medium hover:text-primary'> Waiiting list</div>
+                                    <li>
+                                        <Link to='/profile' className='hover:bg-white'>
+                                            <div className='font-bold text-medium hover:text-primary'>My Profile</div>
                                         </Link>
-                                    </a></li>}
-                                    <li><a className='hover:bg-white'>
-                                        <Link to='/edit-profile'>
-                                            <div className='font-bold text-medium hover:text-primary'> See Profile</div>
+                                    </li>
+                                    <li>
+                                        <Link to='/edit-profile' className='hover:bg-white'>
+                                            <div className='font-bold text-medium hover:text-primary'>Edit Profile</div>
                                         </Link>
-                                    </a></li>
+                                    </li>
+                                    {user === "superadmin" && <li>
+                                        <Link to='/waitinglist' className='hover:bg-white'>
+                                            <div className='font-bold text-medium hover:text-primary'>Waiting Lists</div>
+                                        </Link>
+                                    </li>}
                                     <div className='border-b-2 w-full hover:bg-white'></div>
-                                    <li className='font-bold text-primary'><a className='hover:bg-white hover:text-red-500'>
-                                        <div onClick={doLogout} className='text-[#ff0000] font-bold'>Logout</div></a></li>
+                                    <li className='font-bold text-primary'>
+                                        <a className='hover:bg-white'>
+                                            <div onClick={doLogout} className='text-[#ff0000] font-bold'>
+                                                Logout
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <div></div>

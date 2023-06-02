@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import http from "../../../helpers/http"
 import * as Yup from "yup"
+import { FaEye } from "react-icons/fa"
+import { FaEyeSlash } from "react-icons/fa"
 
 function ResetPassword() {
     const validationSchema = Yup.object({
@@ -15,10 +17,14 @@ function ResetPassword() {
             .required("Confirm password is empty !")
             .oneOf([Yup.ref("password"), null], "Passwords must match"),
     })
-
+    const [open, setOpen] = useState(false)
     const [successMessage, setSuccessMessage] = useState("")
     const [ResetError, setResetError] = useState("")
     const navigate = useNavigate()
+
+    function showEye(){
+        setOpen(!open)
+    }
 
     const doResetPassword = async (values) => {
         try {
@@ -49,7 +55,7 @@ function ResetPassword() {
 
     return (
         <Fragment>
-            <div className='flex w-full h-full xl:h-screen'>
+            <div className='flex w-full h-full'>
                 <div className="hidden md:flex flex-1 bg-[url('/src/assets/img/forgot-image.png')] bg-cover bg-bottom bg-no-repeat"></div>
                 <div className='flex flex-col flex-1 bg-white gap-10 pt-10 h-screen md:h-full'>
                     <div className='flex items-center flex-col justify-center gap-10 h-screen'>
@@ -133,19 +139,24 @@ function ResetPassword() {
                                                 )}
                                             </div>
                                             <div>
-                                                <input
-                                                    type='password'
-                                                    placeholder='Password'
-                                                    name='password'
-                                                    className={`input input-bordered w-full bg-white border-2 mb-2 border-gray-400 text-black max-w-2xl border' ${
-                                                        errors.password &&
-                                                        touched.password &&
-                                                        "input-error border-red-700"
-                                                    }`}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.password}
-                                                />
+                                                <div className='relative'>
+                                                    <input
+                                                        type={open ? "text" : "password"}
+                                                        placeholder='Password'
+                                                        name='password'
+                                                        className={`input input-bordered w-full bg-white border-2 mb-2 border-gray-400 text-black max-w-2xl border' ${
+                                                            errors.password &&
+                                                            touched.password &&
+                                                            "input-error border-red-700"
+                                                        }`}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        value={values.password}
+                                                    />
+                                                    <button type='button' onClick={showEye}>
+                                                        {open ? <FaEye size={25} className='absolute top-3 right-5'/> : <FaEyeSlash size={25} className='absolute top-3 right-5'/>}
+                                                    </button>
+                                                </div>
                                                 {errors.password &&
                                                     touched.password && (
                                                     <label
@@ -159,19 +170,24 @@ function ResetPassword() {
                                                 )}
                                             </div>
                                             <div>
-                                                <input
-                                                    type='password'
-                                                    placeholder='Confirm Password'
-                                                    name='confirmPassword'
-                                                    className={`input input-bordered w-full bg-white border-2 mb-2 border-gray-400 text-black max-w-2xl border' ${
-                                                        errors.confirmPassword &&
-                                                        touched.confirmPassword &&
-                                                        "input-error border-red-700"
-                                                    }`}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.confirmPassword}
-                                                />
+                                                <div className='relative'>
+                                                    <input
+                                                        type={open ? "text" : "password"}
+                                                        placeholder='Confirm Password'
+                                                        name='confirmPassword'
+                                                        className={`input input-bordered w-full bg-white border-2 mb-2 border-gray-400 text-black max-w-2xl border' ${
+                                                            errors.confirmPassword &&
+                                                            touched.confirmPassword &&
+                                                            "input-error border-red-700"
+                                                        }`}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        value={values.confirmPassword}
+                                                    />
+                                                    <button type='button' onClick={showEye}>
+                                                        {open ? <FaEye size={25} className='absolute top-3 right-5'/> : <FaEyeSlash size={25} className='absolute top-3 right-5'/>}
+                                                    </button>
+                                                </div>
                                                 {errors.confirmPassword &&
                                                     touched.confirmPassword && (
                                                     <label
