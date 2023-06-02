@@ -166,11 +166,11 @@ function SavedArticle(){
                                 {savePost.map((savedArticle) => (
                                     <div
                                         key={`saved-article-${savedArticle.id}`}
-                                        className='w-[366px] h-[152px] rounded-lg shadow-xl'
+                                        className='w-[380px] h-[200px] rounded-lg shadow-xl'
                                     >
                                         <div>
                                             <div className='flex gap-5'>
-                                                <img src={savedArticle.picture} className='w-[126px] h-[152px] rounded-lg' alt='' />
+                                                <img src={savedArticle.picture} className='w-[126px] h-[200px] object-cover rounded-lg' alt='' />
                                                 <div className='flex flex-col gap-3'>
                                                     <Link to={`/articleview/${savedArticle.id}`} className='font-bold text-md'>
                                                         {savedArticle.title}
