@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux"
 import { getProfileAction } from "../../redux/actions/profile"
 import moment from "moment"
 import ScrollToTop from "../../components/ScrollToTop"
+import { toast } from "react-toastify"
 
 const Notification = () => {
     const [requestAuthor, setRequestAuthor] = useState([])
@@ -19,13 +20,63 @@ const Notification = () => {
     const token = useSelector((state) => state.auth.token)
     const dispatch = useDispatch()
     const profile = useSelector(state => state.profile.data)
-
+    const [selectedItems, setSelectedItems] = useState([])
+    const [selectAll, setSelectAll] = useState(false)
+    const [modal, setCheckModal] = useState(false)
 
     const getDataNotif = useCallback(async () => {
         const { data } = await http(token).get("/notifications")
         setNotif(data.results)
     }, [token])
 
+    const handleSelectAll = () => {
+        if (!selectAll) {
+            const allItemIds = notif.map((item) => item.id)
+            setSelectedItems(allItemIds)
+        } else {
+            setSelectedItems([])
+        }
+        setSelectAll(!selectAll)
+    }
+
+    function checkModal(){
+        setCheckModal(!modal)
+    }
+      
+
+    const handleCheckboxChange = (itemId) => {
+        if (itemId === "all") {
+            setSelectAll(!selectAll)
+            setSelectedItems(selectAll ? [] : notif.map(item => item.id))
+        } else {
+            const newSelectedItems = [...selectedItems]
+            const index = newSelectedItems.indexOf(itemId)
+      
+            if (index > -1) {
+                newSelectedItems.splice(index, 1)
+            } else {
+                newSelectedItems.push(itemId)
+            }
+      
+            setSelectedItems(newSelectedItems)
+            setSelectAll(newSelectedItems.length === notif.length)
+        }
+    }
+      
+
+    const handleDeleteSelectedItems = async () => {
+        try {
+            const selectedItemsArray = selectedItems.map(Number)
+            for (const itemId of selectedItemsArray) {
+                await http(token).delete(`/notifications/${itemId}`)
+            }
+        } catch (error) {
+            toast.error(error)
+        }
+
+        getDataNotif()
+        setCheckModal(!modal)
+    }
 
     useEffect(()=>{
         async function getRequestAuthor(){
@@ -100,7 +151,7 @@ const Notification = () => {
                
             </div>
             <div className='flex flex-col gap-10 pt-20 pb-12'>
-                <div className='flex w-full justify-between px-20 items-center'>
+                <div className='flex w-full justify-between px-20 items-center py-10'>
                     <Link to='/'>
                         <div className='flex gap-4 items-center'>
                             <FaChevronLeft size={20} />
@@ -111,7 +162,8 @@ const Notification = () => {
                         <div className='font-bold text-[24px]'>Notification</div>
                     </div>
                     <div>
-                        <div className='font-bold'>Select</div>
+                        <button onClick={handleSelectAll} className='font-bold'>
+                            {selectAll ? "Deselect All" : "Select All"}</button>
                     </div>
                 </div>
                 <div>
@@ -152,7 +204,7 @@ const Notification = () => {
                             <>
                                 <div className='w-full flex justify-between items-center px-20'>
                                     <div className='flex gap-5 justify-center items-center'>
-                                        <div className='rounded-full border-2 border-black overflow-hidden w-12 h-12'>
+                                        <div className='rounded-full border-2 border-gray-200 overflow-hidden w-12 h-12'>
                                             <img src={profile?.picture} className='object-cover w-full h-full' />
                                         </div>
                                         <div className='flex flex-col'>
@@ -160,18 +212,28 @@ const Notification = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <input type='checkbox' name={item.id} id={item.id} className='w-6 h-6 border-primary' />
+                                        <input type='checkbox' name={item.id} onChange={() => handleCheckboxChange(item.id)} id={item.id} checked={selectedItems.includes(item.id)} className='checkbox' />
                                     </div>
                                 </div>
                             </>
                         )
                     })}
                 </div>
-                <div className='flex self-center '>
-                    <button className='btn btn-primary w-[400px] text-white'>Delete Selected Items</button>
+                <div className='flex self-center' onClick={checkModal}>
+                    <button className='btn btn-primary w-[400px] text-white normal-case' >Delete Selected Items</button>
                 </div>
             </div>
-           
+            <input type='checkbox' id='my_modal_6' className='modal-toggle' checked={modal} />
+            <div className='modal'>
+                <div className='modal-box'>
+                    <h3 className='font-bold text-lg'>Attention !</h3>
+                    <p className='py-4'>Are you sure to delete that items?</p>
+                    <div className='modal-action'>
+                        <button onClick={handleDeleteSelectedItems} className='btn btn-error text-white normal-case'>Yes</button>
+                        <button onClick={checkModal} className='btn btn-success text-white normal-case'>No</button>
+                    </div>
+                </div>
+            </div>
             <footer>
                 <Footer/>
             </footer>
