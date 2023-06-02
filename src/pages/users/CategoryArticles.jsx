@@ -207,6 +207,11 @@ const CategoryArticles = () => {
                         </div>
                     </div>
                 </div>
+                {article.length < 1 && (
+                    <div className='text-2xl font-bold text-red-400'>
+                     Data Category Not Found!
+                    </div>
+                )}
                 <div className='flex items-center justify-center'>
                     <div className='pt-12'>
                         End of result
