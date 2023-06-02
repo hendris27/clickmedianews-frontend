@@ -90,7 +90,6 @@ const ArticleView = () => {
                 const { data } = await http().get(`/article-view/${id}`)
                 setArticle(data.results)
                 setDescriptions(data.results.descriptions)
-                setLikeCount(data.results.likeCount)
             } catch (error) {
                 const message = error?.response?.data?.message
                 if (message) {
@@ -218,8 +217,8 @@ const ArticleView = () => {
                     <Header />
                 </nav>
                 <div className='pt-[150px]'>
-                    <div className='flex w-full px-20 justify-between'>
-                        <Link to='/articles'>
+                    <div className='flex w-full pl-20 gap-[450px]'>
+                        <Link to='/articles' className='flex items-center'>
                             <div className='flex gap-4'>
                                 <img src={ArrowBack} className='w-2' />
                                 <div className='font-bold'>Back</div>
@@ -227,9 +226,6 @@ const ArticleView = () => {
                         </Link>
                         <div>
                             <div className='font-bold text-[24px]'>Article Viewer</div>
-                        </div>
-                        <div>
-
                         </div>
                     </div>
                 </div>
