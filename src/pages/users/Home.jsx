@@ -85,11 +85,7 @@ const Home = ()=> {
                                 <div className='text-[20px] w-[608px] leading-[32px] '>Everyone has their point of view of something, but just don’t 
                             be afraid to express the facts. Be an author and share you 
                             prespective of something to the world.</div>
-                                <Link to='/writearticles'>
-                                    <div className='mt-8 bg-[#444cd4] hover:bg-[#6261df] w-[172px] h-16 rounded-xl text-[20px] flex items-center justify-center '>
-                                        <button className='text-white'>Start Writing</button>
-                                    </div>
-                                </Link>
+                                
 
                             </div>
                         </div>
