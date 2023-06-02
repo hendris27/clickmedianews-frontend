@@ -13,6 +13,7 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs"
 import {HiOutlineThumbUp, HiThumbUp} from "react-icons/hi"
 import axios from "axios"
 import ScrollToTop from "../../components/ScrollToTop"
+import { data } from "autoprefixer"
 
 const ArticleView = () => {
     const navigate = useNavigate()
@@ -46,14 +47,6 @@ const ArticleView = () => {
             publishArticle(selectedCategoryId, descriptions)
         }
     }
-
-    useEffect(()=> {
-        async function getSavePost(id) {
-            const {data} = await http(token).get(`/saved-article/${id}`)
-            setSavePost(data.results)
-        }
-        getSavePost()
-    }, [token])
 
     async function createSavePost(id) {
         try {
@@ -168,7 +161,6 @@ const ArticleView = () => {
                 console.log("create comment failed")
             }
             const dataComent = await http().get(`/article-comments/${id}`)
-            console.log(dataComent)
             setComments(dataComent.data.results)
 
         } catch (error) {
@@ -209,6 +201,18 @@ const ArticleView = () => {
     React.useEffect(() => {
         getArticleData()
     }, [getArticleData])
+
+    useEffect(()=> {
+        async function getSavePost(id){
+            const {data} = await http(token).get(`/saved-article/${id}`)
+            if(!data){
+                setSavePost(false)
+            }else {
+                setSavePost(true)
+            }
+        }
+        getSavePost(article.id)
+    }, [id, article, token])
 
     return (
         <>
