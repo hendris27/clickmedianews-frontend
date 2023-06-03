@@ -153,7 +153,7 @@ const Home = ()=> {
                                                             <div className='flex gap-4'>
                                                                 <div className='flex gap-2 items-center'>
                                                                     <div><BiLike/></div>
-                                                                    <div>2.1k</div>
+                                                                    <div>{article.likeCount}</div>
                                                                 </div>
                                                                 <div className='flex gap-2 items-center'>
                                                                     <div><BiTimeFive/></div>
@@ -235,7 +235,7 @@ const Home = ()=> {
                                                         <div className='flex gap-4'>
                                                             <div className='flex gap-2 items-center'>
                                                                 <div><BiLike/></div>
-                                                                {!article.likeCount ? (<div>0</div>):(<div>{article.likeCount}</div>)}
+                                                                {article.likeCount}
                                                             </div>
                                                             <div className='flex gap-2 items-center'>
                                                                 <div><BiTimeFive/></div>
