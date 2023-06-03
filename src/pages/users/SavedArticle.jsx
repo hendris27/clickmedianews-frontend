@@ -1,18 +1,12 @@
 import Header from "../../components/Headers.jsx"
 import Footer from "../../components/Footers.jsx"
 import { IoIosArrowForward } from "react-icons/io"
-
 import { Link, useNavigate } from "react-router-dom"
-// import Picture from "../../assets/img/picture_login.png"
-
-// import CategoryImage from "../../assets/img/category-image-3.png"
 import { AiOutlineLike } from "react-icons/ai"
 import { BiTime } from "react-icons/bi"
-
 import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
-
 import moment from "moment/moment.js"
 import { logout as logoutAction } from "../../redux/reducers/auth.js"
 import defaultPicture from "../../assets/img/default.jpg"
@@ -30,6 +24,7 @@ function SavedArticle(){
         try {
             await http(token).delete(`/saved-article/${id}`)
             setSavePost(savePost.filter(post => post.id !== id))
+            localStorage.setItem(`saved_${id}`, "false")
         }catch(err) {
             console.log(err)
         }
