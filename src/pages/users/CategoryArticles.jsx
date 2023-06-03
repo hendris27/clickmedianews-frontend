@@ -190,7 +190,7 @@ const CategoryArticles = () => {
                                                                 </div>
 
                                                                 <div className='bg-primary h-10 w-10 mr-2 flex items-center justify-center rounded-full hover:bg-green-500'>
-                                                                    <Link to='/writearticles'>
+                                                                    <Link to={`/articleview/${event.id}`}>
                                                                         <button><FiEdit2 color='white' className='pt-[4px]' size={25} /></button>
                                                                     </Link>
                                                                 </div>
