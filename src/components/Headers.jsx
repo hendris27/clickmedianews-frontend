@@ -14,6 +14,8 @@ import PropTypes from "prop-types"
 import { useLocation } from "react-router-dom"
 import {getProfileAction} from "../redux/actions/profile"
 import moment from "moment"
+import { toast } from "react-toastify"
+
 
 const Header = (props) => {
     const navigate = useNavigate()
@@ -96,6 +98,9 @@ const Header = (props) => {
                 await http(token).delete(`/request-author/${id}`)
             }
             location.reload()
+            toast.success("Author Accepting", {
+                toastId: "custom-id"
+            })
 
         } catch (error) {
             const message = error?.response?.data?.message
@@ -110,6 +115,9 @@ const Header = (props) => {
             console.log(id)
             await http(token).delete(`/request-author/${id}`)
             location.reload()
+            toast.success("Data is deleted", {
+                toastId: "custom-id"
+            })
             
         } catch (error) {
             const message = error?.response?.data?.message
@@ -221,6 +229,7 @@ const Header = (props) => {
                                                                     <img src={item.picture} className='object-cover w-full h-full' />
                                                                 </div>
                                                                 <div className='flex flex-1 flex-col'>
+                                                                    <div className='hover:text-primary font-bold'>{item.fullName}</div>
                                                                     <div className='hover:text-primary font-bold'>{item.text}</div>
                                                                 </div>
                                                             </div>
