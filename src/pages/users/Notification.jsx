@@ -19,7 +19,7 @@ const Notification = () => {
     const [user, setUser] = useState({})
     const token = useSelector((state) => state.auth.token)
     const dispatch = useDispatch()
-    const profile = useSelector(state => state.profile.data)
+    // const profile = useSelector(state => state.profile.data)
     const [selectedItems, setSelectedItems] = useState([])
     const [selectAll, setSelectAll] = useState(false)
     const [modal, setCheckModal] = useState(false)
@@ -180,11 +180,11 @@ const Notification = () => {
                                 <div className='w-full flex justify-between items-center px-20' key={`author${author.id}`}>
                                     <div className='flex gap-5 justify-center items-center'>
                                         <div className='rounded-full border-2 border-black overflow-hidden w-12 h-12'>
-                                            <img src={author.picture} className='object-cover' />
+                                            <img src={author.picture} className='object-cover h-full w-full' />
                                         </div>
                                         <div className='flex flex-col'>
                                             <label htmlFor='notification' className='font-bold'>{messageRequest}</label>
-                                            <label htmlFor='notification' className='text-gray-500'>{moment(author.createdAt).fromNow("dd")}</label>
+                                            <label htmlFor='notification' className='text-gray-500'>{moment(author.createdAt).fromNow("mm-hh")}</label>
                                         </div>
                                     </div>
                                     <div className='flex gap-11'>
@@ -205,7 +205,7 @@ const Notification = () => {
                                 <div className='w-full flex justify-between items-center px-20'>
                                     <div className='flex gap-5 justify-center items-center'>
                                         <div className='rounded-full border-2 border-gray-200 overflow-hidden w-12 h-12'>
-                                            <img src={profile?.picture} className='object-cover w-full h-full' />
+                                            <img src={item.picture} className='object-cover w-full h-full' />
                                         </div>
                                         <div className='flex flex-col'>
                                             <label htmlFor={item.id} className='font-bold'>{item.text}</label>
