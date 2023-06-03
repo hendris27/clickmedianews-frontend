@@ -13,7 +13,6 @@ import { BsBookmark, BsBookmarkFill } from "react-icons/bs"
 import {HiOutlineThumbUp, HiThumbUp} from "react-icons/hi"
 import axios from "axios"
 import ScrollToTop from "../../components/ScrollToTop"
-import { data } from "autoprefixer"
 
 const ArticleView = () => {
     const navigate = useNavigate()
@@ -236,7 +235,7 @@ const ArticleView = () => {
                 <div className='w-full flex flex-col px-20 justify-between mt-10'>
                     <div className='flex gap-20'>
                         <div className='flex-1 w-[595px] h-[370px] overflow-hidden'>
-                            <img className='object-fit' src={article?.articlePicture} alt='' />
+                            <img className='object-fit' src={article?.picture} alt='' />
                         </div>
                         <div className='flex flex-1 flex-col gap-14'>
                             <div className='text-[36px] font-bold'>{article?.title}</div>
