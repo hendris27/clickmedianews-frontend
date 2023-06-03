@@ -13,11 +13,13 @@ import { Formik } from "formik"
 import PropTypes from "prop-types"
 import { useLocation } from "react-router-dom"
 import {getProfileAction} from "../redux/actions/profile"
+import moment from "moment"
 
 const Header = (props) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    const [requestAuthor, setRequestAuthor] = useState([])
+    const [messageRequest, setMessageRequest] = useState("")
     const [user, setUser] = useState({})
     const [notif, setNotif] = useState([])
     const token = useSelector((state) => state.auth.token)
@@ -31,6 +33,19 @@ const Header = (props) => {
     }, [token])
 
     React.useEffect(()=>{
+        async function getRequestAuthor(){
+            try {
+                const {data} = await http(token).get("/request-author")
+                setRequestAuthor(data.results.reqAuthor)
+                setMessageRequest(data.results.message)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }getRequestAuthor()
+
         async function getUser(){
             try {
                 const {data} =  await http(token).get("/admin/users/detail")
@@ -72,6 +87,37 @@ const Header = (props) => {
         }
         searchResults(search)
     },[search, onSearch])
+
+    async function doAccAuthor(userId, id){
+        try {
+            console.log(id)
+            const {data} = await http(token).patch(`/request-author/${userId}`)
+            if(data.results){
+                await http(token).delete(`/request-author/${id}`)
+            }
+            location.reload()
+
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
+        }
+    }
+
+    async function doIgnoreAuthor(id){
+        try {
+            console.log(id)
+            await http(token).delete(`/request-author/${id}`)
+            location.reload()
+            
+        } catch (error) {
+            const message = error?.response?.data?.message
+            if(message){
+                console.log(message)
+            }
+        }
+    }
 
     return (
         <>
@@ -138,25 +184,55 @@ const Header = (props) => {
                     <div className='flex justify-center items-center'>
                         <div className='dropdown dropdown-bottom dropdown-end'>
                             <label tabIndex={0} onClick={getDataNotif} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#444cd4' /></label>
-                            <ul tabIndex={0} className='dropdown-content menu p-2 shadow  bg-base-100 rounded-box w-[400px] px-2s flex flex-col items-center justify-between '>
-                                {notif.map(item => {
-                                    return (
-                                        <>
-                                            <li key={`notif-list-${item.id}`}>
-                                                <a className='hover:bg-white'>
-                                                    <div className='flex gap-8'>
-                                                        <div className='flex flex-col'>
-                                                            <div className='hover:text-primary font-bold'>{item.text}</div>
+                            <ul tabIndex={0} className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-[500px] px-2 flex flex-col items-center justify-between'>
+                                <div className='h-[400px] overflow-y-scroll'>
+                                    {user === "superadmin" && 
+                                    <div className='flex justify-start p-5 w-full'>
+                                        {requestAuthor.map(author =>{
+                                            return(
+                                                <div className='w-full flex flex-col justify-start' key={`author${author.id}`}>
+                                                    <div className='flex gap-5 justify-start'>
+                                                        <div className='rounded-full border-2 border-black overflow-hidden w-12 h-12'>
+                                                            <img src={author.picture} className='object-cover h-full w-full' />
+                                                        </div>
+                                                        <div className='flex flex-col gap-2'>
+                                                            <div className='flex flex-col'>
+                                                                <label htmlFor='notification' className='flex gap-2 font-bold'>{author.fullName} sent you an {messageRequest}</label>
+                                                                <label htmlFor='notification' className='text-gray-500'>{moment(author.createdAt).fromNow("mm-hh")}</label>
+                                                            </div>
+                                                            <div className='flex justify-start gap-3'>
+                                                                <div><button onClick={()=> doAccAuthor(author.userId, author.id)} className='bg-primary p-2 px-6 hover:bg-green-500 rounded-xl'>Accept</button></div>
+                                                                <div><button onClick={()=> doIgnoreAuthor(author.id)} className='bg-blue-200 p-2 px-6 hover:bg-red-300 rounded-xl' >Ignore</button></div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </a>
-                                            </li>
-                                        </>
-                                    )
-                                    
-                                })}
+                                                </div>
+                                            )
+                                        })}
+                                    </div>}
+                                    <div>
+                                        {notif.map(item => {
+                                            return (
+                                                <>
+                                                    <li key={`notif-list-${item.id}`}>
+                                                        <a className='hover:bg-white'>
+                                                            <div className='flex gap-5 items-center'>
+                                                                <div className='rounded-full border-2 border-gray-200 overflow-hidden w-12 h-12'>
+                                                                    <img src={item.picture} className='object-cover w-full h-full' />
+                                                                </div>
+                                                                <div className='flex flex-1 flex-col'>
+                                                                    <div className='hover:text-primary font-bold'>{item.text}</div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
                                 <div className='border-b-2 w-full hover:bg-white'></div>
-                                <Link to='/notificaton'>
+                                <Link to='/notification'>
                                     <li className='font-bold text-primary'><a className='hover:bg-white text-[#444cd4] hover:text-black'>See More</a></li>
                                 </Link>
                             </ul>
