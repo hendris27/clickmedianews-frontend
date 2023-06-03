@@ -1,15 +1,13 @@
 import Header from "../../components/Headers"
 import Footer from "../../components/Footers"
 import ScrollToTop from "../../components/ScrollToTop"
-import home_main from "../../assets/img/picture_main_content.png"
-import picture_video from "../../assets/img/Video.png"
+import banner from "../../assets/img/picture_main_content.png"
+import videoImg from "../../assets/img/Video.png"
 import image from "../../assets/img/Image.png"
 import card from "../../assets/img/Card.png"
 import { BiLike, BiTimeFive} from "react-icons/bi"
-
 import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs"
 // import Category from "../../components/Category"
-
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
@@ -73,7 +71,7 @@ const Home = ()=> {
                 <main>
                     <div className='w-full relative '>
                         <div className='relative'>
-                            <img src={home_main} className='w-full'/>
+                            <img src={banner} className='w-full'/>
                         </div>
                         <div className='absolute top-0 left-0 flex flex-col  md:flex md:flex-row  bg-no-repeat bg-cover '>
                             <div className='flex flex-col h-full  gap-12 pl-[136px] pt-[100px] pb-[70px] '>
@@ -187,7 +185,7 @@ const Home = ()=> {
                                 </div>
                             </div>
                             <div>
-                                <img src={picture_video} alt='picture' />
+                                <img src={videoImg} alt='picture' />
                             </div>
                         </div>
                     </div>
