@@ -75,13 +75,13 @@ function SavedArticle(){
                                                 {profile.picture === null ? (
                                                     <img
                                                         src={defaultPicture}
-                                                        className='object-cover'
+                                                        className='object-cover h-full w-full'
                                                         alt=''
                                                     />
                                                 ) : (
                                                     <img
                                                         src={profile.picture}
-                                                        className='object-cover'
+                                                        className='object-cover h-full w-full'
                                                         alt=''
                                                     />
                                                 )}
