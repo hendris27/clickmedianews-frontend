@@ -14,6 +14,7 @@ import { logout as logoutAction } from "../../redux/reducers/auth.js"
 import defaultPicture from "../../assets/img/default.jpg"
 import * as Yup from "yup"
 import { toast } from "react-toastify"
+import ScrollToTop from "../../components/ScrollToTop"
 import "react-toastify/dist/ReactToastify.css"
 
 const EditProfile = () => {
@@ -378,6 +379,7 @@ const EditProfile = () => {
             <footer>
                 <Footer />
             </footer>
+            <ScrollToTop />
         </>
     )
 }
