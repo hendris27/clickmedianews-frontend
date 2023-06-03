@@ -45,9 +45,12 @@ function SavedArticle(){
     }, [token, savePost])
 
     const doLogout = ()=> {
-        window.localStorage.removeItem("token")
-        dispatch(logoutAction())
-        navigate("/signin")
+        const confirmed = window.confirm("Are you sure you want to logout?")
+        if (confirmed) {
+            window.localStorage.removeItem("token")
+            dispatch(logoutAction())
+            navigate("/signin")
+        }
     }
     return (
         <>
