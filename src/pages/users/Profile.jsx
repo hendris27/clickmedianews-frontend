@@ -18,7 +18,7 @@ const Profile = () => {
     const [totalPost, setTotalPost] = useState(0)
     const [articel, setArticle] = useState([])
     const [user, setUser] = useState({})
-    const [totalComment, setTotalComment] = useState([])
+    const [totalComment, setTotalComment] = useState(0)
     const dispatch = useDispatch()
 
     useEffect(() => { 
@@ -59,7 +59,7 @@ const Profile = () => {
         async function getComment() {
             try {
                 const dataComment = await http().get(`/article-comments/total/${user.id}`)
-                setTotalComment(dataComment.data.pageInfo)
+                setTotalComment(dataComment.data.pageInfo.totalData)
             } catch (error) {
                 const message = error?.response?.data?.message
                 if (message) {
@@ -124,7 +124,7 @@ const Profile = () => {
                                         <div className='text-[10px]'>Visitor</div>
                                     </div>
                                     <div className='flex flex-col gap-1 pt-1'>
-                                        <div className='font-bold'>{totalComment?.totalData}</div>
+                                        <div className='font-bold'>{totalComment}</div>
                                         <div className='text-[10px]'>Comments</div>
                                     </div>
 

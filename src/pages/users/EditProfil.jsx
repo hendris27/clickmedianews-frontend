@@ -25,6 +25,9 @@ const EditProfile = () => {
     const [open, setOpen] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [statusMassage, setSatusMessage] = useState("")
+
+    const [totalPost, setTotalPost] = useState(0)
+    const [totalComment, setTotalComment] = useState(0)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [user, setUser] = useState({})
@@ -36,8 +39,35 @@ const EditProfile = () => {
             setProfile(data.results)
             console.log(data)
         }
-
         getProfile()
+
+        async function getArticleManage(){
+            try {
+                const articleManage = await http(token).get("/articles/manage?limit=100")
+                console.log(articleManage)
+                if(articleManage.data.results){
+                    setTotalPost(articleManage.data.pageInfo.totalData)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if(message){
+                    console.log(message)
+                }
+            }
+        }getArticleManage()
+
+        async function getComment() {
+            try {
+                const dataComment = await http().get(`/article-comments/total/${user.id}`)
+                setTotalComment(dataComment.data.pageInfo.totalData)
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if (message) {
+                    console.log(message)
+                }
+            }
+        }
+        getComment()
     }, [token])
 
     useEffect(() => {   async function getUser(){
@@ -179,7 +209,7 @@ const EditProfile = () => {
                                 </div>
                                 <div className='w-[255px] rounded-2xl absolute bottom-[-20px] right-5 h-[50px] bg-blue-500 pr-5 flex justify-between text-white text-center'>
                                     <div className='rounded-r-2xl border-1 pt-1 rounded-l-2xl w-[70px] justify-center bg-blue-600'>
-                                        <div className='font-bold'>52</div>
+                                        <div className='font-bold'>{totalPost}</div>
                                         <div className='text-[10px]'>Post</div>
                                     </div>
                                     <div className='flex flex-col pt-1 gap-1'>
@@ -187,7 +217,7 @@ const EditProfile = () => {
                                         <div className='text-[10px]'>Visitor</div>
                                     </div>
                                     <div className='flex flex-col gap-1 pt-1'>
-                                        <div className='font-bold'>4.5K</div>
+                                        <div className='font-bold'>{totalComment}</div>
                                         <div className='text-[10px]'>Comments</div>
                                     </div>
                                 </div>
