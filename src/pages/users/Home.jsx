@@ -7,18 +7,78 @@ import image from "../../assets/img/Image.png"
 import card from "../../assets/img/Card.png"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs"
-// import Category from "../../components/Category"
+import propTypes from "prop-types"
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
 import moment from "moment"
 import { useSelector } from "react-redux"
 
+const Article = ({id, picture, title, descriptions, createdAt}) => {
+    const token = useSelector(state => state.auth.token)
+    const [isSaved, setIsSaved] = useState(
+        localStorage.getItem(`saved_${id}`) === "true"
+    )
+
+    async function handleSave() {
+        try {
+            if(!isSaved) {
+                await http(token).post(`/saved-article/${id}`)
+                setIsSaved(true)
+                localStorage.setItem(`saved_${id}`, "true")
+            }else {
+                await http(token).delete(`/saved-article/${id}`)
+                setIsSaved(false)
+                localStorage.setItem(`saved_${id}`, "false")
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    return (
+        <div key={id} className='flex bg-white w-[416px] rounded-3xl gap-8 drop-shadow-2xl '>
+            <div className='flex justify-between items-center' >
+                <Link to={`/articleView/${id}`} className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                    <img src={picture} className='w-[100%] h-full object-cover' alt='' />
+                </Link>
+                <div className='flex-1 pl-8'>
+                    <div className='flex flex-col gap-8' >
+                        <Link to={`/articleView/${id}`} className='flex flex-col gap-4'>
+                            <div className='text-[#444cd4] text-[20px] leading-[20px] '>{title}</div>
+                            <div className='text-[18px] leading-[20px] font-medium '>{descriptions}</div>
+                        </Link>
+                        <div className='flex gap-4'>
+                            <div className='flex gap-2 items-center'>
+                                <div><BiLike/></div>
+                                <div>2.1k</div>
+                            </div>
+                            <div className='flex gap-2 items-center'>
+                                <div><BiTimeFive/></div>
+                                <div>{moment(createdAt).fromNow("mm")} ago</div>
+                            </div>
+                            <button onClick={handleSave}>
+                                {isSaved ? <BsFillBookmarkFill color='blue'/> : <BsBookmark />}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+Article.propTypes = {
+    id: propTypes.string,
+    picture: propTypes.string,
+    title: propTypes.string,
+    descriptions: propTypes.string,
+    createdAt: propTypes.string
+}
+
 const Home = ()=> {
     const [article, setArticle] = useState([])
     const [category, setCategory] = useState([])
-    const [savePost, setSavePost] = useState(false)
-    const token = useSelector(state => state.auth.token)
 
     useEffect(()=> {
         async function getArticle(){
@@ -36,7 +96,7 @@ const Home = ()=> {
         getCategory()
     }, [])
 
-    useEffect(()=> {
+    /* useEffect(()=> {
         async function getSavePost(id){
             const {data} = await http(token).get(`/saved-article/${id}`)
             if(!data){
@@ -46,21 +106,7 @@ const Home = ()=> {
             }
         }
         getSavePost(article.id)
-    }, [article.id, token])
-
-    async function createSavePost(id) {
-        try {
-            if(savePost) {
-                await http(token).delete(`/saved-article/${id}`)
-                setSavePost(false)
-            }else {
-                await http(token).post(`/saved-article/${id}`)
-                setSavePost(true)
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    }, [article.id, token]) */
 
     return (
         <>
@@ -139,34 +185,14 @@ const Home = ()=> {
                                 <div className='grid grid-cols-3 gap-y-12 gap-x-16'>
                                     {article.map(article => {
                                         return (
-                                            <div key={article.id} className='flex bg-white w-[416px] rounded-3xl gap-8 drop-shadow-2xl '>
-                                                <div className='flex justify-between items-center' >
-                                                    <Link to={`/articleView/${article.id}`} className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                                        <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
-                                                    </Link>
-                                                    <div className='flex-1 pl-8'>
-                                                        <div className='flex flex-col gap-8' >
-                                                            <Link to={`/articleView/${article.id}`} className='flex flex-col gap-4'>
-                                                                <div className='text-[#444cd4] text-[20px] leading-[20px] '>{article.title}</div>
-                                                                <div className='text-[18px] leading-[20px] font-medium '>{article.descriptions}</div>
-                                                            </Link>
-                                                            <div className='flex gap-4'>
-                                                                <div className='flex gap-2 items-center'>
-                                                                    <div><BiLike/></div>
-                                                                    <div>{article.likeCount}</div>
-                                                                </div>
-                                                                <div className='flex gap-2 items-center'>
-                                                                    <div><BiTimeFive/></div>
-                                                                    <div>{moment(article.createdAt).fromNow("mm")} ago</div>
-                                                                </div>
-                                                                <button onClick={() => createSavePost(article.id)} className='flex items-center'>
-                                                                    {savePost == article.id ? <BsFillBookmarkFill color='#444cd4'/> : <BsBookmark /> }
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <Article
+                                                key={article.id}
+                                                id={article.id}
+                                                picture={article.picture}
+                                                title={article.title}
+                                                descriptions={article.descriptions}
+                                                createdAt={article.createdAt}
+                                            />
                                         )
                                     })}
                                 </div>
