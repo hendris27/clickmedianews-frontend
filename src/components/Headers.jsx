@@ -193,7 +193,7 @@ const Header = (props) => {
                         <div className='dropdown dropdown-bottom dropdown-end'>
                             <label tabIndex={0} onClick={getDataNotif} className='btn m-1 bg-white outline-none border-0 hover:bg-white '> <MdNotificationsNone size={25} color='#444cd4' /></label>
                             <ul tabIndex={0} className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-[500px] px-2 flex flex-col items-center justify-between'>
-                                <div className='h-[400px] overflow-y-scroll'>
+                                <div className='h-[400px] overflow-auto'>
                                     {user === "superadmin" && 
                                     <div className='flex justify-start p-5 w-full'>
                                         {requestAuthor.map(author =>{
@@ -219,7 +219,7 @@ const Header = (props) => {
                                         })}
                                     </div>}
                                     <div>
-                                        {notif.map(item => {
+                                        {notif.length > 1 ? notif.map(item => {
                                             return (
                                                 <>
                                                     <li key={`notif-list-${item.id}`}>
@@ -237,7 +237,7 @@ const Header = (props) => {
                                                     </li>
                                                 </>
                                             )
-                                        })}
+                                        }) : <div className='text-xl'>No notifications</div>}
                                     </div>
                                 </div>
                                 <div className='border-b-2 w-full hover:bg-white'></div>

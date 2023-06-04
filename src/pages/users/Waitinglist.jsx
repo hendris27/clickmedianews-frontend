@@ -87,7 +87,7 @@ const CategoryArticles = () => {
             }
         }
         getUser()
-    }, [])
+    }, [token])
 
     return (
         <>

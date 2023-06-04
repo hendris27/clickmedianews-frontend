@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import Header from "../../components/Headers"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill } from "react-icons/bs"

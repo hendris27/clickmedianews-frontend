@@ -19,11 +19,11 @@ const Notification = () => {
     const [user, setUser] = useState({})
     const token = useSelector((state) => state.auth.token)
     const dispatch = useDispatch()
-    // const profile = useSelector(state => state.profile.data)
     const [selectedItems, setSelectedItems] = useState([])
     const [selectAll, setSelectAll] = useState(false)
     const [modal, setCheckModal] = useState(false)
-
+    const [checkSelected, setCheckSelected] = useState(true)
+    
     const getDataNotif = useCallback(async () => {
         const { data } = await http(token).get("/notifications")
         setNotif(data.results)
@@ -33,8 +33,12 @@ const Notification = () => {
         if (!selectAll) {
             const allItemIds = notif.map((item) => item.id)
             setSelectedItems(allItemIds)
+            setCheckSelected(false)
+            console.log(20)
         } else {
             setSelectedItems([])
+            setCheckSelected(true)
+            console.log(30)
         }
         setSelectAll(!selectAll)
     }
@@ -45,13 +49,15 @@ const Notification = () => {
       
 
     const handleCheckboxChange = (itemId) => {
+        if(checkSelected){
+            setCheckSelected(!checkSelected)
+        }
         if (itemId === "all") {
             setSelectAll(!selectAll)
             setSelectedItems(selectAll ? [] : notif.map(item => item.id))
         } else {
             const newSelectedItems = [...selectedItems]
             const index = newSelectedItems.indexOf(itemId)
-      
             if (index > -1) {
                 newSelectedItems.splice(index, 1)
             } else {
@@ -141,7 +147,6 @@ const Notification = () => {
         }
     }
 
-
     return (
         <>
             <div>
@@ -163,7 +168,7 @@ const Notification = () => {
                     </div>
                     <div>
                         <button onClick={handleSelectAll} className='font-bold'>
-                            {selectAll ? "Deselect All" : "Select All"}</button>
+                            {selectAll ? "Unselect All" : "Select All"}</button>
                     </div>
                 </div>
                 <div>
@@ -199,7 +204,7 @@ const Notification = () => {
                                 </div>
                             )
                         })}</div>}
-                    {notif.map(item => {
+                    {notif.length > 1 ? notif.map(item => {
                         return (
                             <>
                                 <div className='w-full flex justify-between items-center px-20'>
@@ -217,10 +222,10 @@ const Notification = () => {
                                 </div>
                             </>
                         )
-                    })}
+                    }) : <div className='w-full text-center text-2xl'>No Notification</div>}
                 </div>
-                <div className='flex self-center' onClick={checkModal}>
-                    <button className='btn btn-primary w-[400px] text-white normal-case' >Delete Selected Items</button>
+                <div className='flex self-center'>
+                    <button disabled={checkSelected} onClick={checkModal} className='btn btn-primary w-[400px] text-white normal-case' >Delete Selected Items</button>
                 </div>
             </div>
             <input type='checkbox' id='my_modal_6' className='modal-toggle' checked={modal} />
