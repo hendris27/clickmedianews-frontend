@@ -25,26 +25,22 @@ const EditProfile = () => {
     const [open, setOpen] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [statusMassage, setSatusMessage] = useState("")
-
     const [totalPost, setTotalPost] = useState(0)
     const [totalComment, setTotalComment] = useState(0)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [user, setUser] = useState({})
 
-
     useEffect(() => { 
         async function getProfile(){
             const { data } = await http(token).get("/profile")
             setProfile(data.results)
-            console.log(data)
         }
         getProfile()
 
         async function getArticleManage(){
             try {
                 const articleManage = await http(token).get("/articles/manage?limit=100")
-                console.log(articleManage)
                 if(articleManage.data.results){
                     setTotalPost(articleManage.data.pageInfo.totalData)
                 }
@@ -73,7 +69,6 @@ const EditProfile = () => {
     useEffect(() => {   async function getUser(){
         try {
             const {data} =  await http(token).get("/admin/users/detail")
-            console.log(data.results)
             if(data.results.role === "superadmin"){
                 setUser(data.results.role)
             }
@@ -85,7 +80,6 @@ const EditProfile = () => {
         }
     }getUser()
     },[token])
-
 
     const fileToDataUrl = (file) => {
         const reader = new FileReader()
@@ -109,7 +103,6 @@ const EditProfile = () => {
                 form.append(key, values[key])
             }
         })
-
         if (selectedPicture) {
             form.append("picture", selectedPicture)
         }
@@ -125,7 +118,6 @@ const EditProfile = () => {
                     "Content-Type": "multipart/form-data",
                 },
             })
-            
             const email = values.email
             const password = values.password
             const body = new URLSearchParams({email: email, password: password})
@@ -141,7 +133,6 @@ const EditProfile = () => {
                 toast.error(message)
             }
         }
-
         getProfile()
         setOpenModal(false)
     }
@@ -149,7 +140,6 @@ const EditProfile = () => {
     async function doRequestAuthor(){
         try {
             const {data} = await http(token).post("/request-author")
-            console.log(data)
             setSatusMessage(data.message)
         } catch (error) {
             const message = error?.response?.data?.message
@@ -190,7 +180,6 @@ const EditProfile = () => {
                                 <div className='flex gap-5 items-center w-full h-[120px] px-10'>
                                     <div className='border-2 rounded-3xl border-blue-500 p-1'>
                                         <div className='rounded-3xl border-2 border-gray-50 overflow-hidden w-16 h-16'>
-                                            
                                             {profile.picture === null ? (
                                                 <img src={defaultPicture} className='object-cover h-full w-full'/>
                                             ) : <img src={profile.picture} className='object-cover h-full w-full'/>}
@@ -245,7 +234,6 @@ const EditProfile = () => {
                                 <div className='font-bold'><button>Logout</button></div>
                                 <div><IoIosArrowForward/></div>
                             </button>
-                       
                         </div>
                     </div>
                     <div className=' pt-28 flex-1'>
@@ -255,7 +243,6 @@ const EditProfile = () => {
                                     setOpen(!open)
                                 }
                                 return (
-                                    
                                     <form className='pb-24' onSubmit={handleSubmit}>
                                         <div className='flex justify-between px-[60px]'>
                                             <div></div>
@@ -264,12 +251,10 @@ const EditProfile = () => {
                                                     <div className='rounded-3xl border-2 border-gray-50 overflow-hidden w-[144px] h-[150px] '>
                                                         {selectedPicture && (
                                                             <img src={pictureURI} className='object-cover h-full w-full'/>
-                                                        )
-                                                        }
+                                                        )}
                                                         {profile.picture === null ? (
                                                             <img src={defaultPicture} className='object-cover h-full w-full'/>
                                                         ) : <img src={profile.picture} className='object-cover h-full w-full'/>}
-                                                        
                                                     </div>
                                                 </div>
                                                 <div className='pt-4'>
@@ -281,11 +266,9 @@ const EditProfile = () => {
                                                                 type='file'
                                                                 name='picture'
                                                                 onChange={changePicture}
-
                                                             />
                                                         </label>
                                                     </div>
-                                    
                                                 </div>
                                             </div>
                                             <div>
@@ -381,14 +364,12 @@ const EditProfile = () => {
                                                     </label>
                                                 )}
                                             </div>
-                            
                                         </div>
                                         <div className='flex justify-center mt-32'>
                                             {user !== "superadmin" && <div className='mb-24 flex flex-col gap-3'>
                                                 {statusMassage && <span className='text-center text-info flex gap-2 items-center'><BsCheckCircleFill size={30}/>{statusMassage}</span>}
                                                 {profile.isAuthor === false ? (<button onClick={doRequestAuthor} type='button' className='btn btn-primary normal-case text-white'>Request to be an author </button>) 
                                                     : (<div className='h-12 px-6 py-3 flex justify-center items-center gap-2 bg-[#19A7CE] rounded-xl text-white'><BsCheckCircleFill size={25}/>You are author </div>)}
-                                                
                                             </div>}
                                         </div>
                                     </form>

@@ -100,7 +100,6 @@ const Profile = () => {
         async function getArticleManage(){
             try {
                 const articleManage = await http(token).get("/articles/manage?limit=100")
-                console.log(articleManage)
                 if(articleManage.data.results){
                     setArticle(articleManage.data.results)
                     setTotalPost(articleManage.data.pageInfo)
@@ -116,7 +115,6 @@ const Profile = () => {
         async function getUser() {
             try {
                 const { data } = await http(token).get("/admin/users/detail")
-                console.log(data.results)
                 if (data.results.role === "superadmin") {
                     setUser(data.results)
                 }

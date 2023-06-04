@@ -139,8 +139,7 @@ const ArticleView = () => {
             const formData = new FormData()
             formData.append("categoryId", selectedCategoryId)
             formData.append("descriptions", descriptions)
-
-            const { data } = await http(token).patch(`/admin/article-view/${id}`, formData)
+            await http(token).patch(`/admin/article-view/${id}`, formData)
         } catch (error) {
             const message = error?.response?.data?.message
             if (message) {
@@ -302,7 +301,6 @@ const ArticleView = () => {
                                         handleChange,
                                         handleBlur,
                                         handleSubmit,
-                                        
                                     }) => (
                                         <form onSubmit={handleSubmit} className='flex flex-col gap-3 w-full'>
                                             <div className='font-bold'>You</div>
@@ -337,24 +335,6 @@ const ArticleView = () => {
                                     </div>
                                 )
                             })}
-                            {/* <div className='flex gap-5'>
-                                <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
-                                    <img src={Picture} className='object-cover' />
-                                </div>
-                                <div>
-                                    <div className='font-bold'>Regina - 1m ago</div>
-                                    <div>Couldn’t agree more!</div>
-                                </div>
-                            </div>
-                            <div className='flex gap-5'>
-                                <div className='rounded-2xl border-2 border-gray-50 overflow-hidden w-12 h-12'>
-                                    <img src={Picture} className='object-cover' />
-                                </div>
-                                <div>
-                                    <div className='font-bold'>Lyonna - 3m ago</div>
-                                    <div>But, can we just focus for the vaccine?</div>
-                                </div>
-                            </div> */}
                         </div>) : (
                         <div className='flex gap-16'>
                             <button onClick={publishButton} className='h-16 btn btn-primary flex-1 normal-case text-white font-bold max-w-full'>Publish Article</button>

@@ -15,7 +15,6 @@ import moment from "moment"
 import { Formik } from "formik"
 import { toast } from "react-toastify"
 
-
 const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
     const token = useSelector(state => state.auth.token)
     const [isSaved, setIsSaved] = useState(
@@ -88,7 +87,6 @@ const ArticlesPage = () => {
     const [article, setArticles] = useState([])
     const token = useSelector(state => state.auth.token)
     const [category, setCategory] = useState([])
-    
 
     useEffect(() => {
         async function getDataArticles() {
@@ -121,7 +119,6 @@ const ArticlesPage = () => {
 
     async function filterArticles(values, setArticles) {
         try {
-            console.log(values)
             const { data } = await http().get(`/articles?limit=100&sortBy=${values.sortBy}`)
             setArticles(data.results)
         } catch (error) {
@@ -172,7 +169,6 @@ const ArticlesPage = () => {
                             handleChange,
                             handleBlur,
                             handleSubmit
-
                         }) => (
                             <form onSubmit={handleSubmit} className='flex gap-5'>
                                 <div><img src={Filter} className='w-6'/></div>
@@ -190,7 +186,6 @@ const ArticlesPage = () => {
                                         <option value=''>Last Added</option>
                                         <option value=''>Last Modified</option>
                                     </select>
-
                                 </div>
                                 <button type='submit' className='bg-white text-white'>submit</button>
                             </form>
@@ -218,7 +213,14 @@ const ArticlesPage = () => {
                                 </div>
                             </div>
                         )
-                    })}    
+                    })}
+                </div>
+                <div className='flex flex-col gap-4'>
+                    <div className='pt-8'>
+                        <div className=''>
+                            <div className='font-bold text-[24px]'>Sport</div>
+                        </div>
+                    </div>
                 </div>
                 <div className='flex items-center justify-center'>
                     <div className='pt-12 w-[816px] h-[118px] '>
@@ -230,7 +232,6 @@ const ArticlesPage = () => {
                     </div>
                 </div>
             </div>
-           
             <footer>
                 <Footer/>
             </footer>

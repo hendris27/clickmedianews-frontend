@@ -57,6 +57,8 @@ const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
         if(!token) {
             toast.error("You have to login first")
         }
+        if (!state?.categories) {
+            getArticle()
         try {
             if(!isSaved) {
                 await http(token).post(`/saved-article/${id}`)
@@ -149,6 +151,7 @@ const CategoryArticles = () => {
 
         async function getArticle(){
             try {
+                const {data} = await http(token).delete(`/admin/articles/${id}`)
                 const {data} = await http().get("/articles?limit=100")
                 if(data.results){
                     setArticle(data.results)
@@ -185,12 +188,10 @@ const CategoryArticles = () => {
                 }
             }
         }
-
         let data
         if (state?.categories){
             data = state.categories
         }
-
         getArticleCategory(data)
 
     }, [state?.categories])

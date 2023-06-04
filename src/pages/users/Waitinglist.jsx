@@ -25,7 +25,6 @@ const CategoryArticles = () => {
                 formData.append("status", true)
                 const { data } = await http(token).patch(`/admin/waiting-lists/${id}`, formData)
                 await http().get("/articles?limit=1000")
-                console.log(data.results)
                 if(data.results){
                     navigate("/waitinglist")
                 }
@@ -43,7 +42,6 @@ const CategoryArticles = () => {
         if (confirmed) {
             try {
                 const {data} = await http(token).delete(`/admin/articles/${id}`)
-                console.log(data.results)
                 if(data.results){
                     navigate("/waitinglist")
                 }
@@ -61,7 +59,6 @@ const CategoryArticles = () => {
         async function getArticle(){
             try {
                 const {data} = await http().get("/articles?limit=1000")
-                console.log(data)
                 if(data.results){
                     setArticle(data.results)
                 }
@@ -78,7 +75,6 @@ const CategoryArticles = () => {
         async function getUser(){
             try {
                 const {data} =  await http(token).get("/admin/users/detail")
-                console.log(data.results.role)
                 if(data.results.role === "superadmin"){
                     setUser(data.results.role)
                 }
