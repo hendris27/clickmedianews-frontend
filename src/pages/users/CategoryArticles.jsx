@@ -183,24 +183,6 @@ const CategoryArticles = () => {
     getArticleCategory(data);
   }, [state?.categories]);
 
-  async function getArticle() {
-    try {
-      const { data } = await http().get('/articles?limit=100');
-      await http().get('/articles');
-
-      setArticle(data.results);
-    } catch (error) {
-      const message = error?.response?.data?.message;
-      if (message) {
-        console.log(message);
-      }
-    }
-  }
-
-  if (!state?.categories) {
-    getArticle();
-  }
-
   async function getArticleCategory(name) {
     try {
       const { data } = await http().get('/articles?limit=100', { params: { category: name } });
