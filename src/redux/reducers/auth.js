@@ -1,17 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { asyncRegisterAction } from "../actions/auth"
-import { asyncLoginAction } from "../actions/auth"
+import { createSlice } from '@reduxjs/toolkit'
+import { asyncRegisterAction } from '../actions/auth'
+import { asyncLoginAction } from '../actions/auth'
 
 const initialState = {
-    token: "",
-    errorMessage: "",
-    successMessage: "",
-    warningMessage: "",
+    token: '',
+    errorMessage: '',
+    successMessage: '',
+    warningMessage: '',
     formError: [],
 }
 
 const authSlice = createSlice({
-    name: "auth",
+    name: 'auth',
     initialState,
     reducers: {
         setErrorMessage: (state, action) => {
@@ -21,9 +21,9 @@ const authSlice = createSlice({
             state.warningMessage = action.payload
         },
         clearMessage: (state) => {
-            state.errorMessage = ""
-            state.successMessage = ""
-            state.warningMessage = ""
+            state.errorMessage = ''
+            state.successMessage = ''
+            state.warningMessage = ''
             state.formError = []
         },
         logout: () => {
@@ -32,7 +32,7 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(asyncLoginAction.rejected, (state, action) => {
-            if (typeof action.payload === "string") {
+            if (typeof action.payload === 'string') {
                 state.errorMessage = action.payload
             } else {
                 state.formError = action.payload
@@ -42,7 +42,7 @@ const authSlice = createSlice({
             state.token = action.payload
         })
         builder.addCase(asyncRegisterAction.rejected, (state, action) => {
-            if (typeof action.payload === "string") {
+            if (typeof action.payload === 'string') {
                 state.errorMessage = action.payload
             } else {
                 state.formError = action.payload
@@ -54,5 +54,11 @@ const authSlice = createSlice({
     },
 })
 
-export const { login, logout, setErrorMessage, setWarningMessage, clearMessage } = authSlice.actions
+export const {
+    login,
+    logout,
+    setErrorMessage,
+    setWarningMessage,
+    clearMessage,
+} = authSlice.actions
 export default authSlice.reducer

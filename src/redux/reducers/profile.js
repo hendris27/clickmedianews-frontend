@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { getProfileAction } from "../actions/profile"
+import { createSlice } from '@reduxjs/toolkit'
+import { getProfileAction } from '../actions/profile'
 
 const initialState = {
-    data: {}
+    data: {},
 }
 
 const profileSlice = createSlice({
-    name: "profile",
+    name: 'profile',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -17,4 +17,3 @@ const profileSlice = createSlice({
 })
 
 export default profileSlice.reducer
-

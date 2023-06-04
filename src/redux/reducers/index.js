@@ -1,18 +1,18 @@
-import { combineReducers } from "@reduxjs/toolkit"
-import { persistReducer } from "redux-persist"
-import storage from "redux-persist/lib/storage"
+import { combineReducers } from '@reduxjs/toolkit'
+import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-import authReducer from "./auth"
-import profileReducer from "./profile"
+import authReducer from './auth'
+import profileReducer from './profile'
 
 const authConfig = {
-    key: "auth",
+    key: 'auth',
     storage,
 }
 
 const reducer = combineReducers({
     auth: persistReducer(authConfig, authReducer),
-    profile: profileReducer
+    profile: profileReducer,
 })
 
 export default reducer

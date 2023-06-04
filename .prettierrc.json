@@ -1,7 +1,6 @@
 {
-    "trailingComma": "none",
-    "indent": ["error", 4],
-    "linebreak-style": ["error", "unix"],
+    "trailingComma": "es5",
+    "tabWidth": 4,
     "semi": false,
     "singleQuote": true
 }
