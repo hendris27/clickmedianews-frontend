@@ -5,11 +5,10 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Lato', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .active {
-    color: blue;
-    font-weight: bold;
-  }
-  
+  color: blue;
+  font-weight: bold;
+}
