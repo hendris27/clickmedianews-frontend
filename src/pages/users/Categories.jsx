@@ -33,7 +33,6 @@ const Categories = () => {
             <div className='p-20'>
                 <div className='w-full h-full flex justify-end pb-3 cursor-pointer'>
                     <button className='bg-[#376AED] rounded-md w-6 text-[20px] text-white'>+</button>
-                    {/* <BsFillPlusSquareFill size={30} color='#5282FF' /> */}
                     <p className='ml-3 text-[18px]'>Add Categories</p>
                 </div>
                 <div className='w-full flex justify-between'>
@@ -49,12 +48,11 @@ const Categories = () => {
                             </ul>
                         </div>
                     </div>
-                    <p className='font-bold'>18 Categories</p>
                 </div>
             </div>
             <div className='w-full flex justify-center text-gray-500'>
                 <Link to='/categoryarticles'>
-                    <button>Click the category to explore articles</button> 
+                    <button className='hover:bg-blue-100'>Click the category to explore articles</button> 
                 </Link>
             </div>
             <div className='px-[80px] '>
