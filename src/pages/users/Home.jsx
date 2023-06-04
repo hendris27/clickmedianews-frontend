@@ -14,7 +14,7 @@ import http from "../../helpers/http"
 import moment from "moment"
 import { useSelector } from "react-redux"
 
-const Article = ({id, picture, title, descriptions, createdAt}) => {
+const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
     const token = useSelector(state => state.auth.token)
     const [isSaved, setIsSaved] = useState(
         localStorage.getItem(`saved_${id}`) === "true"
@@ -51,7 +51,7 @@ const Article = ({id, picture, title, descriptions, createdAt}) => {
                         <div className='flex gap-4'>
                             <div className='flex gap-2 items-center'>
                                 <div><BiLike/></div>
-                                <div>2.1k</div>
+                                <div>{likeCount}</div>
                             </div>
                             <div className='flex gap-2 items-center'>
                                 <div><BiTimeFive/></div>
@@ -73,6 +73,7 @@ Article.propTypes = {
     picture: propTypes.string,
     title: propTypes.string,
     descriptions: propTypes.string,
+    likeCount: propTypes.string,
     createdAt: propTypes.string
 }
 
@@ -191,6 +192,7 @@ const Home = ()=> {
                                                 picture={article.picture}
                                                 title={article.title}
                                                 descriptions={article.descriptions}
+                                                likeCount={article.likeCount}
                                                 createdAt={article.createdAt}
                                             />
                                         )
@@ -247,32 +249,15 @@ const Home = ()=> {
                             <div className='grid grid-cols-3 gap-y-12 gap-x-16'>
                                 {article.map(article => {
                                     return (
-                                        <Link to={`/articleView/${article.id}`} key={`article-${article.id}`} className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                            <div className='flex justify-between items-center' >
-                                                <div className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                                    <img src={article.picture} className='w-[100%] h-full object-cover' alt='' />
-                                                </div>
-                                                <div className='flex-1 pl-8'>
-                                                    <div className='flex flex-col gap-8' >
-                                                        <div className='flex flex-col gap-4'>
-                                                            <div className='text-[#444cd4] text-[20px] leading-[20px] '>{article.title}</div>
-                                                            <div className='text-[18px] leading-[20px] font-medium '>{article.descriptions}</div>
-                                                        </div>
-                                                        <div className='flex gap-4'>
-                                                            <div className='flex gap-2 items-center'>
-                                                                <div><BiLike/></div>
-                                                                {article.likeCount}
-                                                            </div>
-                                                            <div className='flex gap-2 items-center'>
-                                                                <div><BiTimeFive/></div>
-                                                                <div>{moment(article.createdAt).fromNow("mm")} ago</div>
-                                                            </div>
-                                                            <div className='flex items-center'><BsFillBookmarkFill color='#444cd4'/></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Link>
+                                        <Article
+                                            key={article.id}
+                                            id={article.id}
+                                            picture={article.picture}
+                                            title={article.title}
+                                            descriptions={article.descriptions}
+                                            likeCount={article.likeCount}
+                                            createdAt={article.createdAt}
+                                        />
                                     )
                                 })}
                             </div>
