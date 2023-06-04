@@ -11,6 +11,8 @@ const Category = () => {
     const [category, setCategory] = useState([])
     const navigate = useNavigate()
     const token = useSelector(state => state.auth.token)
+    const [user, setUser] = useState({})
+
 
     useEffect(()=> {
 
@@ -20,6 +22,22 @@ const Category = () => {
             setCategory(data.results)
         }
         getCategory()
+
+        async function getUser() {
+            try {
+                const { data } = await http(token).get("/admin/users/detail")
+                if (data.results.role === "superadmin") {
+                    setUser(data.results.role)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if (message) {
+                    console.log(message)
+                }
+            }
+        }
+        getUser()
+
     }, [])
 
 
@@ -64,7 +82,7 @@ const Category = () => {
                                         <Link to='/categoryarticles'>
                                             <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
                                         </Link>
-                                        <div className='absolute bottom-10 right-14'><button onClick={()=>deleteCategory(category.id)} className='btn btn-primary text-white hover:bg-red-300 bg-[#E5E5CB]  border-0'>Delete</button></div>
+                                        {user === "superadmin" &&  <div className='absolute bottom-10 right-14'><button onClick={()=>deleteCategory(category.id)} className='btn btn-primary text-white hover:bg-red-300 bg-[#E5E5CB]  border-0'>Delete</button></div>}
                                     </div>
                                     <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
                                     <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.name}</div>
