@@ -45,7 +45,11 @@ const CategoryArticles = () => {
                     console.log(message)
                 }
             }
-        }getArticle()
+        }
+        
+        if (!state?.categories) {
+            getArticle()
+        }
 
         async function getUser(){
             try {
@@ -61,7 +65,7 @@ const CategoryArticles = () => {
             }
         }
         getUser()
-    }, [token])
+    }, [token, state?.categories])
 
     async function deleteArticle(id){
         const confirmed = window.confirm("Are you sure to deleted this Articles")
