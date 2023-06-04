@@ -139,6 +139,7 @@ const Header = (props) => {
       }
     }
   }
+}}
 
   return (
     <>
