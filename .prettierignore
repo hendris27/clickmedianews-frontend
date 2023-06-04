@@ -7,4 +7,3 @@ src/assets
 .eslintrc.cjs
 .gitignore
 .prettierignore
-.prettierrc.json
