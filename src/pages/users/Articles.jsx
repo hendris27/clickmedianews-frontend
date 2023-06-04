@@ -1,5 +1,5 @@
 import Header from '../../components/Headers';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ScrollToTop from '../../components/ScrollToTop';
 import { BiLike, BiTimeFive } from 'react-icons/bi';
 import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs';
@@ -87,6 +87,7 @@ const ArticlesPage = () => {
   const [article, setArticles] = useState([]);
   const token = useSelector((state) => state.auth.token);
   const [category, setCategory] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getDataArticles() {
@@ -126,6 +127,14 @@ const ArticlesPage = () => {
         console.log(message);
       }
     }
+  }
+
+  function categoryArticles() {
+    navigate('/categoryarticles', {
+      state: {
+        category: null,
+      },
+    });
   }
 
   return (
@@ -220,11 +229,11 @@ const ArticlesPage = () => {
         </div>
         <div className="flex items-center justify-center">
           <div className="pt-12 w-[816px] h-[118px] ">
-            <Link to="/categoryarticles">
+            <div onClick={categoryArticles}>
               <button className="btn bg-blue-100 text-[#19A7CE] font-bold h-full w-full border-0  hover:bg-[#19A7CE] hover:text-white">
                 Load another 30+ category
               </button>
-            </Link>
+            </div>
           </div>
         </div>
       </div>
