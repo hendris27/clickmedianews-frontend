@@ -13,6 +13,7 @@ import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import moment from "moment"
 import { Formik } from "formik"
+import { toast } from "react-toastify"
 
 
 const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
@@ -22,6 +23,9 @@ const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
     )
 
     async function handleSave() {
+        if(!token) {
+            toast.error("You have to login first")
+        }
         try {
             if(!isSaved) {
                 await http(token).post(`/saved-article/${id}`)
@@ -215,15 +219,6 @@ const ArticlesPage = () => {
                             </div>
                         )
                     })}    
-                </div>
-                <div className='flex flex-col gap-4'>
-                    <div className='pt-8'>
-                        <div className=''>
-                            <div className='font-bold text-[24px]'>Sport</div>
-                           
-                        </div>
-                    </div>
-                   
                 </div>
                 <div className='flex items-center justify-center'>
                     <div className='pt-12 w-[816px] h-[118px] '>
