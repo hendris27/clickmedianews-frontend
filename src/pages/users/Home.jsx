@@ -8,7 +8,7 @@ import card from "../../assets/img/Card.png"
 import { BiLike, BiTimeFive} from "react-icons/bi"
 import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs"
 import propTypes from "prop-types"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import http from "../../helpers/http"
 import moment from "moment"
@@ -80,6 +80,7 @@ Article.propTypes = {
 const Home = ()=> {
     const [article, setArticle] = useState([])
     const [category, setCategory] = useState([])
+    const navigate = useNavigate()
 
     useEffect(()=> {
         async function getArticle(){
@@ -108,6 +109,14 @@ const Home = ()=> {
         }
         getSavePost(article.id)
     }, [article.id, token]) */
+
+    const getCategories = (data) => {
+        navigate("/categoryarticles", {
+            state: {
+                categories: data
+            }
+        })
+    }
 
     return (
         <>
@@ -164,12 +173,9 @@ const Home = ()=> {
                                             return (
                                                 <div key={`category-${category.id}`} >
                                                     <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
-                                                        <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden relative '>
-                                                            <Link to='/categoryarticles'>
-                                                                <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
-                                                            </Link>
+                                                        <div onClick={() => {getCategories(category.name)}} className='w-[202px] h-[222px] rounded-3xl overflow-hidden relative cursor-pointer'>
+                                                            <img src={category.picture} className='w-full h-full object-cover' alt={category.name} />    
                                                         </div>
-                                                        <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>
                                                         <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.name}</div>
                                                     </div>
                                                 </div>
