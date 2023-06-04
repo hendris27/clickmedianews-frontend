@@ -23,7 +23,6 @@ const Notification = () => {
     const [selectAll, setSelectAll] = useState(false)
     const [modal, setCheckModal] = useState(false)
     const [checkSelected, setCheckSelected] = useState(true)
-    
     const getDataNotif = useCallback(async () => {
         const { data } = await http(token).get("/notifications")
         setNotif(data.results)
@@ -118,7 +117,6 @@ const Notification = () => {
 
     async function doAccAuthor(userId, id){
         try {
-            console.log(id)
             const {data} = await http(token).patch(`/request-author/${userId}`)
             if(data.results){
                 await http(token).delete(`/request-author/${id}`)
@@ -135,7 +133,6 @@ const Notification = () => {
 
     async function doIgnoreAuthor(id){
         try {
-            console.log(id)
             await http(token).delete(`/request-author/${id}`)
             location.reload()
             

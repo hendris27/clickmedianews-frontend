@@ -15,13 +15,11 @@ const SearchArticles = () => {
     React.useEffect(()=>{
         async function searchResults(){
             const {data} = await http().get("/articles?limit=100", {params: searchParams})
-            console.log(data)
             if(!data.results){
                 console.log("data not found")
             }
             if(data.results){
                 setArticle(data.results)
-                console.log(data)
             }
         }searchResults()
     },[searchParams])

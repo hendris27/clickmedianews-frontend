@@ -46,7 +46,6 @@ const CategoryArticles = () => {
                 }
             }
         }
-        
         if (!state?.categories) {
             getArticle()
         }
@@ -72,7 +71,6 @@ const CategoryArticles = () => {
         if (confirmed) {
             try {
                 const {data} = await http(token).delete(`/admin/articles/${id}`)
-                console.log(data.results)
                 if(data.results){
                     navigate("/categoryarticles")
                 }
@@ -100,12 +98,10 @@ const CategoryArticles = () => {
                 }
             }
         }
-
         let data
         if (state?.categories){
             data = state.categories
         }
-
         getArticleCategory(data)
 
     }, [state?.categories])

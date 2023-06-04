@@ -14,20 +14,17 @@ import {MdError} from "react-icons/md"
 const WriteArticles = () => {
     const token = useSelector((state) => state.auth.token)
     const [categories, setCategory] = useState([])
-    // const [selectedCoverPhoto, setSelectedCoverPhoto] = useState(null)
     const [successMessage, setSuccessMessage] = useState("")
     const [selectedPIcture, setSelectedPicture] = useState(false)
     const [pictureURI, setPictureURI] = useState("")
     const [openModal, setOpenModal] = useState(false)
     const profile = useSelector((state)=>state.profile.data)
     const [user, setUser] = useState({})
-    // const {id} = useParams()
 
     useEffect(() => { 
         async function getUser() {
             try {
                 const { data } = await http(token).get("/admin/users/detail")
-                console.log(data.results)
                 if (data.results.role === "superadmin") {
                     setUser(data.results)
                 }
@@ -79,19 +76,16 @@ const WriteArticles = () => {
                 if(values[key]){
                     form.append(key, values[key])
                 }
-            
             })
             if(selectedPIcture){
                 form.append("picture", selectedPIcture)
             }
-            console.log(form)
             if(token){
                 const {data} = await http(token).post("/write-article", form, {
                     headers: {
                         "Content-Type" : "multipart/form-data"
                     }
                 })
-                console.log(data.message)
                 setSuccessMessage(data.message)
             }
         }
