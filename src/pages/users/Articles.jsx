@@ -82,7 +82,6 @@ Article.propTypes = {
 
 const ArticlesPage = () => {
     const [article, setArticles] = useState([])
-    const [, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
     const [category, setCategory] = useState([])
     
@@ -100,22 +99,6 @@ const ArticlesPage = () => {
             }
         }
         getDataArticles()
-
-        async function getUser(){
-            try {
-                const {data} =  await http(token).get("/admin/users/detail")
-                console.log(data.results)
-                if(data.results.role === "superadmin"){
-                    setUser(data.results.role)
-                }
-            } catch (error) {
-                const message = error?.response?.data?.message
-                if(message){
-                    console.log(message)
-                }
-            }
-        }
-        getUser()
 
         async function getCategory(){
             try {
@@ -215,7 +198,7 @@ const ArticlesPage = () => {
                         return (
                             <div type='submit' key={`category-article-${category.id}`} className=' p-2 rounded-xl text-black text-[28px] font-bold'>{category.name}
                                 <div className='grid grid-cols-3 gap-y-12 gap-x-12 mt-8'>
-                                    {article.filter((items)=>items.status === true).map(article=>{
+                                    {article.filter((items)=>items.status === true && items.category == category.name).map(article=>{
                                         return (
                                             <Article
                                                 key={article.id}
