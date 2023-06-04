@@ -171,7 +171,12 @@ const Home = () => {
                             >
                               <img src={category.picture} className="w-full h-full object-cover" alt={category.name} />
                             </div>
-                            <div className="text-[20px] font-bold hover:text-primary cursor-pointer">
+                            <div
+                              onClick={() => {
+                                getCategories(category.name);
+                              }}
+                              className="text-[20px] font-bold hover:text-primary cursor-pointer"
+                            >
                               {category.name}
                             </div>
                           </div>
