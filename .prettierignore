@@ -1,0 +1,10 @@
+FlowChart/
+node_modules/
+public/
+SlidePpt/
+src/assets
+.env
+.eslintrc.cjs
+.gitignore
+.prettierignore
+.prettierrc.json

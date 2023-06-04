@@ -1,7 +1,8 @@
 {
-    "trailingComma": "none",
-    "indent": ["error", 4],
-    "linebreak-style": ["error", "unix"],
-    "semi": false,
-    "singleQuote": true
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 120,
+    "bracketSpacing": true
 }
