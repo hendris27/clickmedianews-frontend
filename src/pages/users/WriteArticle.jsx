@@ -20,7 +20,27 @@ const WriteArticles = () => {
     const [pictureURI, setPictureURI] = useState("")
     const [openModal, setOpenModal] = useState(false)
     const profile = useSelector((state)=>state.profile.data)
+    const [user, setUser] = useState({})
     // const {id} = useParams()
+
+    useEffect(() => { 
+        async function getUser() {
+            try {
+                const { data } = await http(token).get("/admin/users/detail")
+                console.log(data.results)
+                if (data.results.role === "superadmin") {
+                    setUser(data.results)
+                }
+            } catch (error) {
+                const message = error?.response?.data?.message
+                if (message) {
+                    console.log(message)
+                }
+            }
+        }
+        getUser()
+
+    }, [token])
 
     useEffect(() => {
         async function getCategory(){
@@ -232,12 +252,17 @@ const WriteArticles = () => {
                                             />
                                         </label>)}
                                     </div>
-                                    <button
+                                    {user === "superadmin" ?( <button
                                         className='flex-1 bg-[#19A7CE] h-[75px] hover:bg-green-500 rounded-xl flex justify-center items-center'
                                         type='submit'
                                     >
                                     Request Publish Article
-                                    </button>
+                                    </button>) :
+                                        ( <button
+                                            className='flex-1 bg-[#19A7CE] h-[75px] hover:bg-green-500 rounded-xl flex justify-center items-center'
+                                            type='submit'
+                                        >Publish Article
+                                        </button>) }
                                 </div>
                             </form>
                         )}
