@@ -4,18 +4,13 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"   
 
-
-
-
 const Category = () => {
     const [category, setCategory] = useState([])
     const navigate = useNavigate()
     const token = useSelector(state => state.auth.token)
     const [user, setUser] = useState({})
 
-
     useEffect(()=> {
-
         async function getCategory(){
             const {data} = await http().get("articlesCategories")
 
@@ -38,11 +33,8 @@ const Category = () => {
         }
         getUser()
 
-    }, [])
+    }, [token])
 
-
-
-   
     async function deleteCategory(id) {
         const confirmed = window.confirm("Are you sure to Deleted this Category")
         if (confirmed) {  
@@ -63,6 +55,13 @@ const Category = () => {
         } 
     }
    
+    const getCategories = (data) => {
+        navigate("/categoryarticles", {
+            state: {
+                categories: data
+            }
+        })
+    }
 
     return (
         <div className='flex flex-col gap-8 pt-[60px]'>
@@ -79,9 +78,9 @@ const Category = () => {
                             <div key={`category-${category.id}`} >
                                 <div className='flex flex-col items-center gap-4 drop-shadow-2xl' >
                                     <div className='w-[202px] h-[222px] rounded-3xl overflow-hidden relative '>
-                                        <Link to='/categoryarticles'>
+                                        <div onClick={() => {getCategories(category.name)}} className='w-full h-full cursor-pointer'>
                                             <img src={category.picture} className='w-full h-full object-cover' alt={category.category} />
-                                        </Link>
+                                        </div>
                                         {user === "superadmin" &&  <div className='absolute bottom-10 right-14'><button onClick={()=>deleteCategory(category.id)} className='btn btn-primary text-white hover:bg-red-300 bg-[#E5E5CB]  border-0'>Delete</button></div>}
                                     </div>
                                     <div className='text-[20px] font-bold hover:text-primary cursor-pointer'>{category.category}</div>

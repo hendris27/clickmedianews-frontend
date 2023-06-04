@@ -33,20 +33,6 @@ const CategoryArticles = () => {
         }
         getCategory()
 
-        async function getArticle(){
-            try {
-                const {data} = await http().get("/articles?limit=100")
-                if(data.results){
-                    setArticle(data.results)
-                }
-            } catch (error) {
-                const message = error?.response?.data?.message
-                if(message){
-                    console.log(message)
-                }
-            }
-        }getArticle()
-
         async function getUser(){
             try {
                 const {data} =  await http(token).get("/admin/users/detail")
@@ -101,8 +87,6 @@ const CategoryArticles = () => {
         if (state?.categories){
             data = state.categories
         }
-
-        console.log(state.categories)
 
         getArticleCategory(data)
 
