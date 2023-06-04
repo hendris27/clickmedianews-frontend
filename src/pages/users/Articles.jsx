@@ -154,7 +154,7 @@ const ArticlesPage = () => {
                 <div className='w-full relative'>
                     <div className='relative'>
                         <img src={Articles} className='w-full'/>
-                        <img src={CategoryFade} className='absolute top-0 w-full'/>
+                        <img src={CategoryFade} className='absolute top-0 w-full h-full'/>
                     </div>
                     <div className='absolute top-0 left-0 w-[668px] p-20'>
                         <p className='text-[65px]'>Start Writing an Article</p>
