@@ -176,6 +176,24 @@ const CategoryArticles = () => {
         }
       }
     }
+
+    async function getArticle() {
+      try {
+        const { data } = await http().get('/articles?limit=100');
+        await http().get('/articles');
+        setArticle(data.results);
+      } catch (error) {
+        const message = error?.response?.data?.message;
+        if (message) {
+          console.log(message);
+        }
+      }
+    }
+
+    if (!state?.categories) {
+      getArticle();
+    }
+
     let data;
     if (state?.categories) {
       data = state.categories;
