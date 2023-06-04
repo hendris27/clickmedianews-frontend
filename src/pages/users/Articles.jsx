@@ -13,6 +13,7 @@ import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import moment from "moment"
 import { Formik } from "formik"
+import { toast } from "react-toastify"
 
 const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
     const token = useSelector(state => state.auth.token)
@@ -21,6 +22,9 @@ const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
     )
 
     async function handleSave() {
+        if(!token) {
+            toast.error("You have to login first")
+        }
         try {
             if(!isSaved) {
                 await http(token).post(`/saved-article/${id}`)

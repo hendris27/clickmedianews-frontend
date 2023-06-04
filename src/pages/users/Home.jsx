@@ -13,6 +13,7 @@ import { useState, useEffect } from "react"
 import http from "../../helpers/http"
 import moment from "moment"
 import { useSelector } from "react-redux"
+import { toast } from "react-toastify"
 
 const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
     const token = useSelector(state => state.auth.token)
@@ -21,6 +22,9 @@ const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
     )
 
     async function handleSave() {
+        if(!token) {
+            toast.error("You have to login first")
+        }
         try {
             if(!isSaved) {
                 await http(token).post(`/saved-article/${id}`)
@@ -98,18 +102,6 @@ const Home = ()=> {
         getCategory()
     }, [])
 
-    /* useEffect(()=> {
-        async function getSavePost(id){
-            const {data} = await http(token).get(`/saved-article/${id}`)
-            if(!data){
-                setSavePost(false)
-            }else {
-                setSavePost(true)
-            }
-        }
-        getSavePost(article.id)
-    }, [article.id, token]) */
-
     const getCategories = (data) => {
         navigate("/categoryarticles", {
             state: {
@@ -154,7 +146,6 @@ const Home = ()=> {
                                 <div className='hover:text-black'>#jokowidodo</div>
                                 <div className='hover:text-black'>#dayniki</div>
                                 <div className='hover:text-black'>#ladygaga</div>
-                                <div className='hover:text-black'>##dayniki</div>
                                 <div className='hover:text-black'>#jokowidodo</div>
                                 <div className='hover:text-black'>#dayniki</div>
                                 <div className='hover:text-black'>#jokowidodo</div>
