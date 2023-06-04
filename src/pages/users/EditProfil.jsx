@@ -68,7 +68,7 @@ const EditProfile = () => {
             }
         }
         getComment()
-    }, [token])
+    }, [token, user.id])
 
     useEffect(() => {   async function getUser(){
         try {
@@ -84,7 +84,7 @@ const EditProfile = () => {
             }
         }
     }getUser()
-    },[])
+    },[token])
 
 
     const fileToDataUrl = (file) => {

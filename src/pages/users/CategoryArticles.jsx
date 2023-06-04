@@ -106,7 +106,7 @@ const CategoryArticles = () => {
 
         getArticleCategory(data)
 
-    }, [])
+    }, [state?.categories])
 
     async function getArticleCategory(name){
         try {
