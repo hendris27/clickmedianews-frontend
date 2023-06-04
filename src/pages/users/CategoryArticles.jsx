@@ -190,7 +190,7 @@ const CategoryArticles = () => {
       }
     }
 
-    if (state?.categories) {
+    if (!state?.categories) {
       getArticle();
     }
 
