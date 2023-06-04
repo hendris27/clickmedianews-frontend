@@ -5,13 +5,12 @@ import { BiLike, BiTimeFive } from 'react-icons/bi';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import Filter from '../../assets/img/filter.png';
 import Footer from '../../components/Footers';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import http from '../../helpers/http';
 import { useSelector } from 'react-redux';
 
 const CategoryArticles = () => {
-  const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const token = useSelector((state) => state.auth.token);
   const [article, setArticle] = useState([]);
@@ -23,9 +22,9 @@ const CategoryArticles = () => {
         const formData = new FormData();
         formData.append('status', true);
         const { data } = await http(token).patch(`/admin/waiting-lists/${id}`, formData);
-        await http().get('/articles?limit=1000');
+        const getArticle = await http().get('/articles?limit=1000');
         if (data.results) {
-          navigate('/waitinglist');
+          setArticle(getArticle.data.results);
         }
       } catch (error) {
         const message = error?.response?.data?.message;
@@ -41,8 +40,9 @@ const CategoryArticles = () => {
     if (confirmed) {
       try {
         const { data } = await http(token).delete(`/admin/articles/${id}`);
+        const getArticle = await http().get('/articles?limit=1000');
         if (data.results) {
-          navigate('/waitinglist');
+          setArticle(getArticle.data.results);
         }
       } catch (error) {
         const message = error?.response?.data?.message;
