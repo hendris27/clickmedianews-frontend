@@ -57,10 +57,11 @@ const CategoryArticles = () => {
 
     }
 
-    useEffect(()=> {
+    useEffect(()=>{
         async function getArticle(){
             try {
                 const {data} = await http().get("/articles?limit=1000")
+                console.log(data)
                 if(data.results){
                     setArticle(data.results)
                 }
@@ -71,7 +72,9 @@ const CategoryArticles = () => {
                 }
             }
         }getArticle()
+    },[])
 
+    useEffect(()=> {
         async function getUser(){
             try {
                 const {data} =  await http(token).get("/admin/users/detail")
@@ -87,7 +90,7 @@ const CategoryArticles = () => {
             }
         }
         getUser()
-    }, [])
+    }, [token])
 
     return (
         <>

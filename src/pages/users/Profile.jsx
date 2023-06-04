@@ -3,7 +3,7 @@ import Header from "../../components/Headers.jsx"
 import Footer from "../../components/Footers.jsx"
 import { FaChevronLeft } from "react-icons/fa"
 import { BiLike, BiTimeFive} from "react-icons/bi"
-import { BsFillBookmarkFill } from "react-icons/bs"
+import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { getProfileAction } from "../../redux/actions/profile.js"
@@ -11,6 +11,76 @@ import { Link } from "react-router-dom"
 import defaultPicture from "../../assets/img/default.jpg"
 import ScrollToTop from "../../components/ScrollToTop"
 import http from "../../helpers/http.js"
+import moment from "moment"
+import propTypes from "prop-types"
+
+
+const Article = ({id, picture, title, descriptions, status, likeCount, createdAt}) => {
+    const token = useSelector(state => state.auth.token)
+    const [isSaved, setIsSaved] = useState(
+        localStorage.getItem(`saved_${id}`) === "true"
+    )
+
+    async function handleSave() {
+        try {
+            if(!isSaved) {
+                await http(token).post(`/saved-article/${id}`)
+                setIsSaved(true)
+                localStorage.setItem(`saved_${id}`, "true")
+            }else {
+                await http(token).delete(`/saved-article/${id}`)
+                setIsSaved(false)
+                localStorage.setItem(`saved_${id}`, "false")
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    return(
+        <div key={id} className='flex bg-white w-[416px] rounded-3xl gap-8 drop-shadow-2xl '>
+            <div className='flex justify-between items-center' >
+                <Link to={`/articleView/${id}`} className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                    <img src={picture} className='w-[100%] h-full object-cover' alt='' />
+                </Link>
+                <div className='flex-1 pl-8'>
+                    <div className='flex flex-col gap-8' >
+                        <Link to={`/articleView/${id}`} className='flex flex-col gap-4'>
+                            <div className='text-[#444cd4] text-[20px] leading-[20px] '>{title}</div>
+                            <div className='text-[18px] leading-[20px] font-medium '>{descriptions}</div>
+                        </Link>
+                        <div className='flex flex-col gap-1'>
+                            <div className='flex gap-4'>
+                                <div className='flex gap-2 items-center'>
+                                    <div><BiLike/></div>
+                                    <div>{likeCount}</div>
+                                </div>
+                                <div className='flex gap-2 items-center'>
+                                    <div><BiTimeFive/></div>
+                                    <div>{moment(createdAt).fromNow("mm")} ago</div>
+                                </div>
+                                <button onClick={handleSave}>
+                                    {isSaved ? <BsFillBookmarkFill color='blue'/> : <BsBookmark />}
+                                </button>
+                            </div>
+                            {status === true ? (<span className='text-primary'>Status: Approved</span>) : (<span className='text-primary'>Status: Request Publish</span>) }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+Article.propTypes = {
+    id: propTypes.string,
+    picture: propTypes.string,
+    title: propTypes.string,
+    status: propTypes.string,
+    descriptions: propTypes.string,
+    likeCount: propTypes.string,
+    createdAt: propTypes.string
+}
+
 
 const Profile = () => {
     const token = useSelector((state) => state.auth.token)
@@ -21,8 +91,11 @@ const Profile = () => {
     const [totalComment, setTotalComment] = useState(0)
     const dispatch = useDispatch()
 
-    useEffect(() => { 
+    useEffect(()=>{
         dispatch(getProfileAction(token))
+    },[token, dispatch])
+
+    useEffect(() => { 
 
         async function getArticleManage(){
             try {
@@ -56,6 +129,9 @@ const Profile = () => {
         }
         getUser()
 
+    }, [token])
+
+    useEffect(()=>{
         async function getComment() {
             try {
                 const dataComment = await http().get(`/article-comments/total/${user.id}`)
@@ -68,10 +144,7 @@ const Profile = () => {
             }
         }
         getComment()
-
-    }, [token, dispatch, user])
-
-    
+    },[user])
 
     return(
         <>
@@ -141,10 +214,24 @@ const Profile = () => {
                         <div className=' border-l-2 h-[400px] border-gray-400'></div>
                     </div>
                     <div className='flex-1 w-full px-[70px] pt-24 pb-24 flex flex-col items-center'>
-                        <div className='flex flex-col h-[700px] overflow-x-scroll scrollbar-hidden scrollbar-w-0 gap-8'>
+                        <div className='flex flex-col p-5 h-[700px] overflow-y-scroll scrollbar-hidden gap-8'>
                             <div className='text-[25px]  font-bold'>Post</div>
-                            <div className='grid grid-cols-2 gap-6'>
-                                {articel.map(atcManage =>{
+                            <div className='grid grid-cols-1 gap-6'>
+                                {articel.map(article => {
+                                    return (
+                                        <Article
+                                            key={article.id}
+                                            id={article.id}
+                                            picture={article.picture}
+                                            status={article.status}
+                                            title={article.title}
+                                            descriptions={article.descriptions}
+                                            likeCount={article.likeCount}
+                                            createdAt={article.createdAt}
+                                        />
+                                    )
+                                })}
+                                {/* {articel.map(atcManage =>{
                                     return(
                                         <Link to={`/articleview/${atcManage.id}`} key={`article-get${atcManage.id}`}>
                                             <div className='flex  bg-white w-[247px] h-[221px] rounded-2xl gap-8 drop-shadow-2xl' >
@@ -176,7 +263,7 @@ const Profile = () => {
                                             </div>
                                         </Link>
                                     )
-                                })}
+                                })} */}
                             </div>
                         </div>
                     </div>
