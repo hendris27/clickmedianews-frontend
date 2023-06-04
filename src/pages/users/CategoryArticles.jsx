@@ -102,8 +102,6 @@ const CategoryArticles = () => {
             data = state.categories
         }
 
-        console.log(state.categories)
-
         getArticleCategory(data)
 
     }, [state?.categories])
