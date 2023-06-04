@@ -285,7 +285,7 @@ const Header = (props) => {
                             <button className='btn btn-primary text-white w-full h-[20px] '>
                                 <Link
                                     to='/signup'
-                                    className='font-bold'
+                                    className='font-bold normal-case'
                                 >
                                     Sign Up
                                 </Link>
