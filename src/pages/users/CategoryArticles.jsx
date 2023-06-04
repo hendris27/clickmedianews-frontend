@@ -22,7 +22,7 @@ const CategoryArticles = () => {
     useEffect(()=> {
         async function getCategory(){
             try {
-                const {data} = await http().get("/categories?limit=9")
+                const {data} = await http().get("/categories?limit=100")
                 setCategory(data.results)
             } catch (error) {
                 const message = error?.response?.data?.message
@@ -88,7 +88,7 @@ const CategoryArticles = () => {
     useEffect(()=> {
         async function getArticleCategory(name){
             try {
-                const {data} = await http().get("/articles", {params: {category: name}})
+                const {data} = await http().get("/articles?limit=100", {params: {category: name}})
                 if(state.categories){
                     await http().get("/articles", {params: {category: state.categories}})
                 }
@@ -112,7 +112,7 @@ const CategoryArticles = () => {
 
     async function getArticleCategory(name){
         try {
-            const {data} = await http().get("/articles", {params: {category: name}})
+            const {data} = await http().get("/articles?limit=100", {params: {category: name}})
             setArticle(data.results)
         } catch (error) {
             const message = error?.response?.data?.message
@@ -152,7 +152,9 @@ const CategoryArticles = () => {
                                 </ul>
                             </div>
                         </div>
-                        <p className='font-bold'>18 Categories</p>
+                        <Link to='/categoryarticles' >
+                            <p className='font-bold text-primary'>18 + Categories</p>
+                        </Link>
                     </div>
                 </div>
                 <div className='flex flex-col gap-4'>
