@@ -218,13 +218,6 @@ const ArticlesPage = () => {
             );
           })}
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="pt-8">
-            <div className="">
-              <div className="font-bold text-[24px]">Sport</div>
-            </div>
-          </div>
-        </div>
         <div className="flex items-center justify-center">
           <div className="pt-12 w-[816px] h-[118px] ">
             <Link to="/categoryarticles">
