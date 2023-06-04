@@ -229,7 +229,6 @@ const Header = (props) => {
                                                                     <img src={item.picture} className='object-cover w-full h-full' />
                                                                 </div>
                                                                 <div className='flex flex-1 flex-col'>
-                                                                    <div className='hover:text-primary font-bold'>{item.fullName}</div>
                                                                     <div className='hover:text-primary font-bold'>{item.text}</div>
                                                                 </div>
                                                             </div>
