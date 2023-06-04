@@ -98,18 +98,6 @@ const Home = ()=> {
         getCategory()
     }, [])
 
-    /* useEffect(()=> {
-        async function getSavePost(id){
-            const {data} = await http(token).get(`/saved-article/${id}`)
-            if(!data){
-                setSavePost(false)
-            }else {
-                setSavePost(true)
-            }
-        }
-        getSavePost(article.id)
-    }, [article.id, token]) */
-
     const getCategories = (data) => {
         navigate("/categoryarticles", {
             state: {
