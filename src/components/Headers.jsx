@@ -111,7 +111,6 @@ const Header = (props) => {
 
   async function doIgnoreAuthor(id) {
     try {
-      console.log(id);
       await http(token).delete(`/request-author/${id}`);
       location.reload();
       toast.success('Data is deleted', {
@@ -255,28 +254,24 @@ const Header = (props) => {
                     </div>
                   )}
                   <div>
-                    {notif.length > 1 ? (
-                      notif.map((item) => {
-                        return (
-                          <>
-                            <li key={`notif-list-${item.id}`}>
-                              <a className="hover:bg-white">
-                                <div className="flex gap-5 items-center">
-                                  <div className="rounded-full border-2 border-gray-200 overflow-hidden w-12 h-12">
-                                    <img src={item.picture} className="object-cover w-full h-full" />
-                                  </div>
-                                  <div className="flex flex-1 flex-col">
-                                    <div className="hover:text-primary font-bold">{item.text}</div>
-                                  </div>
+                    {notif.map((item) => {
+                      return (
+                        <>
+                          <li key={`notif-list-${item.id}`}>
+                            <a className="hover:bg-white">
+                              <div className="flex gap-5 items-center">
+                                <div className="rounded-full border-2 border-gray-200 overflow-hidden w-12 h-12">
+                                  <img src={item.picture} className="object-cover w-full h-full" />
                                 </div>
-                              </a>
-                            </li>
-                          </>
-                        );
-                      })
-                    ) : (
-                      <div className="text-xl">No notifications</div>
-                    )}
+                                <div className="flex flex-1 flex-col">
+                                  <div className="hover:text-primary font-bold">{item.text}</div>
+                                </div>
+                              </div>
+                            </a>
+                          </li>
+                        </>
+                      );
+                    })}
                   </div>
                 </div>
                 <div className="border-b-2 w-full hover:bg-white"></div>

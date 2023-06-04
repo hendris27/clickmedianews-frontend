@@ -224,38 +224,34 @@ const Notification = () => {
               })}
             </div>
           )}
-          {notif.length > 1 ? (
-            notif.map((item) => {
-              return (
-                <>
-                  <div className="w-full flex justify-between items-center px-20">
-                    <div className="flex gap-5 justify-center items-center">
-                      <div className="rounded-full border-2 border-gray-200 overflow-hidden w-12 h-12">
-                        <img src={item.picture} className="object-cover w-full h-full" />
-                      </div>
-                      <div className="flex flex-col">
-                        <label htmlFor={item.id} className="font-bold">
-                          {item.text}
-                        </label>
-                      </div>
+          {notif.map((item) => {
+            return (
+              <>
+                <div className="w-full flex justify-between items-center px-20">
+                  <div className="flex gap-5 justify-center items-center">
+                    <div className="rounded-full border-2 border-gray-200 overflow-hidden w-12 h-12">
+                      <img src={item.picture} className="object-cover w-full h-full" />
                     </div>
-                    <div>
-                      <input
-                        type="checkbox"
-                        name={item.id}
-                        onChange={() => handleCheckboxChange(item.id)}
-                        id={item.id}
-                        checked={selectedItems.includes(item.id)}
-                        className="checkbox"
-                      />
+                    <div className="flex flex-col">
+                      <label htmlFor={item.id} className="font-bold">
+                        {item.text}
+                      </label>
                     </div>
                   </div>
-                </>
-              );
-            })
-          ) : (
-            <div className="w-full text-center text-2xl">No Notification</div>
-          )}
+                  <div>
+                    <input
+                      type="checkbox"
+                      name={item.id}
+                      onChange={() => handleCheckboxChange(item.id)}
+                      id={item.id}
+                      checked={selectedItems.includes(item.id)}
+                      className="checkbox"
+                    />
+                  </div>
+                </div>
+              </>
+            );
+          })}
         </div>
         <div className="flex self-center">
           <button
