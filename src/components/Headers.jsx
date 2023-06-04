@@ -110,17 +110,19 @@ const Header = (props) => {
   }
 
   async function doIgnoreAuthor(id) {
-    try {
-      console.log(id);
-      await http(token).delete(`/request-author/${id}`);
-      location.reload();
-      toast.success('Data is deleted', {
-        toastId: 'custom-id',
-      });
-    } catch (error) {
-      const message = error?.response?.data?.message;
-      if (message) {
-        console.log(message);
+    const confirmed = window.confirm('Are you sure you want to logout?');
+    if (confirmed) {
+      try {
+        await http(token).delete(`/request-author/${id}`);
+        location.reload();
+        toast.success('Data is deleted', {
+          toastId: 'custom-id',
+        });
+      } catch (error) {
+        const message = error?.response?.data?.message;
+        if (message) {
+          console.log(message);
+        }
       }
     }
   }

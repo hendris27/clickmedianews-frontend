@@ -75,7 +75,12 @@ const Category = () => {
               <div key={`category-${category.id}`}>
                 <div className="flex flex-col items-center gap-4 drop-shadow-2xl">
                   <div className="w-[202px] h-[222px] rounded-3xl overflow-hidden relative ">
-                    <div className="w-full h-full cursor-pointer">
+                    <div
+                      className="w-full h-full cursor-pointer"
+                      onClick={() => {
+                        getCategories(category.name);
+                      }}
+                    >
                       <img src={category.picture} className="w-full h-full object-cover" alt={category.category} />
                     </div>
                     {user === 'superadmin' && (
