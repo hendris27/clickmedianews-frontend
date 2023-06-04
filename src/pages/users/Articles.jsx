@@ -2,10 +2,11 @@ import Header from "../../components/Headers"
 import { Link } from "react-router-dom"
 import ScrollToTop from "../../components/ScrollToTop"
 import { BiLike, BiTimeFive} from "react-icons/bi"
-import { BsFillBookmarkFill } from "react-icons/bs"
+import { BsFillBookmarkFill, BsBookmark } from "react-icons/bs"
 import Articles from "../../assets/img/picture_articles.png"
 import CategoryFade from "../../assets/img/category-image.png"
 import Filter from "../../assets/img/filter.png"
+import propTypes from "prop-types"
 import Footer from "../../components/Footers"
 import http from "../../helpers/http"
 import { useEffect, useState } from "react"
@@ -13,11 +14,78 @@ import { useSelector } from "react-redux"
 import moment from "moment"
 import { Formik } from "formik"
 
+
+const Article = ({id, picture, title, descriptions, likeCount, createdAt}) => {
+    const token = useSelector(state => state.auth.token)
+    const [isSaved, setIsSaved] = useState(
+        localStorage.getItem(`saved_${id}`) === "true"
+    )
+
+    async function handleSave() {
+        try {
+            if(!isSaved) {
+                await http(token).post(`/saved-article/${id}`)
+                setIsSaved(true)
+                localStorage.setItem(`saved_${id}`, "true")
+            }else {
+                await http(token).delete(`/saved-article/${id}`)
+                setIsSaved(false)
+                localStorage.setItem(`saved_${id}`, "false")
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    return (
+        <div key={id} className='flex bg-white w-[416px] rounded-3xl gap-8 drop-shadow-2xl '>
+            <div className='flex justify-between items-center' >
+                <Link to={`/articleView/${id}`} className='w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
+                    <img src={picture} className='w-[100%] h-full object-cover' alt='' />
+                </Link>
+                <div className='flex-1 pl-8'>
+                    <div className='flex flex-col gap-8' >
+                        <Link to={`/articleView/${id}`} className='flex flex-col gap-4'>
+                            <div className='text-[#444cd4] text-[20px] leading-[20px] '>{title}</div>
+                            <div className='text-[18px] leading-[20px] font-medium '>{descriptions}</div>
+                        </Link>
+                        <div className='flex gap-4 text-sm font-thin'>
+                            <div className='flex gap-2 items-center'>
+                                <div><BiLike/></div>
+                                <div>{likeCount}</div>
+                            </div>
+                            <div className='flex gap-20'>
+                                <div className='flex gap-2 items-center'>
+                                    <div><BiTimeFive/></div>
+                                    <div>{moment(createdAt).fromNow("mm")} ago</div>
+                                </div>
+                                <button onClick={handleSave}>
+                                    {isSaved ? <BsFillBookmarkFill color='blue'/> : <BsBookmark />}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+Article.propTypes = {
+    id: propTypes.string,
+    picture: propTypes.string,
+    title: propTypes.string,
+    descriptions: propTypes.string,
+    likeCount: propTypes.string,
+    createdAt: propTypes.string
+}
+
 const ArticlesPage = () => {
     const [article, setArticles] = useState([])
     const [, setUser] = useState([])
     const token = useSelector(state => state.auth.token)
     const [category, setCategory] = useState([])
+    
 
     useEffect(() => {
         async function getDataArticles() {
@@ -147,38 +215,17 @@ const ArticlesPage = () => {
                         return (
                             <div type='submit' key={`category-article-${category.id}`} className=' p-2 rounded-xl text-black text-[28px] font-bold'>{category.name}
                                 <div className='grid grid-cols-3 gap-y-12 gap-x-12 mt-8'>
-                                    {article.filter((items)=>items.status === true).map(event=>{
+                                    {article.filter((items)=>items.status === true).map(article=>{
                                         return (
-                                            <Link to={`/articleView/${event.id}`} key={`articles${event.id}`}>
-                                                {event.status === true && <div className='flex bg-white w-[396px] rounded-3xl gap-8 drop-shadow-2xl'>
-                                                    <div className='flex justify-between items-center cursor-pointer' >
-                                                        <div className='flex-0.8 w-[126px] h-[222px] rounded-3xl overflow-hidden bg-green-400'>
-                                                            <img src={event.picture} className='w-[100%] h-full object-cover' alt='' />
-                                                        </div>
-                                                        <div className='flex-1 pl-8'>
-                                                            <div className='flex flex-col gap-8' >
-                                                                <div className='flex flex-col gap-4'>
-                                                                    <div className='text-[#19A7CE] text-[20px] leading-[20px] '>{event.title}</div>
-                                                                    <div className='text-[18px] leading-[20px] font-medium '>{event.descriptions}</div>
-                                                                </div>
-                                                                <div className='flex gap-4 text-[16px]'>
-                                                                    <div className='flex gap-4'>
-                                                                        <div className='flex gap-2 items-center'>
-                                                                            <div><button><BiLike /></button></div>
-                                                                            <div>{event.likeCount}</div>
-                                                                        </div>
-                                                                        <div className='flex gap-2 items-center'>
-                                                                            <div><BiTimeFive /></div>
-                                                                            <div>{moment(event.createdAt).fromNow("mm-hh")}&nbsp; ago</div>
-                                                                        </div>
-                                                                        <div className='flex items-center'><button><BsFillBookmarkFill color='#19A7CE'/></button></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>}
-                                            </Link>
+                                            <Article
+                                                key={article.id}
+                                                id={article.id}
+                                                picture={article.picture}
+                                                title={article.title}
+                                                descriptions={article.descriptions}
+                                                likeCount={article.likeCount}
+                                                createdAt={article.createdAt}
+                                            />
                                         )
                                     })}
                                 </div>
