@@ -97,6 +97,11 @@ const Header = (props) => {
       if (data.results) {
         await http(token).delete(`/request-author/${id}`);
       }
+
+      const accAuthor = await http(token).get('/request-author');
+        setRequestAuthor(accAuthor.data.results.reqAuthor);
+        setMessageRequest(accAuthor.data.results.message);
+        
       location.reload();
       toast.success('Author Accepting', {
         toastId: 'custom-id',
@@ -119,6 +124,11 @@ const Header = (props) => {
         toast.success('Data is deleted', {
           toastId: 'custom-id',
         });
+
+        const { data } = await http(token).get('/request-author');
+        setRequestAuthor(data.results.reqAuthor);
+        setMessageRequest(data.results.message);
+
       } catch (error) {
         const message = error?.response?.data?.message;
         if (message) {
