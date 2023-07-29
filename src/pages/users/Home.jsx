@@ -1,7 +1,7 @@
 import Header from '../../components/Headers';
 import Footer from '../../components/Footers';
 import ScrollToTop from '../../components/ScrollToTop';
-import banner from '../../assets/img/picture_main_content.png';
+import banner from '../../assets/img/picture_main.jpg';
 import videoImg from '../../assets/img/Video.png';
 import image from '../../assets/img/Image.png';
 import card from '../../assets/img/Card.png';
@@ -210,22 +210,24 @@ const Home = () => {
             </div>
           </div>
           <div className="bg-[#D7DDEC] pl-[155px] pt-[135px] pb-[175px]">
-            <div className="flex gap-16">
-              <div className="flex flex-col gap-8">
-                <div className="flex flex-col gap-4">
-                  <div className="font-bold text-[36px] leading-[56px]  ">
-                    Let&apos;s hear about <br /> Kayla&apos;s success story
+            <div className="flex justify-center w-full ">
+              <div className="flex gap-32">
+                <div className="flex flex-col gap-8">
+                  <div className="flex flex-col gap-4">
+                    <div className="font-bold text-[36px] leading-[56px]  ">
+                      Let&apos;s hear about <br /> Kayla&apos;s success story
+                    </div>
+                    <div className="font-medium">
+                      See how well News Today works in a <br /> real user&apos; life.{' '}
+                    </div>
                   </div>
-                  <div className="font-medium">
-                    See how well News Today works in a <br /> real user&apos; life.{' '}
+                  <div className="bg-[#444cd4] hover:bg-[#6261df] text-white w-[180px] h-16 flex items-center justify-center rounded-xl">
+                    <button>Let’s get started</button>
                   </div>
                 </div>
-                <div className="bg-[#444cd4] hover:bg-[#6261df] text-white w-[180px] h-16 flex items-center justify-center rounded-xl">
-                  <button>Let’s get started</button>
+                <div>
+                  <img src={videoImg} alt="picture" />
                 </div>
-              </div>
-              <div>
-                <img src={videoImg} alt="picture" />
               </div>
             </div>
           </div>

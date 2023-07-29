@@ -56,10 +56,10 @@ function SignIn() {
 
   return (
     <Fragment>
-      <div className="flex w-full h-full">
+      <div className="flex w-full h-screen">
         <div className="hidden md:flex flex-1 bg-[url('/src/assets/img/picture_login.png')] bg-cover bg-bottom bg-no-repeat"></div>
-        <div className="flex flex-col flex-1 bg-white gap-10 pt-10 pb-10 md:h-full">
-          <div className="flex items-center flex-col justify-center gap-3">
+        <div className="flex flex-col justify-center items-center flex-1 bg-white gap-10 pt-10 pb-10 md:h-full">
+          <div className="flex items-center max-w-xs flex-col justify-center gap-3">
             <Formik
               initialValues={{ email: '', password: '', phoneNumber: '' }}
               onSubmit={doSignIn}
@@ -145,7 +145,7 @@ function SignIn() {
                 );
               }}
             </Formik>
-            <div className="flex flex-col items-center gap-3 w-[43%]">
+            <div className="flex flex-col items-center gap-3 w-full">
               <p className="uppercase font-bold">Or log in with</p>
               <div className="flex gap-5">
                 <div>
